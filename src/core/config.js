@@ -1,6 +1,7 @@
 export const APP_CONFIG = {
   feedUrl: 'https://gtfsrt.renfe.com/vehicle_positions.json',
   feedFallbackUrls: ['/api/vehicle_positions'],
+  loadRailPathsInProduction: false,
   updateIntervalMs: 20000,
   staleAfterMs: 40000,
   jumpThresholdKm: 15,

@@ -1,5 +1,6 @@
 name = "spaintrain"
 compatibility_date = "2026-03-16"
+main = "cloudflare/worker-static-proxy.js"
 
 [assets]
 directory = "./dist"

@@ -19,11 +19,8 @@ export class SpainTrainApp {
       byVehicle: new Map(),
       byStopLine: new Map(),
     };
-    const isDev = Boolean(import.meta.env.DEV);
-    const primaryFeedUrl = isDev ? '/api/vehicle_positions' : APP_CONFIG.feedUrl;
-    const fallbackUrls = isDev
-      ? [APP_CONFIG.feedUrl]
-      : APP_CONFIG.feedFallbackUrls;
+    const primaryFeedUrl = APP_CONFIG.feedFallbackUrls[0] || '/api/vehicle_positions';
+    const fallbackUrls = [APP_CONFIG.feedUrl];
 
     this.feedService = new FeedService({
       feedUrl: primaryFeedUrl,
@@ -79,6 +76,11 @@ export class SpainTrainApp {
   }
 
   async loadRailPathsInBackground() {
+    if (import.meta.env.PROD && !APP_CONFIG.loadRailPathsInProduction) {
+      logger.info('Skipping external rail-path loading in production');
+      return;
+    }
+
     try {
       const railPaths = await loadRailPaths();
       if (railPaths) {

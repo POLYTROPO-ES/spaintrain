@@ -29,6 +29,7 @@ This repository includes `wrangler.toml`:
 ```toml
 name = "spaintrain"
 compatibility_date = "2026-03-16"
+main = "cloudflare/worker-static-proxy.js"
 
 [assets]
 directory = "./dist"
@@ -38,6 +39,7 @@ not_found_handling = "single-page-application"
 Important:
 - This root config is now valid for `wrangler deploy` (Worker static assets mode).
 - If your CI/CD runs `wrangler deploy`, it needs `[assets].directory` (or `main`) to avoid the "Missing entry-point" error.
+- `main` handles `/api/vehicle_positions` proxy so production no longer depends on direct cross-origin fetch to Renfe.
 
 ## Optional Manual Deployment
 From the project root:

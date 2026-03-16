@@ -22,6 +22,12 @@ export class FeedService {
       throw new Error(`Feed request failed with status ${response.status}`);
     }
 
+    const contentType = response.headers.get('content-type') || '';
+    if (!contentType.toLowerCase().includes('application/json')) {
+      const text = await response.text();
+      throw new Error(`Feed endpoint did not return JSON (content-type: ${contentType}, preview: ${text.slice(0, 80)})`);
+    }
+
     return response.json();
   }
 
