@@ -1,6 +1,7 @@
 const RENFE_FEED_URL = 'https://gtfsrt.renfe.com/vehicle_positions.json';
 const RENFE_FEED_LD_URL = 'https://gtfsrt.renfe.com/vehicle_positions_LD.json';
 const RENFE_ALERTS_URL = 'https://gtfsrt.renfe.com/alerts.json';
+const PERMISSIONS_POLICY = 'browsing-topics=(), join-ad-interest-group=(), run-ad-auction=()';
 
 async function fetchFeed(url) {
   const response = await fetch(url, {
@@ -62,6 +63,7 @@ function corsHeaders(origin) {
     'Access-Control-Allow-Methods': 'GET,OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Cache-Control': 'no-store',
+    'Permissions-Policy': PERMISSIONS_POLICY,
   };
 }
 
@@ -151,6 +153,13 @@ export default {
       return handleAlertsProxy(request);
     }
 
-    return env.ASSETS.fetch(request);
+    const assetResponse = await env.ASSETS.fetch(request);
+    const headers = new Headers(assetResponse.headers);
+    headers.set('Permissions-Policy', PERMISSIONS_POLICY);
+    return new Response(assetResponse.body, {
+      status: assetResponse.status,
+      statusText: assetResponse.statusText,
+      headers,
+    });
   },
 };

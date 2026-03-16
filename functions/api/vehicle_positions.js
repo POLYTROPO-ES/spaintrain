@@ -1,5 +1,6 @@
 const RENFE_FEED_URL = 'https://gtfsrt.renfe.com/vehicle_positions.json';
 const RENFE_FEED_LD_URL = 'https://gtfsrt.renfe.com/vehicle_positions_LD.json';
+const PERMISSIONS_POLICY = 'browsing-topics=(), join-ad-interest-group=(), run-ad-auction=()';
 
 async function fetchFeed(url) {
   const response = await fetch(url, {
@@ -61,6 +62,7 @@ function corsHeaders(origin) {
     'Access-Control-Allow-Methods': 'GET,OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Cache-Control': 'no-store',
+    'Permissions-Policy': PERMISSIONS_POLICY,
   };
 }
 

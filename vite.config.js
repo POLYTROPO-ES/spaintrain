@@ -3,6 +3,7 @@ import { defineConfig } from 'vite';
 const RENFE_FEED_URL = 'https://gtfsrt.renfe.com/vehicle_positions.json';
 const RENFE_FEED_LD_URL = 'https://gtfsrt.renfe.com/vehicle_positions_LD.json';
 const RENFE_ALERTS_URL = 'https://gtfsrt.renfe.com/alerts.json';
+const PERMISSIONS_POLICY = 'browsing-topics=(), join-ad-interest-group=(), run-ad-auction=()';
 
 async function fetchFeed(url) {
   const response = await fetch(url, {
@@ -119,5 +120,13 @@ export default defineConfig({
   server: {
     port: 5173,
     open: true,
+    headers: {
+      'Permissions-Policy': PERMISSIONS_POLICY,
+    },
+  },
+  preview: {
+    headers: {
+      'Permissions-Policy': PERMISSIONS_POLICY,
+    },
   },
 });
