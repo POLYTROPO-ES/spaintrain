@@ -47,7 +47,9 @@ Repository: [POLYTROPO-ES/spaintrain](https://github.com/POLYTROPO-ES/spaintrain
    `npm run dev`
 3. Run tests:
    `npm run test:run`
-4. Build production bundle:
+4. Run core e2e interaction test:
+   `npm run test:e2e`
+5. Build production bundle:
    `npm run build`
 
 ## Scripts
@@ -56,6 +58,7 @@ Repository: [POLYTROPO-ES/spaintrain](https://github.com/POLYTROPO-ES/spaintrain
 - `npm run preview`: preview built app
 - `npm run test`: run tests in watch mode
 - `npm run test:run`: run tests once
+- `npm run test:e2e`: Playwright e2e test for marker click popup behavior
 - `npm run deploy:cf`: build and deploy to Cloudflare Pages
 - `npm run docker:build`: build Docker image
 - `npm run docker:run`: run container on port 8080

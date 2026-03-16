@@ -14,9 +14,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  validate-pr-build:
-    name: Validate build (PR)
-    if: github.event_name == 'pull_request'
+  quality-gate:
+    name: Quality Gate (build + unit + e2e)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -34,10 +33,20 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Unit tests
+        run: npm run test:run
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: E2E tests (marker click popup)
+        run: npm run test:e2e
+
   deploy-worker:
     name: Deploy Worker (static assets + API proxy)
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    needs: quality-gate
     steps:
       - name: Checkout
         uses: actions/checkout@v4

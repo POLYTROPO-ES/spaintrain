@@ -13,6 +13,8 @@
     "test": "vitest",
     "pretest:run": "node scripts/generate-version.mjs",
     "test:run": "vitest run",
+    "pretest:e2e": "node scripts/generate-version.mjs",
+    "test:e2e": "playwright test",
     "deploy:cf": "npm run build && node scripts/prepare-pages-redirects.mjs && npx wrangler pages deploy dist --project-name spaintrain --functions functions",
     "deploy:worker": "npm run build && npx wrangler deploy",
     "docker:build": "docker build -t spaintrain:latest .",
@@ -22,6 +24,7 @@
     "leaflet": "^1.9.4"
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.2",
     "vite": "^6.3.0",
     "vitest": "^3.2.4"
   }
