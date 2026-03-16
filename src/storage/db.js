@@ -136,13 +136,9 @@ export class LocalStore {
 
   async clearAll() {
     const db = await this.dbPromise;
-    db.close();
-    await new Promise((resolve, reject) => {
-      const request = indexedDB.deleteDatabase(APP_CONFIG.storage.dbName);
-      request.onsuccess = () => resolve();
-      request.onerror = () => reject(request.error);
-      request.onblocked = () => reject(new Error('Database deletion blocked by open connection'));
-    });
-    this.dbPromise = openDatabase();
+    const tx = db.transaction([APP_CONFIG.storage.snapshotStore, APP_CONFIG.storage.settingsStore], 'readwrite');
+    tx.objectStore(APP_CONFIG.storage.snapshotStore).clear();
+    tx.objectStore(APP_CONFIG.storage.settingsStore).clear();
+    await awaitTransaction(tx);
   }
 }

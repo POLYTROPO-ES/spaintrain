@@ -402,14 +402,31 @@ export class SpainTrainApp {
   }
 
   async onDeleteData() {
-    await this.store.clearAll();
-    this.platformMemory.byVehicle.clear();
-    this.platformMemory.byStopLine.clear();
-    this.state.previousSnapshot = null;
-    this.state.currentSnapshot = null;
-    this.ui.refs.vehicles.textContent = '0';
-    this.ui.refs.lastUpdate.textContent = '-';
-    this.ui.refs.modePill.textContent = this.i18n.t('status_live');
+    try {
+      await this.store.clearAll();
+      this.platformMemory.byVehicle.clear();
+      this.platformMemory.byStopLine.clear();
+      this.state.previousSnapshot = null;
+      this.state.currentSnapshot = null;
+      this.state.alerts = [];
+      this.state.alertsMetrics = { source: '/api/alerts', count: 0 };
+      this.state.disruptionLineCodes = new Set();
+      this.map.setDisruptionLineCodes(this.state.disruptionLineCodes);
+
+      this.ui.refs.vehicles.textContent = '0';
+      this.ui.refs.lastUpdate.textContent = '-';
+      this.ui.refs.modePill.textContent = this.i18n.t('status_live');
+      this.ui.refs.alertsCount.textContent = '0';
+      this.ui.refs.alertsList.innerHTML = '';
+      this.ui.refs.alertsEmpty.textContent = this.i18n.t('alerts_none');
+
+      alert(this.i18n.t('delete_data_success'));
+      logger.info('Local database cleared');
+    } catch (error) {
+      const message = String(error?.message || error);
+      alert(`${this.i18n.t('delete_data_failed')}: ${message}`);
+      logger.error('Local database clear failed', { message });
+    }
   }
 
   async onLineFilterChange(lineFilters) {
