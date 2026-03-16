@@ -92,7 +92,7 @@ If Overpass returns `504` or "server too busy":
 
 2. If you still need deterministic local testing without external Overpass:
 - temporarily force local sample mode by editing [src/paths/railPathService.js](../src/paths/railPathService.js)
-- return `parseSample()` directly inside `loadRailPaths()`
+- return `null` directly inside `loadRailPaths()` to continue without rail overlay
 
 3. For production-grade stability, consider hosting a prebuilt Spain rail GeoJSON snapshot and loading that first.
 

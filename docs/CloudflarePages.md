@@ -11,13 +11,17 @@
 - Node version: 20+
 
 ## SPA Routing
-The file `public/_redirects` includes:
+For Cloudflare Pages deploy, `_redirects` is generated at deploy time from `cloudflare/_redirects.pages`:
 
 ```txt
 /* /index.html 200
 ```
 
-This ensures client-side routing works on refresh and deep links.
+This ensures client-side routing works on refresh and deep links in Pages mode.
+
+Important:
+- `_redirects` is intentionally not kept in `public/` because it causes validation errors in `wrangler deploy` (Worker static assets mode).
+- Use `npm run deploy:cf` to prepare `dist/_redirects` automatically before `wrangler pages deploy`.
 
 ## wrangler.toml
 This repository includes `wrangler.toml`:
@@ -41,6 +45,7 @@ From the project root:
 ```bash
 npm install
 npm run build
+node scripts/prepare-pages-redirects.mjs
 npx wrangler pages deploy dist --project-name spaintrain
 ```
 
