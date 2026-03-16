@@ -1,6 +1,7 @@
 # Cloudflare Auto Deploy On Every Main Commit
 
 This guide configures automatic deployment to Cloudflare Worker and Cloudflare Pages whenever code is pushed to main.
+It also runs a build validation on pull requests to main.
 
 Workflow file:
 - .github/workflows/deploy-cloudflare.yml
@@ -22,12 +23,17 @@ Create an API token with minimum required permissions:
 
 Restrict token scope to your account/resources whenever possible.
 
-## 3) How The Workflow Deploys
+## 3) How The Workflow Runs
+On every pull request to main:
+1. Build project (validation only, no deploy)
+
 On every push to main:
 1. Build project
 2. Deploy Worker static app (`npm run deploy:worker`)
 3. Build again
 4. Deploy Pages (`npm run deploy:cf`)
+
+During each build, version metadata is generated automatically by `scripts/generate-version.mjs` and embedded in the UI (version + short commit SHA, and PR number when available).
 
 Manual run is available via Actions -> workflow_dispatch.
 

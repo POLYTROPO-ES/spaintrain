@@ -39,6 +39,7 @@ docker-compose.override.yml
 # Temporary files
 *.tmp
 *.temp
+src/generated/version.js
 
 # Azure and deployment local state
 .azure/

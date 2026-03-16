@@ -11,6 +11,7 @@ Repository: [POLYTROPO-ES/spaintrain](https://github.com/POLYTROPO-ES/spaintrain
 - Strict and inferred platform modes with confidence scoring
 - Multi-language UI: ES, EN, FR, IT, PT
 - Line multi-select filter and train/line search
+- In-app build version with short commit SHA
 - IndexedDB local history with playback controls
 - Export/import history for cross-device transfer
 - Light/dark theme support

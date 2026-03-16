@@ -37,6 +37,7 @@ export const dictionaries = {
     import_invalid_schema: 'El archivo no cumple el esquema esperado',
     import_partial: 'Importacion parcial: algunos registros invalidos fueron omitidos',
     data_source: 'Fuente de datos',
+    app_version: 'Version app',
     updating_first_data: 'Actualizando primeros datos en vivo...',
   },
   en: {
@@ -77,6 +78,7 @@ export const dictionaries = {
     import_invalid_schema: 'File does not match expected schema',
     import_partial: 'Partial import: invalid records were skipped',
     data_source: 'Data source',
+    app_version: 'App version',
     updating_first_data: 'Loading first live data update...',
   },
   fr: {
@@ -117,6 +119,7 @@ export const dictionaries = {
     import_invalid_schema: 'Le fichier ne respecte pas le schema attendu',
     import_partial: 'Import partiel: des enregistrements invalides ont ete ignores',
     data_source: 'Source de donnees',
+    app_version: 'Version app',
     updating_first_data: 'Chargement des premieres donnees en direct...',
   },
   it: {
@@ -157,6 +160,7 @@ export const dictionaries = {
     import_invalid_schema: 'Il file non rispetta lo schema previsto',
     import_partial: 'Import parziale: record non validi ignorati',
     data_source: 'Fonte dati',
+    app_version: 'Versione app',
     updating_first_data: 'Caricamento dei primi dati live...',
   },
   pt: {
@@ -197,6 +201,7 @@ export const dictionaries = {
     import_invalid_schema: 'Arquivo fora do esquema esperado',
     import_partial: 'Importacao parcial: registros invalidos foram ignorados',
     data_source: 'Fonte de dados',
+    app_version: 'Versao app',
     updating_first_data: 'Carregando os primeiros dados ao vivo...',
   },
 };

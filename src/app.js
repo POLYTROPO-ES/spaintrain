@@ -10,6 +10,7 @@ import { PlaybackPlayer } from './playback/player.js';
 import { loadRailPaths } from './paths/railPathService.js';
 import { validateImportPayload } from './storage/importSchema.js';
 import { logger } from './core/logger.js';
+import { VERSION_INFO } from './generated/version.js';
 
 export class SpainTrainApp {
   constructor(root) {
@@ -128,6 +129,7 @@ export class SpainTrainApp {
     this.firstLoadOverlay = this.root.querySelector('#first-load-overlay');
     this.firstLoadText = this.root.querySelector('#first-load-text');
     this.updateFirstLoadOverlayText();
+    this.ui.refs.version.textContent = VERSION_INFO.displayVersion;
     this.refreshStats();
   }
 

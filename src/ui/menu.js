@@ -62,6 +62,7 @@ export function buildMenu(app, i18n, settings) {
         <div><span id="label-last-update"></span>: <strong id="last-update">-</strong></div>
         <div><span id="label-vehicles"></span>: <strong id="vehicles">0</strong></div>
         <div><span id="label-source"></span>: <strong id="source">-</strong></div>
+        <div><span id="label-version"></span>: <strong id="version">-</strong></div>
         <div class="warning" id="stale-warning"></div>
       </div>
 
@@ -109,6 +110,7 @@ export function buildMenu(app, i18n, settings) {
     lastUpdate: panel.querySelector('#last-update'),
     vehicles: panel.querySelector('#vehicles'),
     source: panel.querySelector('#source'),
+    version: panel.querySelector('#version'),
     staleWarning: panel.querySelector('#stale-warning'),
     modePill: panel.querySelector('#mode-pill'),
     playbackFrom: panel.querySelector('#playback-from'),
@@ -189,6 +191,7 @@ export function buildMenu(app, i18n, settings) {
     panel.querySelector('#label-last-update').textContent = i18n.t('last_update');
     panel.querySelector('#label-vehicles').textContent = i18n.t('vehicles');
     panel.querySelector('#label-source').textContent = i18n.t('data_source');
+    panel.querySelector('#label-version').textContent = i18n.t('app_version');
     panel.querySelector('#playback-title').textContent = i18n.t('playback');
     panel.querySelector('#label-from').textContent = i18n.t('from');
     panel.querySelector('#label-to').textContent = i18n.t('to');
