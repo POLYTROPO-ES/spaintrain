@@ -17,6 +17,14 @@ Repository: [POLYTROPO-ES/spaintrain](https://github.com/POLYTROPO-ES/spaintrain
 - CORS-safe local development proxy
 - Cloudflare Pages + Worker proxy deployment support
 
+## Data Sources
+- Live train positions (Renfe GTFS Realtime):
+   - JSON: [https://gtfsrt.renfe.com/vehicle_positions.json](https://gtfsrt.renfe.com/vehicle_positions.json)
+   - Protobuf: [https://gtfsrt.renfe.com/vehicle_positions.pb](https://gtfsrt.renfe.com/vehicle_positions.pb)
+- Rail path geometry:
+   - OpenStreetMap railway data via Overpass API mirrors
+   - Local fallback sample geometry stored in [src/paths/rail-paths-spain-sample.geojson](src/paths/rail-paths-spain-sample.geojson)
+
 ## Tech Stack
 - Vite
 - Leaflet
