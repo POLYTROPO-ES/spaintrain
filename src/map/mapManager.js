@@ -71,11 +71,27 @@ export class MapManager {
       const marker = this.markerCache.get(vehicle.id);
       const color = statusColor[vehicle.status] || statusColor.UNKNOWN;
       const popup = this.createPopup(vehicle);
+      const markerSignature = `${vehicle.status}|${color}`;
 
       if (marker) {
+        const wasPopupOpen = marker.isPopupOpen();
         marker.setLatLng([vehicle.lat, vehicle.lon]);
-        marker.setIcon(buildTrainIcon(color));
-        marker.bindPopup(popup);
+
+        // Avoid recreating icon/popup binding every frame; this keeps marker click interactions stable.
+        if (marker.__signature !== markerSignature) {
+          marker.setIcon(buildTrainIcon(color));
+          marker.__signature = markerSignature;
+        }
+
+        if (marker.getPopup()) {
+          marker.setPopupContent(popup);
+        } else {
+          marker.bindPopup(popup);
+        }
+
+        if (wasPopupOpen) {
+          marker.openPopup();
+        }
         return;
       }
 
@@ -84,6 +100,7 @@ export class MapManager {
       }).addTo(this.markerLayer);
 
       newMarker.bindPopup(popup);
+      newMarker.__signature = markerSignature;
       this.markerCache.set(vehicle.id, newMarker);
     });
 
