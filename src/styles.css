@@ -47,6 +47,59 @@ body,
   height: 100%;
 }
 
+.first-load-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(2, 6, 23, 0.22);
+  backdrop-filter: blur(2px);
+}
+
+.first-load-overlay.hidden {
+  display: none;
+}
+
+.first-load-card {
+  min-width: 280px;
+  max-width: 90vw;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--panel-bg);
+  color: var(--text);
+  padding: 16px 18px;
+  box-shadow: 0 8px 34px rgba(15, 23, 42, 0.18);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.first-load-icon {
+  font-size: 1.4rem;
+}
+
+.first-load-text {
+  font-weight: 700;
+  flex: 1;
+}
+
+.first-load-spinner {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 3px solid color-mix(in oklab, var(--accent) 20%, #ffffff);
+  border-top-color: var(--accent);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .menu-root {
   position: absolute;
   top: 12px;
