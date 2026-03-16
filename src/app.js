@@ -60,8 +60,7 @@ export class SpainTrainApp {
     this.applyTheme(this.state.settings.theme);
 
     this.map = new MapManager('map');
-    const railPaths = await loadRailPaths();
-    this.map.setRailPaths(railPaths);
+    this.loadRailPathsInBackground();
 
     this.configurePlayback();
     this.startAnimationLoop();
@@ -76,6 +75,22 @@ export class SpainTrainApp {
           registrations.forEach((registration) => registration.unregister());
         }).catch(() => {});
       }
+    }
+  }
+
+  async loadRailPathsInBackground() {
+    try {
+      const railPaths = await loadRailPaths();
+      if (railPaths) {
+        this.map.setRailPaths(railPaths);
+        logger.debug('Rail path overlay loaded', { featureCount: railPaths.features?.length || 0 });
+      } else {
+        logger.warn('Rail path overlay unavailable, continuing without overlay');
+      }
+    } catch (error) {
+      logger.warn('Rail path background load failed, continuing without overlay', {
+        message: String(error?.message || error),
+      });
     }
   }
 

@@ -1,9 +1,7 @@
-import sampleRailPaths from './rail-paths-spain-sample.geojson?raw';
-
 const OVERPASS_ENDPOINTS = [
   'https://overpass-api.de/api/interpreter',
-  'https://overpass.kumi.systems/api/interpreter',
   'https://overpass.openstreetmap.fr/api/interpreter',
+  'https://maps.mail.ru/osm/tools/overpass/api/interpreter',
 ];
 
 // Split Spain into smaller regions to avoid gateway timeouts on huge single queries.
@@ -19,10 +17,6 @@ const SPAIN_BBOX_TILES = [
   { minLat: 40.8, minLon: -0.5, maxLat: 44.5, maxLon: 4.5 },
 ];
 
-function parseSample() {
-  return JSON.parse(sampleRailPaths);
-}
-
 function buildQuery(tile) {
   return `[out:json][timeout:25];(way["railway"~"^(rail|light_rail|subway|narrow_gauge)$"](${tile.minLat},${tile.minLon},${tile.maxLat},${tile.maxLon}););out geom;`;
 }
@@ -30,7 +24,14 @@ function buildQuery(tile) {
 async function fetchOverpassTile(endpoint, tile) {
   const query = buildQuery(tile);
   const url = `${endpoint}?data=${encodeURIComponent(query)}`;
-  const response = await fetch(url);
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 12000);
+  let response;
+  try {
+    response = await fetch(url, { signal: controller.signal });
+  } finally {
+    clearTimeout(timer);
+  }
 
   if (!response.ok) {
     throw new Error(`Overpass failed with ${response.status}`);
@@ -101,8 +102,9 @@ export async function loadRailPaths() {
         features,
       };
     }
-    return parseSample();
+    // If no external geometry could be fetched, continue without rail overlay.
+    return null;
   } catch {
-    return parseSample();
+    return null;
   }
 }
