@@ -1,7 +1,8 @@
-const CACHE_NAME = 'spaintrain-shell-v2';
+const CACHE_NAME = 'spaintrain-shell-v3';
 const SHELL_FILES = ['/', '/index.html'];
 
 self.addEventListener('install', (event) => {
+  self.skipWaiting();
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(SHELL_FILES)));
 });
 
@@ -13,6 +14,7 @@ self.addEventListener('activate', (event) => {
       )
     )
   );
+  self.clients.claim();
 });
 
 self.addEventListener('fetch', (event) => {

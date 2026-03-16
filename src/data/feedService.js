@@ -41,9 +41,8 @@ export class FeedService {
       payload = await this.requestJson(this.feedUrl);
       logger.debug('Feed fetched from primary source', { source });
     } catch (error) {
-      const corsSuspected = error instanceof TypeError;
-      logger.warn('Primary feed fetch failed', { corsSuspected, message: String(error?.message || error) });
-      if (!corsSuspected || this.fallbackUrls.length === 0) {
+      logger.warn('Primary feed fetch failed', { message: String(error?.message || error) });
+      if (this.fallbackUrls.length === 0) {
         throw error;
       }
 

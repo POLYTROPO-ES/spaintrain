@@ -10,6 +10,13 @@
 - Build output directory: `dist`
 - Node version: 20+
 
+## API Proxy In Pages Mode
+This repository now includes a Pages Function at:
+- functions/api/vehicle_positions.js
+
+When deploying with `npm run deploy:cf`, Wrangler uploads this function using `--functions functions`.
+This ensures `/api/vehicle_positions` returns JSON instead of SPA HTML in Pages mode.
+
 ## SPA Routing
 For Cloudflare Pages deploy, `_redirects` is generated at deploy time from `cloudflare/_redirects.pages`:
 
@@ -60,8 +67,8 @@ npx wrangler deploy
 ```
 
 ## Environment Notes
-- The app is browser-first and fetches provider JSON directly.
-- If direct fetch fails with a CORS-like network error, the app automatically falls back to `/api/vehicle_positions`.
+- In production, the app fetches `/api/vehicle_positions` first (same-origin Worker proxy) to avoid browser CORS issues.
+- In local development only, direct provider fetch may be used as fallback.
 
 ## Worker Proxy Template (Implemented)
 Template files included:
@@ -86,9 +93,9 @@ The app is already configured with fallback endpoint:
 - `src/core/config.js` -> `feedFallbackUrls: ['/api/vehicle_positions']`
 
 ### Runtime Behavior
-1. App tries direct source: `https://gtfsrt.renfe.com/vehicle_positions.json`.
-2. If fetch throws `TypeError` (typical browser CORS/network failure), app retries against fallback URLs.
-3. If worker endpoint is available, ingestion continues with proxied source.
+1. App tries proxy source: `/api/vehicle_positions`.
+2. If proxy fails, app retries configured fallback URLs.
+3. In production, fallback is intentionally empty to avoid direct browser CORS calls.
 
 You can verify active source in the menu stats section (`Data source`).
 

@@ -20,8 +20,8 @@ export class SpainTrainApp {
       byVehicle: new Map(),
       byStopLine: new Map(),
     };
-    const primaryFeedUrl = APP_CONFIG.feedFallbackUrls[0] || '/api/vehicle_positions';
-    const fallbackUrls = [APP_CONFIG.feedUrl];
+    const primaryFeedUrl = '/api/vehicle_positions';
+    const fallbackUrls = import.meta.env.DEV ? [APP_CONFIG.feedUrl] : [];
 
     this.feedService = new FeedService({
       feedUrl: primaryFeedUrl,
