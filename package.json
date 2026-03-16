@@ -10,6 +10,7 @@
     "test": "vitest",
     "test:run": "vitest run",
     "deploy:cf": "npm run build && npx wrangler pages deploy dist --project-name spaintrain",
+    "deploy:worker": "npm run build && npx wrangler deploy",
     "docker:build": "docker build -t spaintrain:latest .",
     "docker:run": "docker run --rm -p 8080:80 spaintrain:latest"
   },

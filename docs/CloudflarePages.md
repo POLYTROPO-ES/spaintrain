@@ -25,8 +25,15 @@ This repository includes `wrangler.toml`:
 ```toml
 name = "spaintrain"
 compatibility_date = "2026-03-16"
-pages_build_output_dir = "dist"
+
+[assets]
+directory = "./dist"
+not_found_handling = "single-page-application"
 ```
+
+Important:
+- This root config is now valid for `wrangler deploy` (Worker static assets mode).
+- If your CI/CD runs `wrangler deploy`, it needs `[assets].directory` (or `main`) to avoid the "Missing entry-point" error.
 
 ## Optional Manual Deployment
 From the project root:
@@ -35,6 +42,14 @@ From the project root:
 npm install
 npm run build
 npx wrangler pages deploy dist --project-name spaintrain
+```
+
+Alternative (Worker static assets deploy):
+
+```bash
+npm install
+npm run build
+npx wrangler deploy
 ```
 
 ## Environment Notes
