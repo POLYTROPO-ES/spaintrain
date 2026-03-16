@@ -49,6 +49,13 @@ Repository: [POLYTROPO-ES/spaintrain](https://github.com/POLYTROPO-ES/spaintrain
 - [functions/](functions/): Cloudflare Pages Functions for same-origin API endpoints
 - [data-source/](data-source/): local sample source payloads
 
+## KISS Refactor Notes
+- Shared JSON request + fallback behavior is centralized in [src/data/http.js](src/data/http.js).
+- Shared line normalization is centralized in [src/core/lineCode.js](src/core/lineCode.js).
+- App vehicle rendering/count updates use one path in [src/app.js](src/app.js) via `renderVehicles(...)`.
+- Map icon functions in [src/map/mapManager.js](src/map/mapManager.js) use explicit parameters instead of dynamic argument inspection.
+- Menu i18n text assignment in [src/ui/menu.js](src/ui/menu.js) uses a small helper to reduce repetitive DOM code.
+
 ## Getting Started
 1. Install dependencies:
    `npm install`

@@ -13,6 +13,7 @@ This folder stores the baseline technical decisions for SpainTrain.
 8. [08-multilingual-support-five-languages](08-multilingual-support-five-languages.md)
 9. [09-local-playback-history](09-local-playback-history.md)
 10. [10-free-access-model](10-free-access-model.md)
+11. [11-kiss-refactor-and-shared-utilities](11-kiss-refactor-and-shared-utilities.md)
 
 ## Conventions
 - Status: accepted, proposed, superseded.

@@ -88,6 +88,10 @@ Interpretation:
 - Same-origin API endpoints consumed by browser client:
   - `/api/vehicle_positions` (merged conventional + LD feed)
   - `/api/alerts` (service alerts)
+- KISS principle for core modules:
+	- Keep shared logic in focused helpers (example: HTTP/fallback helper and line-code normalization helper).
+	- Avoid duplicate render/update branches for the same UI responsibility.
+	- Prefer explicit function parameters over dynamic argument inspection.
 - In-browser modules:
 	- JSON fetcher and parser
 	- in-memory state store
@@ -211,6 +215,7 @@ Interpretation:
 8. Languages: Spanish, English, French, Italian, Portuguese.
 9. Playback: include historical playback from locally stored browser data.
 10. Access model: all features are free.
+11. KISS refactor baseline: shared utilities for request/fallback and line normalization, plus reduced UI/render duplication.
 
 ### Decision Index (Detailed Files)
 - [docs/decisions/README.md](decisions/README.md)
@@ -224,6 +229,7 @@ Interpretation:
 - [docs/decisions/08-multilingual-support-five-languages.md](decisions/08-multilingual-support-five-languages.md)
 - [docs/decisions/09-local-playback-history.md](decisions/09-local-playback-history.md)
 - [docs/decisions/10-free-access-model.md](decisions/10-free-access-model.md)
+- [docs/decisions/11-kiss-refactor-and-shared-utilities.md](decisions/11-kiss-refactor-and-shared-utilities.md)
 - [docs/LocalTestingAndDocker.md](LocalTestingAndDocker.md)
 - [docs/CloudflarePages.md](CloudflarePages.md)
 
