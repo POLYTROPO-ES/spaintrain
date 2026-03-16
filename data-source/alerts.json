@@ -1,0 +1,2370 @@
+{
+  "header": {
+    "gtfsRealtimeVersion": "2.0",
+    "timestamp": "1773682129"
+  },
+  "entity": [{
+    "id": "AVISO_478250",
+    "alert": {
+      "activePeriod": [{
+        "start": "1771934820"
+      }],
+      "informedEntity": [{
+        "routeId": "10T0035C5"
+      }, {
+        "routeId": "10T0036C5"
+      }, {
+        "routeId": "10T0047C5"
+      }, {
+        "routeId": "10T0048C5"
+      }, {
+        "routeId": "10T0017C5"
+      }, {
+        "routeId": "10T0018C5"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "#MadC5 Por obras de mejora en la infraestructura, los fines de semana del 28 de febrero al 22 de marzo, entre las 00:30h y las 10:00h, el servicio de trenes de la línea C\u0026#8209;5, en ambos sentidos, iniciará y finalizará su recorrido en la estación de Atocha.",
+          "language": "es"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_477908",
+    "alert": {
+      "activePeriod": [{
+        "start": "1771780560"
+      }],
+      "informedEntity": [{
+        "routeId": "10T0031C2"
+      }, {
+        "routeId": "10T0032C2"
+      }, {
+        "routeId": "10T0020C2"
+      }, {
+        "routeId": "10T0037C2"
+      }, {
+        "routeId": "10T0038C2"
+      }, {
+        "routeId": "10T0049C2"
+      }, {
+        "routeId": "10T0005C2"
+      }, {
+        "routeId": "10T0081C2"
+      }, {
+        "routeId": "10T0006C2"
+      }, {
+        "routeId": "10T0082C2"
+      }, {
+        "routeId": "10T0019C2"
+      }, {
+        "routeId": "10T0083C2"
+      }, {
+        "routeId": "10T0084C2"
+      }, {
+        "routeId": "10T0050C2"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "#MadC2Civis Desde el lunes 23 de febrero los horarios de líneas C-2, C-7 y C-8 se verán modificados como consecuencia del temporal de fuertes vientos de la pasada semana que ha dañado la cubierta del taller de Fuencarral. Se mantienen las frecuencias salvo momentos puntuales. El servicio de CIVIS Guadalajara-Madrid Chamartín Clara Campoamor queda suspendido. Informaremos del restablecimiento del servicio. Más información en nuestros canales oficiales y personal de estaciones.",
+          "language": "es"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_476867",
+    "alert": {
+      "activePeriod": [{
+        "start": "1771253940"
+      }],
+      "informedEntity": [{
+        "routeId": "10T0030C3"
+      }, {
+        "routeId": "10T0033C3"
+      }, {
+        "routeId": "10T0034C3"
+      }, {
+        "routeId": "10T0029C3"
+      }, {
+        "routeId": "10T0007C3"
+      }, {
+        "routeId": "10T0008C3"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "#MadC3 Por obras de mejora en la infraestructura, se reajusta el servicio de trenes de la línea C-3, hasta el 7 de mayo. Entre las 21:30h y las 23:59h, los trenes iniciarán y finalizarán su recorrido en la estación de Villaverde Bajo. Se debe hacer uso de los trenes de la línea C-4 hasta Villaverde Bajo y realizar transbordo.",
+          "language": "es"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_476672",
+    "alert": {
+      "activePeriod": [{
+        "start": "1771224240"
+      }],
+      "informedEntity": [{
+        "routeId": "10T0030C3"
+      }, {
+        "routeId": "10T0033C3"
+      }, {
+        "routeId": "10T0034C3"
+      }, {
+        "routeId": "10T0029C3"
+      }, {
+        "routeId": "10T0007C3"
+      }, {
+        "routeId": "10T0008C3"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "#MadC3 Por obras en la infraestructura y limitaciones de velocidad, la frecuencia de paso se ve afectada a lo largo de toda la línea.",
+          "language": "es"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_475015",
+    "alert": {
+      "activePeriod": [{
+        "start": "1770123660"
+      }],
+      "informedEntity": [{
+        "routeId": "10T0065C1"
+      }, {
+        "routeId": "10T0066C1"
+      }, {
+        "routeId": "10T0001C1"
+      }, {
+        "routeId": "10T0002C1"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "#MadC1 Por obras de mejora en la infraestructura, se reajusta el servicio de trenes en la Línea C-1 ChamartínAeropuerto T4. Recomendamos consultar nuestros horarios antes de viajar.",
+          "language": "es"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_467462",
+    "alert": {
+      "activePeriod": [{
+        "start": "1765528080"
+      }],
+      "informedEntity": [{
+        "routeId": "10T0041C8"
+      }, {
+        "routeId": "10T0042C8"
+      }, {
+        "routeId": "10T0089C8"
+      }, {
+        "routeId": "10T0043C8"
+      }, {
+        "routeId": "10T0044C8"
+      }, {
+        "routeId": "10T0045C8"
+      }, {
+        "routeId": "10T0069C8"
+      }, {
+        "routeId": "10T0046C8"
+      }, {
+        "routeId": "10T0090C8"
+      }, {
+        "routeId": "10T0039C8"
+      }, {
+        "routeId": "10T0070C8"
+      }, {
+        "routeId": "10T0040C8"
+      }, {
+        "routeId": "10T0025C9"
+      }, {
+        "routeId": "10T0026C9"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "#MadC9 Debido a las obras que se están realizando en la línea C-9, los aseos públicos de la estación de Cercedilla permanecen temporalmente inoperativos. ",
+          "language": "es"
+        }]
+      }
+    }
+  }, {
+    "id": "INFO_481720",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773667020"
+      }],
+      "informedEntity": [{
+        "stopId": "10203"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Ascensor de la estación de El Escorial, acceso a las vías 1 y 3 sentido Atocha, se encuentra fuera de servicio",
+          "language": "es"
+        }]
+      }
+    }
+  }, {
+    "id": "INFO_481726",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773650460"
+      }],
+      "informedEntity": [{
+        "stopId": "18002"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Ascensor de la estación de Nuevos Ministerios, acceso desde vestíbulo a calle Raimundo Fernández Villaverde, se encuentra fuera de servicio.",
+          "language": "es"
+        }]
+      }
+    }
+  }, {
+    "id": "INFO_481727",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773650460"
+      }],
+      "informedEntity": [{
+        "stopId": "35009"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Ascensor de la estación de Zarzaquemada, acceso desde el exterior a vestíbulo principal, se encuentra fuera de servicio.",
+          "language": "es"
+        }]
+      }
+    }
+  }, {
+    "id": "INFO_481354",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773557700"
+      }],
+      "informedEntity": [{
+        "stopId": "37001"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Ascensor de la estación de Villaverde Alto que da acceso a las vías 2 y 4 sentido Parla y Móstoles-El Soto, se encuentra fuera de servicio. ",
+          "language": "es"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_481772",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773681480"
+      }],
+      "informedEntity": [{
+        "routeId": "30T0024C5"
+      }, {
+        "routeId": "30T0023C5"
+      }, {
+        "routeId": "30T0020C5"
+      }, {
+        "routeId": "30T0010C5"
+      }, {
+        "routeId": "30T0009C5"
+      }, {
+        "routeId": "30T0019C5"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Línea C-5             \r\n\r\n  \r\n\r\n Tren con salida a las 18:55h de la estación de DOS HERMANAS y con destino BENACAZÓN no presta servicio entre las estaciones de DOS HERMANAS y SANTA JUSTA.      \r\nViajeros entre DOS HERMANAS y SANTA JUSTA encaminados en el tren de la línea C1 con paso por DOS HERMANAS a las 18:43h y hasta SANTA JUSTA. Desde SANTA JUSTA a BENACAZÓN encaminados en el tren de la C-5 que inicia su recorrido en SANTA JUSTA. ",
+          "language": "es"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_481761",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773681300"
+      }],
+      "informedEntity": [{
+        "routeId": "30T0024C5"
+      }, {
+        "routeId": "30T0023C5"
+      }, {
+        "routeId": "30T0020C5"
+      }, {
+        "routeId": "30T0010C5"
+      }, {
+        "routeId": "30T0009C5"
+      }, {
+        "routeId": "30T0019C5"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Línea C-5             \r\n\r\nTren con salida a las 17:33h de la estación de BENACAZÓN y con destino DOS HERMANAS no presta servicio entre las estaciones de SANTA JUSTA y DOS HERMANAS.    \r\nViajeros encaminados en el próximo tren de la línea C1 (destino Utrera). ",
+          "language": "es"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_481760",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773678240"
+      }],
+      "informedEntity": [{
+        "routeId": "30T0024C5"
+      }, {
+        "routeId": "30T0023C5"
+      }, {
+        "routeId": "30T0020C5"
+      }, {
+        "routeId": "30T0010C5"
+      }, {
+        "routeId": "30T0009C5"
+      }, {
+        "routeId": "30T0019C5"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Línea C-5             \r\n\r\nTren con salida a las 17:44h de la estación de JARDINES DE HÉRCULES y con destino BENACAZÓN no presta servicio entre las estaciones de JARDINES DE HÉRCULES y SANTA JUSTA.      \r\n\r\n  \r\n\r\nViajeros entre JARDINES DE HÉRCULES y SANTA JUSTA encaminados en el tren de la línea C1 con paso por JARDINES DE HÉRCULES a las 17:25h y hasta SANTA JUSTA. Desde SANTA JUSTA a BENACAZÓN encaminados en el tren de la C-5 que inicia su recorrido en SANTA JUSTA. ",
+          "language": "es"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_481750",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773669540"
+      }],
+      "informedEntity": [{
+        "routeId": "30T0022C3"
+      }, {
+        "routeId": "30T0011C3"
+      }, {
+        "routeId": "30T0012C3"
+      }, {
+        "routeId": "30T0021C3"
+      }, {
+        "routeId": "30T0005C3"
+      }, {
+        "routeId": "30T0017C3"
+      }, {
+        "routeId": "30T0006C3"
+      }, {
+        "routeId": "30T0018C3"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": " Línea C-3   \r\n Tren con salida a las 18:14h con destino SEVILLA SANTA JUSTA, no presta servicio entre las estaciones de CAZALLA-CONSTANTINA y EL PEDROSO.   \r\n Servicio especial de transporte por carretera de CAZALLA-CONSTANTINA a LOS ROSALES. \u0026#128650;Los viajeros serán encaminados al siguiente tren de la línea C-1 (con destino Utrera) a partir de LOS ROSALES ",
+          "language": "es"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_481138",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773418140"
+      }],
+      "informedEntity": [{
+        "routeId": "30T0022C3"
+      }, {
+        "routeId": "30T0011C3"
+      }, {
+        "routeId": "30T0012C3"
+      }, {
+        "routeId": "30T0021C3"
+      }, {
+        "routeId": "30T0005C3"
+      }, {
+        "routeId": "30T0017C3"
+      }, {
+        "routeId": "30T0006C3"
+      }, {
+        "routeId": "30T0018C3"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Por obras de mejora en la infraestructura, desde el lunes 16 de marzo, queda suspendida parcialmente la circulación en la línea C3 en dos trenes de la oferta habitual. \r\n\r\nA partir del 7 de abril se produce el corte total de la circulación en la línea C3. Se establece un Plan Alternativo de Transporte por carretera entre las estaciones de Los Rosales y Cazalla-Constantina. Entre Los Rosales y Sevilla Santa Justa el recorrido se realizará con trenes de la línea C1. Consulta el horario del primer periodo y próximamente informaremos de la afectación a partir del 7 de abril.",
+          "language": "es"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_442950",
+    "alert": {
+      "activePeriod": [{
+        "start": "1749487440"
+      }],
+      "informedEntity": [{
+        "routeId": "30T0022C3"
+      }, {
+        "routeId": "30T0011C3"
+      }, {
+        "routeId": "30T0012C3"
+      }, {
+        "routeId": "30T0021C3"
+      }, {
+        "routeId": "30T0005C3"
+      }, {
+        "routeId": "30T0017C3"
+      }, {
+        "routeId": "30T0006C3"
+      }, {
+        "routeId": "30T0018C3"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Para los trenes de la línea C3 con origen o destino MÉRIDA, CÁCERES, PLASENCIA y MADRID son válidos los títulos de viaje de Cercanías sin reserva de plaza asignada. Desde el día 3 de febrero, el transporte de bicicletas y otros elementos de movilidad individual y el viaje con animales de compañía, se rige por las condiciones generales de Media Distancia Convencional.",
+          "language": "es"
+        }]
+      }
+    }
+  }, {
+    "id": "INFO_481771",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773680100"
+      }],
+      "informedEntity": [{
+        "stopId": "50703"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Actualmente, por motivos técnicos, el ascensor de acceso a la vía 1 de la estación de LA RINCONADA se encuentra fuera de servicio. Si tiene Movilidad Reducida y origen o destino en esta estación, contacte a través de los puntos de información en estaciones, máquinas autoventa o en el 954 485 672. Disculpe las molestias. ",
+          "language": "es"
+        }]
+      }
+    }
+  }, {
+    "id": "INFO_481766",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773673200"
+      }],
+      "informedEntity": [{
+        "stopId": "51100"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": " Actualmente, por motivos técnicos, el ascensor de acceso a la vía 2 de la estación de SAN BERNARDO se encuentra fuera de servicio. Si tiene Movilidad Reducida y origen o destino en esta estación, contacte a través de los puntos de información en estaciones, máquinas autoventa o en el 954 485 672. Disculpe las molestias. ",
+          "language": "es"
+        }]
+      }
+    }
+  }, {
+    "id": "INFO_480706",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773207540"
+      }],
+      "informedEntity": [{
+        "routeId": "30T0001C1"
+      }, {
+        "routeId": "30T0013C1"
+      }, {
+        "routeId": "30T0002C1"
+      }, {
+        "routeId": "30T0014C1"
+      }, {
+        "routeId": "30T0015C1"
+      }, {
+        "routeId": "30T0016C1"
+      }, {
+        "routeId": "30T0024C5"
+      }, {
+        "routeId": "30T0023C5"
+      }, {
+        "routeId": "30T0020C5"
+      }, {
+        "routeId": "30T0010C5"
+      }, {
+        "routeId": "30T0009C5"
+      }, {
+        "routeId": "30T0019C5"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Actualmente, por motivos técnicos, el ascensor de acceso a la vía 2 de la estación de JARDINES DE HÉRCULES se encuentra fuera de servicio. Si tiene Movilidad Reducida y origen o destino en esta estación, contacte a través de los puntos de información en estaciones, máquinas autoventa o en el 954 485 672. Disculpe las molestias ",
+          "language": "es"
+        }]
+      }
+    }
+  }, {
+    "id": "INFO_475226",
+    "alert": {
+      "activePeriod": [{
+        "start": "1770281220"
+      }],
+      "informedEntity": [{
+        "routeId": "30T0024C5"
+      }, {
+        "routeId": "30T0001C1"
+      }, {
+        "routeId": "30T0013C1"
+      }, {
+        "routeId": "30T0002C1"
+      }, {
+        "routeId": "30T0014C1"
+      }, {
+        "routeId": "30T0022C3"
+      }, {
+        "routeId": "30T0011C3"
+      }, {
+        "routeId": "30T0023C5"
+      }, {
+        "routeId": "30T0012C3"
+      }, {
+        "routeId": "30T0020C5"
+      }, {
+        "routeId": "30T0021C3"
+      }, {
+        "routeId": "30T0010C5"
+      }, {
+        "routeId": "30T0009C5"
+      }, {
+        "routeId": "30T0007C4"
+      }, {
+        "routeId": "30T0019C5"
+      }, {
+        "routeId": "30T0005C3"
+      }, {
+        "routeId": "30T0017C3"
+      }, {
+        "routeId": "30T0006C3"
+      }, {
+        "routeId": "30T0018C3"
+      }, {
+        "routeId": "30T0003C2"
+      }, {
+        "routeId": "30T0015C1"
+      }, {
+        "routeId": "30T0004C2"
+      }, {
+        "routeId": "30T0016C1"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Actualmente, por motivos técnicos, el ascensor de acceso a la vía 2 de la estación de LOS ROSALES se encuentra fuera de servicio. Si tiene Movilidad Reducida y origen o destino en esta estación, contacte a través de los puntos de información en estaciones, máquinas autoventa o en el 954 485 672. Disculpe las molestias. ",
+          "language": "es"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_481770",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773679920"
+      }],
+      "informedEntity": [{
+        "routeId": "31T0001C1"
+      }, {
+        "routeId": "31T0002C1"
+      }, {
+        "routeId": "31T0007C1"
+      }, {
+        "routeId": "31T0008C1"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Línea C-1\r\n\r\nTren con salida a las 17:22 h de la estación de JEREZ y con destino CÁDIZ, circula con una demora de 21 minutos a su paso por la estación de PUERTO DE SANTA MARIA.\r\n\r\nSentimos las molestias.",
+          "language": "es"
+        }]
+      }
+    }
+  }, {
+    "id": "INFO_481713",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773657480"
+      }],
+      "informedEntity": [{
+        "stopId": "51414"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Ascensor vía 2 de la estación de San Severiano se encuentra fuera de servicio. Estación inaccesible para personas con movilidad reducida en trayectos con dirección Cádiz. Para más información contacten con el tl. 856 170 290. Disculpen las molestias.",
+          "language": "es"
+        }]
+      }
+    }
+  }, {
+    "id": "INFO_481693",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773641760"
+      }],
+      "informedEntity": [{
+        "stopId": "51401"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Ascensor vía 1 de la estación de Puerto Real, se encuentra fuera de servicio. Estación inaccesible para personas con movilidad reducida en trayectos con dirección Jerez-Sevilla. Para más información contacten con el tlf. 856 170 290. Disculpen las molestias",
+          "language": "es"
+        }]
+      }
+    }
+  }, {
+    "id": "INFO_480974",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773315960"
+      }],
+      "informedEntity": [{
+        "routeId": "31T0001C1"
+      }, {
+        "routeId": "31T0004C1a"
+      }, {
+        "routeId": "31T0009T1"
+      }, {
+        "routeId": "31T0002C1"
+      }, {
+        "routeId": "31T0003C1a"
+      }, {
+        "routeId": "31T0005T1"
+      }, {
+        "routeId": "31T0006T1"
+      }, {
+        "routeId": "31T0012T1"
+      }, {
+        "routeId": "31T0007C1"
+      }, {
+        "routeId": "31T0010T1"
+      }, {
+        "routeId": "31T0008C1"
+      }, {
+        "routeId": "31T0011T1"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Ascensor vía 1 de la estación de Las Aletas se encuentra fuera de servicio. Estación inaccesible para personas con movilidad reducida en trayectos con dirección Jerez. Para más información contacten con el tl. 856 170 290. Disculpen las molestias.",
+          "language": "es"
+        }]
+      }
+    }
+  }, {
+    "id": "INFO_479495",
+    "alert": {
+      "activePeriod": [{
+        "start": "1772563020"
+      }],
+      "informedEntity": [{
+        "routeId": "31T0001C1"
+      }, {
+        "routeId": "31T0002C1"
+      }, {
+        "routeId": "31T0007C1"
+      }, {
+        "routeId": "31T0008C1"
+      }, {
+        "routeId": "31T0009T1"
+      }, {
+        "routeId": "31T0005T1"
+      }, {
+        "routeId": "31T0006T1"
+      }, {
+        "routeId": "31T0012T1"
+      }, {
+        "routeId": "31T0010T1"
+      }, {
+        "routeId": "31T0011T1"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Ascensor vía 1 de la estación de Estadio se encuentra fuera de servicio. Estación inaccesible para personas con movilidad reducida en trayectos con dirección Jerez y Pelagatos. Para más información contacten con el tlf. 856 170 290. \r\nDisculpen las molestias.",
+          "language": "es"
+        }]
+      }
+    }
+  }, {
+    "id": "INFO_470357",
+    "alert": {
+      "activePeriod": [{
+        "start": "1767358440"
+      }],
+      "informedEntity": [{
+        "routeId": "31T0001C1"
+      }, {
+        "routeId": "31T0004C1a"
+      }, {
+        "routeId": "31T0009T1"
+      }, {
+        "routeId": "31T0002C1"
+      }, {
+        "routeId": "31T0003C1a"
+      }, {
+        "routeId": "31T0005T1"
+      }, {
+        "routeId": "31T0006T1"
+      }, {
+        "routeId": "31T0012T1"
+      }, {
+        "routeId": "31T0007C1"
+      }, {
+        "routeId": "31T0010T1"
+      }, {
+        "routeId": "31T0008C1"
+      }, {
+        "routeId": "31T0011T1"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Ascensor vía 1 y vía 3 de la estación de El Puerto de Santa María se encuentra fuera de servicio. Estación inaccesible para personas con movilidad reducida en trayectos con dirección Jerez. Para más información contacten con el tl. 856 170 290. Disculpen las molestias",
+          "language": "es"
+        }]
+      }
+    }
+  }, {
+    "id": "INFO_446083",
+    "alert": {
+      "activePeriod": [{
+        "start": "1751261700"
+      }],
+      "informedEntity": [{
+        "routeId": "31T0001C1"
+      }, {
+        "routeId": "31T0004C1a"
+      }, {
+        "routeId": "31T0009T1"
+      }, {
+        "routeId": "31T0002C1"
+      }, {
+        "routeId": "31T0003C1a"
+      }, {
+        "routeId": "31T0005T1"
+      }, {
+        "routeId": "31T0006T1"
+      }, {
+        "routeId": "31T0012T1"
+      }, {
+        "routeId": "31T0007C1"
+      }, {
+        "routeId": "31T0010T1"
+      }, {
+        "routeId": "31T0008C1"
+      }, {
+        "routeId": "31T0011T1"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Ascensor vía 1 de la estación de Valdelagrana, se encuentra fuera de servicio. Estación inaccesible para personas con movilidad reducida en trayectos con dirección Jerez. Para más información contacten con el tlf. 856 170 290. Disculpen las molestias.",
+          "language": "es"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_478376",
+    "alert": {
+      "activePeriod": [{
+        "start": "1772012820"
+      }],
+      "informedEntity": [{
+        "routeId": "32T0002C1"
+      }, {
+        "routeId": "32T0001C1"
+      }, {
+        "routeId": "32T0008C2"
+      }, {
+        "routeId": "32T0007C2"
+      }, {
+        "routeId": "32T0006C2"
+      }, {
+        "routeId": "32T0005C2"
+      }, {
+        "routeId": "32T0004C2"
+      }, {
+        "routeId": "32T0003C2"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Renfe Cercanías Málaga informa que la estación de Torremuelle, no es accesible temporalmente para PMR. Roga (+)\r\n",
+          "language": "es"
+        }]
+      }
+    }
+  }, {
+    "id": "INFO_465103",
+    "alert": {
+      "activePeriod": [{
+        "start": "1763538000"
+      }],
+      "informedEntity": [{
+        "routeId": "32T0002C1"
+      }, {
+        "routeId": "32T0001C1"
+      }, {
+        "routeId": "32T0008C2"
+      }, {
+        "routeId": "32T0007C2"
+      }, {
+        "routeId": "32T0006C2"
+      }, {
+        "routeId": "32T0005C2"
+      }, {
+        "routeId": "32T0004C2"
+      }, {
+        "routeId": "32T0003C2"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Renfe Cercanías Málaga informa que la estación de Plaza Mayor no es accesible temporalmente para PMR. Rogamos disculpen las molestias",
+          "language": "es"
+        }]
+      }
+    }
+  }, {
+    "id": "INFO_465080",
+    "alert": {
+      "activePeriod": [{
+        "start": "1763537760"
+      }],
+      "informedEntity": [{
+        "routeId": "32T0002C1"
+      }, {
+        "routeId": "32T0001C1"
+      }, {
+        "routeId": "32T0008C2"
+      }, {
+        "routeId": "32T0007C2"
+      }, {
+        "routeId": "32T0006C2"
+      }, {
+        "routeId": "32T0005C2"
+      }, {
+        "routeId": "32T0004C2"
+      }, {
+        "routeId": "32T0003C2"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Renfe Cercanías Málaga informa que andén 2 dirección Málaga, de la estación de Los Álamos, no es accesible temporalmente para PMR. Rogamos disculpen las molestias.",
+          "language": "es"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_481097",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773391200"
+      }],
+      "informedEntity": [{
+        "routeId": "40T0021C6"
+      }, {
+        "routeId": "40T0016C6"
+      }, {
+        "routeId": "40T0015C6"
+      }, {
+        "routeId": "40T0022C6"
+      }, {
+        "routeId": "40T0014C6"
+      }, {
+        "routeId": "40T0013C6"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "#AVISO# Del 13 al 19 de marzo se modifica la llegada de los trenes a Valencia Nord. Entre las 13 horas y las 15 horas, el servicio finaliza en València Font de Sant Lluís.Se recomienda adelantar la hora de su viaje. ",
+          "language": "es"
+        }, {
+          "text": "#AVÍS Del 13 al 19 de març es modifica l\u0027arribada dels trens a València Nord. Entre les 13 hores i les 15 hores, el servici finalitza a València Font de Sant Lluís. Es recomana avançar l\u0027hora del seu viatge.  ",
+          "language": "ca"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_481108",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773391020"
+      }],
+      "informedEntity": [{
+        "routeId": "40T0033C3"
+      }, {
+        "routeId": "40T0008C3"
+      }, {
+        "routeId": "40T0007C3"
+      }, {
+        "routeId": "40T0026C3"
+      }, {
+        "routeId": "40T0018C3"
+      }, {
+        "routeId": "40T0017C3"
+      }, {
+        "routeId": "40T0034C3"
+      }, {
+        "routeId": "40T0025C3"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "#AVISO# Del 13 al 19 de marzo se modifica la llegada de los trenes a Valencia Nord. Entre las 13 horas y las 15 horas, el servicio finaliza en València San Isidre. Se recomienda adelantar la hora de su viaje. ",
+          "language": "es"
+        }, {
+          "text": "#AVÍS Del 13 al 19 de març es modifica l\u0027arribada dels trens a València Nord. Entre les 13 hores i les 15 hores, el servici finalitza a València San Isidre. Es recomana avançar l\u0027hora del seu viatge.  ",
+          "language": "ca"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_481107",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773390900"
+      }],
+      "informedEntity": [{
+        "routeId": "40T0027C1"
+      }, {
+        "routeId": "40T0028C1"
+      }, {
+        "routeId": "40T0002C1"
+      }, {
+        "routeId": "40T0001C1"
+      }, {
+        "routeId": "40T0030C2"
+      }, {
+        "routeId": "40T0038C2"
+      }, {
+        "routeId": "40T0006C2"
+      }, {
+        "routeId": "40T0029C2"
+      }, {
+        "routeId": "40T0005C2"
+      }, {
+        "routeId": "40T0023C2"
+      }, {
+        "routeId": "40T0035C2"
+      }, {
+        "routeId": "40T0037C2"
+      }, {
+        "routeId": "40T0024C2"
+      }, {
+        "routeId": "40T0036C2"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "#AVISO# Del 13 al 19 de marzo se modifica la llegada de los trenes a Valencia Nord. Entre las 13 horas y las 15 horas, el servicio finaliza en Albal. Se recomienda adelantar la hora de su viaje.  ",
+          "language": "es"
+        }, {
+          "text": "#AVÍS# Del 13 al 19 de març es modifica l\u0027arribada dels trens a València Nord. Entre les 13 hores i les 15 hores, el servici finalitza a Albal.  Es recomana avançar l\u0027hora del seu viatge.  ",
+          "language": "ca"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_476684",
+    "alert": {
+      "activePeriod": [{
+        "start": "1771227600"
+      }],
+      "informedEntity": [{
+        "stopId": "69107"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Ascensor vía 3 de Xeraco fuera de servicio. Disculpen las molestias.",
+          "language": "es"
+        }, {
+          "text": "Ascensor via 3 de Xeraco fora de servici. Disculpen les molèsties.",
+          "language": "ca"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_470390",
+    "alert": {
+      "activePeriod": [{
+        "start": "1767421620"
+      }],
+      "informedEntity": [{
+        "routeId": "40T0031C5"
+      }, {
+        "routeId": "40T0020C5"
+      }, {
+        "routeId": "40T0032C5"
+      }, {
+        "routeId": "40T0019C5"
+      }, {
+        "routeId": "40T0012C5"
+      }, {
+        "routeId": "40T0011C5"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "SERVICIO POR AUTOBÚS C-5: Plan alternativo de transporte por carretera. Más información: https://www.renfe.com/es/es/grupo-renfe/comunicacion/renfe-al-dia/avisos/plan-alternativo-carretera-zaragoza-teruel-sagunto-valencia-obras",
+          "language": "es"
+        }, {
+          "text": "SERVICI PER AUTOBÚS C-5: Pla alternatiu de transport per carretera. Més informació: https://www.renfe.com/es/es/grupo-renfe/comunicacion/renfe-al-dia/avisos/plan-alternativo-carretera-zaragoza-teruel-sagunto-valencia-obras",
+          "language": "ca"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_442947",
+    "alert": {
+      "activePeriod": [{
+        "start": "1749469860"
+      }],
+      "informedEntity": [{
+        "routeId": "40T0033C3"
+      }, {
+        "routeId": "40T0008C3"
+      }, {
+        "routeId": "40T0007C3"
+      }, {
+        "routeId": "40T0026C3"
+      }, {
+        "routeId": "40T0018C3"
+      }, {
+        "routeId": "40T0017C3"
+      }, {
+        "routeId": "40T0034C3"
+      }, {
+        "routeId": "40T0025C3"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "SERVICIO POR AUTOBÚS C-3: Plan alternativo de transporte por carretera. Más información: https://www.renfe.com/es/es/grupo-renfe/comunicacion/renfe-al-dia/avisos/horarios-servicio-cercanias-a-partir-15-noviembre",
+          "language": "es"
+        }, {
+          "text": "SERVICI PER AUTOBÚS C-3: Pla alternatiu de transport per carretera. Més informació: https://www.renfe.com/es/es/grupo-renfe/comunicacion/renfe-al-dia/avisos/horarios-servicio-cercanias-a-partir-15-noviembre\r\n",
+          "language": "ca"
+        }]
+      }
+    }
+  }, {
+    "id": "INFO_481026",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773340080"
+      }],
+      "informedEntity": [{
+        "stopId": "64105"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Ascensor vía 2 de Algemesí fuera de servicio. Disculpen las molestias.",
+          "language": "es"
+        }, {
+          "text": "Ascensor via 2 d\u0027 Algemesí fora de servici. Disculpen les molèsties.",
+          "language": "ca"
+        }]
+      }
+    }
+  }, {
+    "id": "INFO_480454",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773034740"
+      }],
+      "informedEntity": [{
+        "stopId": "64202"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Ascensor vía 1 y 2 de Massanassa fuera de servicio. Disculpen las molestias.",
+          "language": "es"
+        }, {
+          "text": "Ascensor via 1 i 2 de Massanassa fora de servici. Disculpen les molèsties.\r\n",
+          "language": "ca"
+        }]
+      }
+    }
+  }, {
+    "id": "INFO_479734",
+    "alert": {
+      "activePeriod": [{
+        "start": "1772688540"
+      }],
+      "informedEntity": [{
+        "stopId": "64103"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Ascensor vía 1 de Carcaixent fuera de servicio. Disculpen las molestias.\r\n",
+          "language": "es"
+        }, {
+          "text": "Ascensor via 1 de Carcaixent fora de servici. Disculpen les molèsties.",
+          "language": "ca"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_446239",
+    "alert": {
+      "activePeriod": [{
+        "start": "1751362440"
+      }],
+      "informedEntity": [{
+        "routeId": "41T0010C2"
+      }, {
+        "routeId": "41T0008C2"
+      }, {
+        "routeId": "41T0007C2"
+      }, {
+        "routeId": "41T0009C2"
+      }, {
+        "routeId": "41T0004C2"
+      }, {
+        "routeId": "41T0003C2"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Plan alternativo de transporte para la Línea C2 de Cercanías por obras de Adif en la Región de Murcia. Consulte Horarios: https://www.renfe.com/es/es/grupo-renfe/comunicacion/renfe-al-dia/avisos/plan-alternativo-transporte-derovadp-obras-adif-ave-region-murcia",
+          "language": "es"
+        }, {
+          "text": "Plan alternativo de transporte para la Línea C2 de Cercanías por obras de Adif en la Región de Murcia. Consulte Horarios: https://www.renfe.com/es/es/grupo-renfe/comunicacion/renfe-al-dia/avisos/plan-alternativo-transporte-derovadp-obras-adif-ave-region-murcia",
+          "language": "ca"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_481752",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773671760"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Los trenes circulan con demoras de 35 minutos de media debido a una incidencia técnica en un tren ya solucionada, y las limitaciones de velocidad establecidas. Estamos trabajando para recuperar los horarios y las frecuencias de paso habituales.",
+          "language": "es"
+        }, {
+          "text": "Els trens circulen amb demores de 35 minuts de mitjana a causa d\u0027una incidència tècnica en un tren ja solucionada i les limitacions de velocitat establertes. Estem treballant per recuperar els horaris i les freqüències de pas habituals.",
+          "language": "ca"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_481749",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773668700"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Los trenes circulan con demoras de 30 minutos de media debido a las limitaciones de velocidad establecidas y por causas operativas. Se está trabajando en la recuperación de las frecuencias y los horarios de paso habituales.",
+          "language": "es"
+        }, {
+          "text": "Els trens circulen amb demores de 30 minuts de mitjana a causa de les limitacions de velocitat establertes y per causes operatives. S\u0027està treballant en la recuperació de les freqüències i els horaris de pas habituals.",
+          "language": "ca"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_481667",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773639840"
+      }],
+      "informedEntity": [{
+        "routeId": "51T0090R8"
+      }, {
+        "routeId": "51T0091R8"
+      }, {
+        "routeId": "51T0092R8"
+      }, {
+        "routeId": "51T0035R8"
+      }, {
+        "routeId": "51T0023R8"
+      }, {
+        "routeId": "51T0036R8"
+      }, {
+        "routeId": "51T0024R8"
+      }, {
+        "routeId": "51T0089R8"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Servicio ferroviario entre Rubí Can Vallhonrat y Granollers Centre.\r\nServicio alternativo por carretera entre Martorell Central y Rubí Can Vallhonrat.",
+          "language": "es"
+        }, {
+          "text": "Servei ferroviari entre Rubí Can Vallhonrat - Granollers Centre. \r\nServei alternatiu per carretera entre Martorell Central - Rubí Can Vallhonrat.\r\n",
+          "language": "ca"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_481666",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773639780"
+      }],
+      "informedEntity": [{
+        "routeId": "51T0037R7"
+      }, {
+        "routeId": "51T0038R7"
+      }, {
+        "routeId": "51T0081R7"
+      }, {
+        "routeId": "51T0021R7"
+      }, {
+        "routeId": "51T0022R7"
+      }, {
+        "routeId": "51T0030R7"
+      }, {
+        "routeId": "51T0082R7"
+      }, {
+        "routeId": "51T0029R7"
+      }, {
+        "routeId": "51T0083R7"
+      }, {
+        "routeId": "51T0084R7"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Servicio ferroviario entre Barcelona Fabra i Puig y Cerdanyola del Vallès, correspondiente a la línea R4.\r\nServicio alternativo por carretera entre Cerdanyola del Vallès, Cerdanyola Universitat y el Campus UAB.",
+          "language": "es"
+        }, {
+          "text": "Servei ferroviari entre Barcelona Fabra i Puig - Cerdanyola del Vallés: servei de tren de la línia R4\r\nServei alternatiu per carretera entre Cerdanyola del Vallés - Cerdanyola  Universitat- Campus UAB\r\n",
+          "language": "ca"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_481665",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773639720"
+      }],
+      "informedEntity": [{
+        "routeId": "51T0025R2"
+      }, {
+        "routeId": "51T0059R2"
+      }, {
+        "routeId": "51T0013R2"
+      }, {
+        "routeId": "51T0026R2"
+      }, {
+        "routeId": "51T0014R2"
+      }, {
+        "routeId": "51T0027R2"
+      }, {
+        "routeId": "51T0028R2"
+      }, {
+        "routeId": "51T0067R2"
+      }, {
+        "routeId": "51T0055R2"
+      }, {
+        "routeId": "51T0068R2"
+      }, {
+        "routeId": "51T0056R2"
+      }, {
+        "routeId": "51T0069R2"
+      }, {
+        "routeId": "51T0057R2"
+      }, {
+        "routeId": "51T0058R2"
+      }, {
+        "routeId": "51T0051R2"
+      }, {
+        "routeId": "51T0052R2"
+      }, {
+        "routeId": "51T0053R2"
+      }, {
+        "routeId": "51T0054R2"
+      }, {
+        "routeId": "51T0070R2"
+      }, {
+        "routeId": "51T0060R2"
+      }, {
+        "routeId": "51T0061R2"
+      }, {
+        "routeId": "51T0095R2"
+      }, {
+        "routeId": "51T0062R2"
+      }, {
+        "routeId": "51T0096R2"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "A partir del 16 de marzo la línea R2Sud reprograma la oferta de trenes entre Garraf, Sitges y Vilanova y la Geltrú con dos trenes por hora y sentido con motivo de las obras de mejora de la infraestructura entre Garraf y Sitges. Consulta toda la información y nuevos horarios en rodalies.gencat.cat.",
+          "language": "es"
+        }, {
+          "text": "A partir del 16 de març la línia R2Sud reprograma loferta de trens entre Garraf, Sitges i Vilanova i la Geltrú amb dos trens per hora i sentit amb motiu de les obres de millora de la infraestructura entre Garraf i Sitges . Consulta tota la informació i  els nous horaris a rodalies.gencat.cat.",
+          "language": "ca"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_481684",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773639660"
+      }],
+      "informedEntity": [{
+        "routeId": "51T0080R4"
+      }, {
+        "routeId": "51T0005R4"
+      }, {
+        "routeId": "51T0032R4"
+      }, {
+        "routeId": "51T0078R4"
+      }, {
+        "routeId": "51T0079R4"
+      }, {
+        "routeId": "51T0074R4"
+      }, {
+        "routeId": "51T0041R4"
+      }, {
+        "routeId": "51T0075R4"
+      }, {
+        "routeId": "51T0042R4"
+      }, {
+        "routeId": "51T0076R4"
+      }, {
+        "routeId": "51T0020R4"
+      }, {
+        "routeId": "51T0031R4"
+      }, {
+        "routeId": "51T0077R4"
+      }, {
+        "routeId": "51T0006R4"
+      }, {
+        "routeId": "51T0019R4"
+      }, {
+        "routeId": "51T0117R4"
+      }, {
+        "routeId": "51T0071R4"
+      }, {
+        "routeId": "51T0118R4"
+      }, {
+        "routeId": "51T0072R4"
+      }, {
+        "routeId": "51T0073R4"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Servicio ferroviario entre Sant Vicenç de Calders y Sant Sadurní dAnoia.\r\nServicio alternativo por carretera entre Sant Sadurní dAnoia y Martorell Central, con paradas intermedias. Frecuencia cada 30 minutos.\r\nServicio ferroviario entre Martorell Central y Terrassa Estació del Nord.\r\nServicio lanzadera entre Terrassa Estació del Nord y Manresa, con una frecuencia de 1 hora.\r\nServicio complementario por carretera entre Terrassa Estació del Nord y Manresa.",
+          "language": "es"
+        }, {
+          "text": " Servei ferroviari entre Sant Vicenç de Calders - Sant Sadurní dAnoia\r\nServei alternatiu per carretera entre Sant Sadurní dAnoia - Martorell Central, amb parades intermèdies. Freqüència cada 30 min\r\nServei ferroviari entre Martorell Central - Terrassa Estació del Nord\r\n\r\nServei llançadora entre Terrassa Estació del Nord - Manresa cada 1:00h\r\nServei complementari carretera entre Terrassa Estació del Nord - Manresa\r\n",
+          "language": "ca"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_481664",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773639600"
+      }],
+      "informedEntity": [{
+        "routeId": "51T0134R3"
+      }, {
+        "routeId": "51T0015R3"
+      }, {
+        "routeId": "51T0136R3"
+      }, {
+        "routeId": "51T0135R3"
+      }, {
+        "routeId": "51T0016R3"
+      }, {
+        "routeId": "51T0039R3"
+      }, {
+        "routeId": "51T0130R3"
+      }, {
+        "routeId": "51T0045R3"
+      }, {
+        "routeId": "51T0131R3"
+      }, {
+        "routeId": "51T0033R3"
+      }, {
+        "routeId": "51T0046R3"
+      }, {
+        "routeId": "51T0132R3"
+      }, {
+        "routeId": "51T0034R3"
+      }, {
+        "routeId": "51T0133R3"
+      }, {
+        "routeId": "51T0086R3"
+      }, {
+        "routeId": "51T0040R3"
+      }, {
+        "routeId": "51T0087R3"
+      }, {
+        "routeId": "51T0088R3"
+      }, {
+        "routeId": "51T0127R3"
+      }, {
+        "routeId": "51T0128R3"
+      }, {
+        "routeId": "51T0129R3"
+      }, {
+        "routeId": "51T0085R3"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Servicio ferroviario de la línea R4 entre LHospitalet de Llobregat y Montcada Bifurcació.  \r\nServicio ferroviario entre La Garriga y Ripoll.  \r\nServicio alternativo por carretera entre Fabra i Puig y Puigcerdà/La Tor de Querol, con paradas intermedias.",
+          "language": "es"
+        }, {
+          "text": "Servei ferroviari de la línia R4 entre L\u0027Hospitalet de Llobregat - Montcada Bifurcació. \r\nServei ferroviari entre La Garriga - Ripoll. \r\nServei alternatiu per carretera entre Fabra i Puig - Puigcerdà/La Tor de Querol, amb parades intermèdies\r\n",
+          "language": "ca"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_481663",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773639540"
+      }],
+      "informedEntity": [{
+        "routeId": "51T0146R1"
+      }, {
+        "routeId": "51T0002R1"
+      }, {
+        "routeId": "51T0157R1"
+      }, {
+        "routeId": "51T0147R1"
+      }, {
+        "routeId": "51T0049R1"
+      }, {
+        "routeId": "51T0158R1"
+      }, {
+        "routeId": "51T0148R1"
+      }, {
+        "routeId": "51T0159R1"
+      }, {
+        "routeId": "51T0149R1"
+      }, {
+        "routeId": "51T0142R1"
+      }, {
+        "routeId": "51T0044R1"
+      }, {
+        "routeId": "51T0153R1"
+      }, {
+        "routeId": "51T0143R1"
+      }, {
+        "routeId": "51T0154R1"
+      }, {
+        "routeId": "51T0144R1"
+      }, {
+        "routeId": "51T0155R1"
+      }, {
+        "routeId": "51T0145R1"
+      }, {
+        "routeId": "51T0001R1"
+      }, {
+        "routeId": "51T0156R1"
+      }, {
+        "routeId": "51T0063R1"
+      }, {
+        "routeId": "51T0161R1"
+      }, {
+        "routeId": "51T0064R1"
+      }, {
+        "routeId": "51T0150R1"
+      }, {
+        "routeId": "51T0162R1"
+      }, {
+        "routeId": "51T0065R1"
+      }, {
+        "routeId": "51T0151R1"
+      }, {
+        "routeId": "51T0141R1"
+      }, {
+        "routeId": "51T0043R1"
+      }, {
+        "routeId": "51T0066R1"
+      }, {
+        "routeId": "51T0152R1"
+      }, {
+        "routeId": "51T0050R1"
+      }, {
+        "routeId": "51T0160R1"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Servicio ferroviario entre L\u0027Hospitalet de Llobregat y Blanes: servicio de tren.\r\nServicio lanzadera entre Blanes y Maçanet \u0026#8209; Massanes cada 1 hora y 30 minutos.\r\nServicio complementario por carretera entre Maçanet \u0026#8209; Massanes y Blanes.",
+          "language": "es"
+        }, {
+          "text": "Servei ferroviari entre  L\u0027Hospitalet de Llobregat - Blanes: servei de tren. Servei llançadora entre Blanes - Maçanet-Massanes cada 1:30h Servei complementari per carretera entre  Maçanet-Massanes - Blanes\r\n",
+          "language": "ca"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_476703",
+    "alert": {
+      "activePeriod": [{
+        "start": "1771231860"
+      }],
+      "informedEntity": [{
+        "routeId": "51T0037R7"
+      }, {
+        "routeId": "51T0038R7"
+      }, {
+        "routeId": "51T0081R7"
+      }, {
+        "routeId": "51T0021R7"
+      }, {
+        "routeId": "51T0022R7"
+      }, {
+        "routeId": "51T0030R7"
+      }, {
+        "routeId": "51T0082R7"
+      }, {
+        "routeId": "51T0029R7"
+      }, {
+        "routeId": "51T0083R7"
+      }, {
+        "routeId": "51T0084R7"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Con motivo de las obras que Adif está realizando en Montcada Bifurcació, la circulación de la línea R7 quedará interrumpida desde el 2 de noviembre hasta mayo de 2026. Se establece un servicio alternativo por carretera entre Cerdanyola del Vallès y Cerdanyola Universitat",
+          "language": "es"
+        }, {
+          "text": "Amb motiu de les obres que Adif realitza a Montcada Bifurcació, la circulació de la línia R7 quedarà interrompuda des del 2 de novembre fins al maig de 2026. S\u0027estableix un servei alternatiu per carretera entre Cerdanyola del Vallès i Cerdanyola Universitat.",
+          "language": "ca"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_474875",
+    "alert": {
+      "activePeriod": [{
+        "start": "1770034320"
+      }],
+      "informedEntity": [{
+        "routeId": "51T0134R3"
+      }, {
+        "routeId": "51T0015R3"
+      }, {
+        "routeId": "51T0136R3"
+      }, {
+        "routeId": "51T0135R3"
+      }, {
+        "routeId": "51T0016R3"
+      }, {
+        "routeId": "51T0039R3"
+      }, {
+        "routeId": "51T0130R3"
+      }, {
+        "routeId": "51T0045R3"
+      }, {
+        "routeId": "51T0131R3"
+      }, {
+        "routeId": "51T0033R3"
+      }, {
+        "routeId": "51T0046R3"
+      }, {
+        "routeId": "51T0132R3"
+      }, {
+        "routeId": "51T0034R3"
+      }, {
+        "routeId": "51T0133R3"
+      }, {
+        "routeId": "51T0086R3"
+      }, {
+        "routeId": "51T0040R3"
+      }, {
+        "routeId": "51T0087R3"
+      }, {
+        "routeId": "51T0088R3"
+      }, {
+        "routeId": "51T0127R3"
+      }, {
+        "routeId": "51T0128R3"
+      }, {
+        "routeId": "51T0129R3"
+      }, {
+        "routeId": "51T0085R3"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Con motivo de las obras de desdoblamiento del tramo ferroviario entre las estaciones de Parets del Vallès y La Garriga, el servicio de la línea entre L\u0027Hospitalet de Llobregat y La Garriga quedará modificado desde el 7 de octubre hasta el mes de mayo de 2026",
+          "language": "es"
+        }, {
+          "text": "Amb motiu de les obres de desdoblament del tram ferroviari entre les estacions de Parets del Vallès i La Garriga, el servei de la línia entre L\u0027Hospitalet de Llobregat i La Garriga quedarà modificat des del 7 d\u0027octubre fins al mes de maig de 2026",
+          "language": "ca"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_481757",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773675420"
+      }],
+      "informedEntity": [{
+        "routeId": "60T0002C1"
+      }, {
+        "routeId": "60T0001C1"
+      }, {
+        "routeId": "60T0004C2"
+      }, {
+        "routeId": "60T0003C2"
+      }, {
+        "routeId": "60T0006C3"
+      }, {
+        "routeId": "60T0005C3"
+      }, {
+        "routeId": "60T0012C4"
+      }, {
+        "routeId": "60T0011C4"
+      }, {
+        "routeId": "60T0016C4"
+      }, {
+        "routeId": "60T0015C4"
+      }, {
+        "routeId": "60T0009C4"
+      }, {
+        "routeId": "60T0008C4"
+      }, {
+        "routeId": "60T0007C4"
+      }, {
+        "routeId": "60T0010C4"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Martxoaren 17ko greba-deialdia dela eta, Renfe Aldiriak gutxieneko zerbitzuak izango ditu. C-4 lineako Distantzia Ertaineko zerbitzuei ez die eragingo greba orokorrak, eta, beraz, zerbitzua emango dute. Informazio gehiago jaso nahi izanez gero, galdetu geltokietako leihatiletan, bezeroenganako bulegoan edo 944 879 222 zenbakian. // Con motivo de la convocatoria de huelga del día 17 de marzo Renfe Cercanías contará con servicios mínimos establecidos.  Los servicios de Media Distancia de la línea C-4 no se ven afectados por la huelga general, por lo que sí circulan. Más información consulte con nuestro personal, en la oficina de atención al cliente y en el teléfono 944 879 222.",
+          "language": "es"
+        }, {
+          "text": "Martxoaren 17ko greba-deialdia dela eta, Renfe Aldiriak gutxieneko zerbitzuak izango ditu. C-4 lineako Distantzia Ertaineko zerbitzuei ez die eragingo greba orokorrak, eta, beraz, zerbitzua emango dute. Informazio gehiago jaso nahi izanez gero, galdetu geltokietako leihatiletan, bezeroenganako bulegoan edo 944 879 222 zenbakian. // Con motivo de la convocatoria de huelga del día 17 de marzo Renfe Cercanías contará con servicios mínimos establecidos.  Los servicios de Media Distancia de la línea C-4 no se ven afectados por la huelga general, por lo que sí circulan. Más información consulte con nuestro personal, en la oficina de atención al cliente y en el teléfono 944 879 222.",
+          "language": "eu"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_480983",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773304680"
+      }],
+      "informedEntity": [{
+        "routeId": "60T0006C3"
+      }, {
+        "routeId": "60T0005C3"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "#BilboAldiriakC3 Martxoaren 16tik aurrera, ordutegi berria ezarriko da C3 linean, eta 21:00etik aurrera zirkulazio eskaintza handituko da. Renfe Aldiriak APP-an eta geltokietan eskuragarri dauden ordutegiak kontsultatzea gomendatzen da. Informazio gehiago jaso nahi izanez gero, galdetu geltokietako leihatiletan, bezeroenganako bulegoan edo 944 879 222 zenbakian. // #BilbaoC3 A partir del día 16 de marzo, se establecerá el nuevo horario en la línea C3, ampliándose la oferta de circulaciones a partir de las 21:00h. Se recomienda a los viajeros de la línea que consulten los horarios disponibles en la APP Renfe Cercanías y en las estaciones. Para obtener más información consulte con nuestro personal, en la oficina de atención al cliente y en el teléfono 944 879 222.",
+          "language": "es"
+        }, {
+          "text": "#BilboAldiriakC3 Martxoaren 16tik aurrera, ordutegi berria ezarriko da C3 linean, eta 21:00etik aurrera zirkulazio eskaintza handituko da. Renfe Aldiriak APP-an eta geltokietan eskuragarri dauden ordutegiak kontsultatzea gomendatzen da. Informazio gehiago jaso nahi izanez gero, galdetu geltokietako leihatiletan, bezeroenganako bulegoan edo 944 879 222 zenbakian. // #BilbaoC3 A partir del día 16 de marzo, se establecerá el nuevo horario en la línea C3, ampliándose la oferta de circulaciones a partir de las 21:00h. Se recomienda a los viajeros de la línea que consulten los horarios disponibles en la APP Renfe Cercanías y en las estaciones. Para obtener más información consulte con nuestro personal, en la oficina de atención al cliente y en el teléfono 944 879 222.",
+          "language": "eu"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_480305",
+    "alert": {
+      "activePeriod": [{
+        "start": "1772893260"
+      }],
+      "informedEntity": [{
+        "routeId": "60T0002C1"
+      }, {
+        "routeId": "60T0001C1"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "#BilboAldiriakC1 Azpiegituran izandako arazo baten ondorioz, trenak Sestao, La Iberia, Portugalete eta Peñotako geltokietan ohikoak ez diren bideetatik zirkulatzen ari dira: Bilbo-Abando norabidean: 1. trenbidea eta Santurtzi norabidean: 2. trenbidea. Barkatu eragozpenak. // #BilbaoC1 Debido a un problema en la infraestructura, los trenes circulan por las vías contrarias a las habituales en las estaciones de Sestao, La Iberia, Portugalete y Peñota: Dirección Bilbao-Abando: Vía 1 y dirección Santurtzi: Vía 2. Disculpen las molestias.",
+          "language": "es"
+        }, {
+          "text": "#BilboAldiriakC1 Azpiegituran izandako arazo baten ondorioz, trenak Sestao, La Iberia, Portugalete eta Peñotako geltokietan ohikoak ez diren bideetatik zirkulatzen ari dira: Bilbo-Abando norabidean: 1. trenbidea eta Santurtzi norabidean: 2. trenbidea. Barkatu eragozpenak. // #BilbaoC1 Debido a un problema en la infraestructura, los trenes circulan por las vías contrarias a las habituales en las estaciones de Sestao, La Iberia, Portugalete y Peñota: Dirección Bilbao-Abando: Vía 1 y dirección Santurtzi: Vía 2. Disculpen las molestias.",
+          "language": "eu"
+        }]
+      }
+    }
+  }, {
+    "id": "INFO_481547",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773572940"
+      }],
+      "informedEntity": [{
+        "routeId": "60T0002C1"
+      }, {
+        "routeId": "60T0001C1"
+      }, {
+        "routeId": "60T0012C4"
+      }, {
+        "routeId": "60T0011C4"
+      }, {
+        "routeId": "60T0006C3"
+      }, {
+        "routeId": "60T0005C3"
+      }, {
+        "routeId": "60T0004C2"
+      }, {
+        "routeId": "60T0016C4"
+      }, {
+        "routeId": "60T0003C2"
+      }, {
+        "routeId": "60T0015C4"
+      }, {
+        "routeId": "60T0009C4"
+      }, {
+        "routeId": "60T0008C4"
+      }, {
+        "routeId": "60T0014C4A"
+      }, {
+        "routeId": "60T0007C4"
+      }, {
+        "routeId": "60T0013C4A"
+      }, {
+        "routeId": "60T0010C4"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "PORTUGALETE: 2. trenbideko igogailua zerbitzuz kanpo dago. Bilbo/Abando noranzko bidaiarie eragiten die. // El ascensor de vía 2 se encuentra fuera de servicio. Afecta a los viajeros dirección Bilbao/Abando",
+          "language": "es"
+        }, {
+          "text": "PORTUGALETE: 2. trenbideko igogailua zerbitzuz kanpo dago. Bilbo/Abando noranzko bidaiarie eragiten die. // El ascensor de vía 2 se encuentra fuera de servicio. Afecta a los viajeros dirección Bilbao/Abando",
+          "language": "eu"
+        }]
+      }
+    }
+  }, {
+    "id": "INFO_480858",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773255900"
+      }],
+      "informedEntity": [{
+        "routeId": "60T0002C1"
+      }, {
+        "routeId": "60T0001C1"
+      }, {
+        "routeId": "60T0012C4"
+      }, {
+        "routeId": "60T0011C4"
+      }, {
+        "routeId": "60T0006C3"
+      }, {
+        "routeId": "60T0005C3"
+      }, {
+        "routeId": "60T0004C2"
+      }, {
+        "routeId": "60T0016C4"
+      }, {
+        "routeId": "60T0003C2"
+      }, {
+        "routeId": "60T0015C4"
+      }, {
+        "routeId": "60T0009C4"
+      }, {
+        "routeId": "60T0008C4"
+      }, {
+        "routeId": "60T0014C4A"
+      }, {
+        "routeId": "60T0007C4"
+      }, {
+        "routeId": "60T0013C4A"
+      }, {
+        "routeId": "60T0010C4"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "AMETZOLA: Jaisteko eskailera mekanikoak ez daude erabilgarri (C-1 eta C-2 atondoa). Bilbo/Abandora, Bilbo/La Concordia, Santurtzi eta Muskiz noranzko bidairie eragiten die. // Las escaleras mecánicas de bajada están fuera de servicio (Vestíbulo C-1 y C-2). Afecta a los viajeros dirección Bilbao/Abando, Bilbao/La Concordia, Santurtzi y Muskiz.\r\n",
+          "language": "es"
+        }, {
+          "text": "AMETZOLA: Jaisteko eskailera mekanikoak ez daude erabilgarri (C-1 eta C-2 atondoa). Bilbo/Abandora, Bilbo/La Concordia, Santurtzi eta Muskiz noranzko bidairie eragiten die. // Las escaleras mecánicas de bajada están fuera de servicio (Vestíbulo C-1 y C-2). Afecta a los viajeros dirección Bilbao/Abando, Bilbao/La Concordia, Santurtzi y Muskiz.\r\n",
+          "language": "eu"
+        }]
+      }
+    }
+  }, {
+    "id": "INFO_480857",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773255840"
+      }],
+      "informedEntity": [{
+        "routeId": "60T0002C1"
+      }, {
+        "routeId": "60T0001C1"
+      }, {
+        "routeId": "60T0012C4"
+      }, {
+        "routeId": "60T0011C4"
+      }, {
+        "routeId": "60T0006C3"
+      }, {
+        "routeId": "60T0005C3"
+      }, {
+        "routeId": "60T0004C2"
+      }, {
+        "routeId": "60T0016C4"
+      }, {
+        "routeId": "60T0003C2"
+      }, {
+        "routeId": "60T0015C4"
+      }, {
+        "routeId": "60T0009C4"
+      }, {
+        "routeId": "60T0008C4"
+      }, {
+        "routeId": "60T0014C4A"
+      }, {
+        "routeId": "60T0007C4"
+      }, {
+        "routeId": "60T0013C4A"
+      }, {
+        "routeId": "60T0010C4"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "AMETZOLA: Ataria eta Trenbidearen etorbidea lotzen dituen igogailua zerbitzuz kanpo dago. // El ascensor que conecta el vestíbulo con la calle Avda. del Ferrocarril se encuentra fuera de servicio.\r\n",
+          "language": "es"
+        }, {
+          "text": "AMETZOLA: Ataria eta Trenbidearen etorbidea lotzen dituen igogailua zerbitzuz kanpo dago. // El ascensor que conecta el vestíbulo con la calle Avda. del Ferrocarril se encuentra fuera de servicio.\r\n",
+          "language": "eu"
+        }]
+      }
+    }
+  }, {
+    "id": "INFO_480527",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773071040"
+      }],
+      "informedEntity": [{
+        "routeId": "60T0002C1"
+      }, {
+        "routeId": "60T0001C1"
+      }, {
+        "routeId": "60T0012C4"
+      }, {
+        "routeId": "60T0011C4"
+      }, {
+        "routeId": "60T0006C3"
+      }, {
+        "routeId": "60T0005C3"
+      }, {
+        "routeId": "60T0004C2"
+      }, {
+        "routeId": "60T0016C4"
+      }, {
+        "routeId": "60T0003C2"
+      }, {
+        "routeId": "60T0015C4"
+      }, {
+        "routeId": "60T0009C4"
+      }, {
+        "routeId": "60T0008C4"
+      }, {
+        "routeId": "60T0014C4A"
+      }, {
+        "routeId": "60T0007C4"
+      }, {
+        "routeId": "60T0013C4A"
+      }, {
+        "routeId": "60T0010C4"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "SAN MAMES/SANTIMAMI: Jaisteko kanpoko eskailera, Quevedo irteera, zerbitzutik kanpo dago. // La escalera exterior de bajada, salida Quevedo, se encuentra fuera de servicio.",
+          "language": "es"
+        }, {
+          "text": "SAN MAMES/SANTIMAMI: Jaisteko kanpoko eskailera, Quevedo irteera, zerbitzutik kanpo dago. // La escalera exterior de bajada, salida Quevedo, se encuentra fuera de servicio.",
+          "language": "eu"
+        }]
+      }
+    }
+  }, {
+    "id": "INFO_480410",
+    "alert": {
+      "activePeriod": [{
+        "start": "1772956200"
+      }],
+      "informedEntity": [{
+        "routeId": "60T0002C1"
+      }, {
+        "routeId": "60T0001C1"
+      }, {
+        "routeId": "60T0012C4"
+      }, {
+        "routeId": "60T0011C4"
+      }, {
+        "routeId": "60T0006C3"
+      }, {
+        "routeId": "60T0005C3"
+      }, {
+        "routeId": "60T0004C2"
+      }, {
+        "routeId": "60T0016C4"
+      }, {
+        "routeId": "60T0003C2"
+      }, {
+        "routeId": "60T0015C4"
+      }, {
+        "routeId": "60T0009C4"
+      }, {
+        "routeId": "60T0008C4"
+      }, {
+        "routeId": "60T0014C4A"
+      }, {
+        "routeId": "60T0007C4"
+      }, {
+        "routeId": "60T0013C4A"
+      }, {
+        "routeId": "60T0010C4"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "AMETZOLA: 2. trenbideko igogailua zerbitzuz kanpo dago. Bilbo/Abando noranzko bidaiarie eragiten die. // El ascensor de vía 2 se encuentra fuera de servicio. Afecta a los viajeros dirección Bilbao Abando.",
+          "language": "es"
+        }, {
+          "text": "AMETZOLA: 2. trenbideko igogailua zerbitzuz kanpo dago. Bilbo/Abando noranzko bidaiarie eragiten die. // El ascensor de vía 2 se encuentra fuera de servicio. Afecta a los viajeros dirección Bilbao Abando.",
+          "language": "eu"
+        }]
+      }
+    }
+  }, {
+    "id": "INFO_473302",
+    "alert": {
+      "activePeriod": [{
+        "start": "1768916520"
+      }],
+      "informedEntity": [{
+        "routeId": "60T0002C1"
+      }, {
+        "routeId": "60T0001C1"
+      }, {
+        "routeId": "60T0012C4"
+      }, {
+        "routeId": "60T0011C4"
+      }, {
+        "routeId": "60T0006C3"
+      }, {
+        "routeId": "60T0005C3"
+      }, {
+        "routeId": "60T0004C2"
+      }, {
+        "routeId": "60T0016C4"
+      }, {
+        "routeId": "60T0003C2"
+      }, {
+        "routeId": "60T0015C4"
+      }, {
+        "routeId": "60T0009C4"
+      }, {
+        "routeId": "60T0008C4"
+      }, {
+        "routeId": "60T0014C4A"
+      }, {
+        "routeId": "60T0007C4"
+      }, {
+        "routeId": "60T0013C4A"
+      }, {
+        "routeId": "60T0010C4"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "UGAO-MIRABALLES: Kanpoko eta 1. trenbideko igogailuak zerbitzuz kanpo daude. Bilbo/Abando noranzko bidaiariei eragiten die. // El ascensor de exterior y vía 1 se encuentran fuera de servicio. Afecta a los viajeros dirección Bilbao/Abando.",
+          "language": "es"
+        }, {
+          "text": "UGAO-MIRABALLES: Kanpoko eta 1. trenbideko igogailuak zerbitzuz kanpo daude. Bilbo/Abando noranzko bidaiariei eragiten die. // El ascensor de exterior y vía 1 se encuentran fuera de servicio. Afecta a los viajeros dirección Bilbao/Abando.",
+          "language": "eu"
+        }]
+      }
+    }
+  }, {
+    "id": "INFO_469886",
+    "alert": {
+      "activePeriod": [{
+        "start": "1767104460"
+      }],
+      "informedEntity": [{
+        "routeId": "60T0002C1"
+      }, {
+        "routeId": "60T0001C1"
+      }, {
+        "routeId": "60T0012C4"
+      }, {
+        "routeId": "60T0011C4"
+      }, {
+        "routeId": "60T0006C3"
+      }, {
+        "routeId": "60T0005C3"
+      }, {
+        "routeId": "60T0004C2"
+      }, {
+        "routeId": "60T0016C4"
+      }, {
+        "routeId": "60T0003C2"
+      }, {
+        "routeId": "60T0015C4"
+      }, {
+        "routeId": "60T0009C4"
+      }, {
+        "routeId": "60T0008C4"
+      }, {
+        "routeId": "60T0014C4A"
+      }, {
+        "routeId": "60T0007C4"
+      }, {
+        "routeId": "60T0013C4A"
+      }, {
+        "routeId": "60T0010C4"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "ABAROA: 2. trenbideko igogailua zerbitzuz kanpo dago. Laudio eta Urduña noranzko bidaiarie eragiten die. // El ascensor de vía 2 se encuentra fuera de servicio. Afecta a los viajeros dirección Llodio y Orduña.",
+          "language": "es"
+        }, {
+          "text": "ABAROA: 2. trenbideko igogailua zerbitzuz kanpo dago. Laudio eta Urduña noranzko bidaiarie eragiten die. // El ascensor de vía 2 se encuentra fuera de servicio. Afecta a los viajeros dirección Llodio y Orduña.",
+          "language": "eu"
+        }]
+      }
+    }
+  }, {
+    "id": "INFO_469836",
+    "alert": {
+      "activePeriod": [{
+        "start": "1767104040"
+      }],
+      "informedEntity": [{
+        "routeId": "60T0002C1"
+      }, {
+        "routeId": "60T0001C1"
+      }, {
+        "routeId": "60T0012C4"
+      }, {
+        "routeId": "60T0011C4"
+      }, {
+        "routeId": "60T0006C3"
+      }, {
+        "routeId": "60T0005C3"
+      }, {
+        "routeId": "60T0004C2"
+      }, {
+        "routeId": "60T0016C4"
+      }, {
+        "routeId": "60T0003C2"
+      }, {
+        "routeId": "60T0015C4"
+      }, {
+        "routeId": "60T0009C4"
+      }, {
+        "routeId": "60T0008C4"
+      }, {
+        "routeId": "60T0014C4A"
+      }, {
+        "routeId": "60T0007C4"
+      }, {
+        "routeId": "60T0013C4A"
+      }, {
+        "routeId": "60T0010C4"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "LA PEÑA: 1. trenbideko eskailera mekanikoak zerbitzuz kanpo daude. Bilbo/Abando noranzko bidaiarie eragiten die. // Las escaleras mecánicas de vía 1 están fuera de servicio. Afecta a los viajeros dirección Bilbao/Abando.",
+          "language": "es"
+        }, {
+          "text": "LA PEÑA: 1. trenbideko eskailera mekanikoak zerbitzuz kanpo daude. Bilbo/Abando noranzko bidaiarie eragiten die. // Las escaleras mecánicas de vía 1 están fuera de servicio. Afecta a los viajeros dirección Bilbao/Abando.",
+          "language": "eu"
+        }]
+      }
+    }
+  }, {
+    "id": "INFO_453693",
+    "alert": {
+      "activePeriod": [{
+        "start": "1756613940"
+      }],
+      "informedEntity": [{
+        "routeId": "60T0002C1"
+      }, {
+        "routeId": "60T0001C1"
+      }, {
+        "routeId": "60T0012C4"
+      }, {
+        "routeId": "60T0011C4"
+      }, {
+        "routeId": "60T0006C3"
+      }, {
+        "routeId": "60T0005C3"
+      }, {
+        "routeId": "60T0004C2"
+      }, {
+        "routeId": "60T0016C4"
+      }, {
+        "routeId": "60T0003C2"
+      }, {
+        "routeId": "60T0015C4"
+      }, {
+        "routeId": "60T0009C4"
+      }, {
+        "routeId": "60T0008C4"
+      }, {
+        "routeId": "60T0014C4A"
+      }, {
+        "routeId": "60T0007C4"
+      }, {
+        "routeId": "60T0013C4A"
+      }, {
+        "routeId": "60T0010C4"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "AMETZOLA: Igotzeko eskailera mekanikoak ez daude erabilgarri, Bilbo/La Concordia noranzko bidaiariei eragiten die (C-4). // Las escaleras mecánicas de subida están fuera de servicio, afecta a los viajeros dirección Bilbao/La Concordia (C-4).",
+          "language": "es"
+        }, {
+          "text": "AMETZOLA: Igotzeko eskailera mekanikoak ez daude erabilgarri, Bilbo/La Concordia noranzko bidaiariei eragiten die (C-4). // Las escaleras mecánicas de subida están fuera de servicio, afecta a los viajeros dirección Bilbao/La Concordia (C-4).",
+          "language": "eu"
+        }]
+      }
+    }
+  }, {
+    "id": "INFO_453271",
+    "alert": {
+      "activePeriod": [{
+        "start": "1755836040"
+      }],
+      "informedEntity": [{
+        "routeId": "60T0002C1"
+      }, {
+        "routeId": "60T0001C1"
+      }, {
+        "routeId": "60T0012C4"
+      }, {
+        "routeId": "60T0011C4"
+      }, {
+        "routeId": "60T0006C3"
+      }, {
+        "routeId": "60T0005C3"
+      }, {
+        "routeId": "60T0004C2"
+      }, {
+        "routeId": "60T0016C4"
+      }, {
+        "routeId": "60T0003C2"
+      }, {
+        "routeId": "60T0015C4"
+      }, {
+        "routeId": "60T0009C4"
+      }, {
+        "routeId": "60T0008C4"
+      }, {
+        "routeId": "60T0014C4A"
+      }, {
+        "routeId": "60T0007C4"
+      }, {
+        "routeId": "60T0013C4A"
+      }, {
+        "routeId": "60T0010C4"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "ZORROTZA: 2. trenbideko igogailua zerbitzuz kanpo dago. Bilbo/Abando noranzko bidaiarie eragiten die. // El ascensor de vía 2 se encuentra fuera de servicio. Afecta a los viajeros dirección Bilbao/Abando.",
+          "language": "es"
+        }, {
+          "text": "ZORROTZA: 2. trenbideko igogailua zerbitzuz kanpo dago. Bilbo/Abando noranzko bidaiarie eragiten die. // El ascensor de vía 2 se encuentra fuera de servicio. Afecta a los viajeros dirección Bilbao/Abando.",
+          "language": "eu"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_481758",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773675600"
+      }],
+      "informedEntity": [{
+        "routeId": "61T0006C1"
+      }, {
+        "routeId": "61T0017C1"
+      }, {
+        "routeId": "61T0005C1"
+      }, {
+        "routeId": "61T0016C1"
+      }, {
+        "routeId": "61T0004C1"
+      }, {
+        "routeId": "61T0015C1"
+      }, {
+        "routeId": "61T0003C1"
+      }, {
+        "routeId": "61T0014C1"
+      }, {
+        "routeId": "61T0009C1"
+      }, {
+        "routeId": "61T0008C1"
+      }, {
+        "routeId": "61T0019C1"
+      }, {
+        "routeId": "61T0007C1"
+      }, {
+        "routeId": "61T0018C1"
+      }, {
+        "routeId": "61T0021C1"
+      }, {
+        "routeId": "61T0020C1"
+      }, {
+        "routeId": "61T0002C1"
+      }, {
+        "routeId": "61T0013C1"
+      }, {
+        "routeId": "61T0001C1"
+      }, {
+        "routeId": "61T0012C1"
+      }, {
+        "routeId": "61T0011C1"
+      }, {
+        "routeId": "61T0022C1"
+      }, {
+        "routeId": "61T0010C1"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "Martxoaren 17ko greba-deialdia dela eta, Renfe Aldiriak gutxieneko zerbitzuak izango ditu. Greba orokorrak ez die eragingo Distantzia Ertaineko trenei, eta, beraz, zerbitzua emango dute. Informazio gehiago jaso nahi izanez gero, galdetu ezazu geltokietako leihatiletan, bezeroenganako bulegoan edo 943 841 251 zenbakian. // Con motivo de la convocatoria de huelga del día 17 de marzo Renfe Cercanías contará con servicios mínimos establecidos. Los servicios de Media Distancia no se ven afectados por la huelga general, por lo que sí circulan. Más información consulte con nuestro personal, en la oficina de atención al cliente y en el teléfono 943 841 251.",
+          "language": "es"
+        }, {
+          "text": "Martxoaren 17ko greba-deialdia dela eta, Renfe Aldiriak gutxieneko zerbitzuak izango ditu. Greba orokorrak ez die eragingo Distantzia Ertaineko trenei, eta, beraz, zerbitzua emango dute. Informazio gehiago jaso nahi izanez gero, galdetu ezazu geltokietako leihatiletan, bezeroenganako bulegoan edo 943 841 251 zenbakian. // Con motivo de la convocatoria de huelga del día 17 de marzo Renfe Cercanías contará con servicios mínimos establecidos. Los servicios de Media Distancia no se ven afectados por la huelga general, por lo que sí circulan. Más información consulte con nuestro personal, en la oficina de atención al cliente y en el teléfono 943 841 251.",
+          "language": "eu"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_481691",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773641460"
+      }],
+      "informedEntity": [{
+        "routeId": "61T0006C1"
+      }, {
+        "routeId": "61T0017C1"
+      }, {
+        "routeId": "61T0005C1"
+      }, {
+        "routeId": "61T0016C1"
+      }, {
+        "routeId": "61T0004C1"
+      }, {
+        "routeId": "61T0015C1"
+      }, {
+        "routeId": "61T0003C1"
+      }, {
+        "routeId": "61T0014C1"
+      }, {
+        "routeId": "61T0009C1"
+      }, {
+        "routeId": "61T0008C1"
+      }, {
+        "routeId": "61T0019C1"
+      }, {
+        "routeId": "61T0007C1"
+      }, {
+        "routeId": "61T0018C1"
+      }, {
+        "routeId": "61T0021C1"
+      }, {
+        "routeId": "61T0020C1"
+      }, {
+        "routeId": "61T0002C1"
+      }, {
+        "routeId": "61T0013C1"
+      }, {
+        "routeId": "61T0001C1"
+      }, {
+        "routeId": "61T0012C1"
+      }, {
+        "routeId": "61T0011C1"
+      }, {
+        "routeId": "61T0022C1"
+      }, {
+        "routeId": "61T0010C1"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "#DonostiaAldiriakC1 Azpiegituran izandako arazo baten ondorioz, trenek 15 eta 25 minutu bitarteko atzerapenak jasan ditzakete ibilbidean zehar. // #SanSebastianC1 Debido a un problema en la infraestructura, los trenes pueden sufrir demoras de entre 15 y 25 minutos durante el recorrido.",
+          "language": "es"
+        }, {
+          "text": "#DonostiaAldiriakC1 Azpiegituran izandako arazo baten ondorioz, trenek 15 eta 25 minutu bitarteko atzerapenak jasan ditzakete ibilbidean zehar. // #SanSebastianC1 Debido a un problema en la infraestructura, los trenes pueden sufrir demoras de entre 15 y 25 minutos durante el recorrido.",
+          "language": "eu"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_480176",
+    "alert": {
+      "activePeriod": [{
+        "start": "1772870640"
+      }],
+      "informedEntity": [{
+        "stopId": "11505"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "ANDOAIN: 1. trenbideko igogailua zerbitzuz kanpo dago. Donostia noranzko bidaiarie eragiten die. // El ascensor de vía 1 se encuentra fuera de servicio. Afecta a los viajeros dirección San Sebastian.",
+          "language": "es"
+        }, {
+          "text": "ANDOAIN: 1. trenbideko igogailua zerbitzuz kanpo dago. Donostia noranzko bidaiarie eragiten die. // El ascensor de vía 1 se encuentra fuera de servicio. Afecta a los viajeros dirección San Sebastian.",
+          "language": "eu"
+        }]
+      }
+    }
+  }, {
+    "id": "AVISO_480084",
+    "alert": {
+      "activePeriod": [{
+        "start": "1772796960"
+      }],
+      "informedEntity": [{
+        "stopId": "11510"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "#DonostiAldiriakC1 Hobekuntza lanak direla eta, Loiolako geltokia itxita egongo da martxoaren 7tik apirilaren 19ra. Informazio gehiago jaso nahi izanez gero, galdetu ezazu geltokietako leihatiletan, bezeroenganako bulegoan edo 943 841 251 zenbakian. // #SanSebastianC1 Debido a las obras de mejora, la estación de Loiola permanecerá cerrada del 7 de marzo al 19 de abril. Más información consulte con nuestro personal, en la oficina de atención al cliente y en el teléfono 943 841 251.",
+          "language": "es"
+        }, {
+          "text": "#DonostiAldiriakC1 Hobekuntza lanak direla eta, Loiolako geltokia itxita egongo da martxoaren 7tik apirilaren 19ra. Informazio gehiago jaso nahi izanez gero, galdetu ezazu geltokietako leihatiletan, bezeroenganako bulegoan edo 943 841 251 zenbakian. // #SanSebastianC1 Debido a las obras de mejora, la estación de Loiola permanecerá cerrada del 7 de marzo al 19 de abril. Más información consulte con nuestro personal, en la oficina de atención al cliente y en el teléfono 943 841 251.",
+          "language": "eu"
+        }]
+      }
+    }
+  }, {
+    "id": "INFO_480737",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773219600"
+      }],
+      "informedEntity": [{
+        "stopId": "11404"
+      }],
+      "descriptionText": {
+        "translation": [{
+          "text": "BEASAIN: 1. trenbideko igogailua zerbitzuz kanpo dago. Irun noranzko bidaiarie eragiten die. // El ascensor de vía 1 se encuentra fuera de servicio. Afecta a los viajeros dirección Irun. ",
+          "language": "es"
+        }, {
+          "text": "BEASAIN: 1. trenbideko igogailua zerbitzuz kanpo dago. Irun noranzko bidaiarie eragiten die. // El ascensor de vía 1 se encuentra fuera de servicio. Afecta a los viajeros dirección Irun. ",
+          "language": "eu"
+        }]
+      }
+    }
+  }, {
+    "id": "AUTOBUS_4071L84061C2",
+    "alert": {
+      "activePeriod": [{
+        "start": "1773682920"
+      }],
+      "informedEntity": [{
+        "trip": {
+          "tripId": "4071L84061C2"
+        }
+      }],
+      "effect": "MODIFIED_SERVICE",
+      "descriptionText": {
+        "translation": [{
+          "text": "Se prestará servicio de autobús para este recorrido.",
+          "language": "es"
+        }, {
+          "text": "Se prestará servicio de autobús para este recorrido.",
+          "language": "ca"
+        }, {
+          "text": "Se prestará servicio de autobús para este recorrido.",
+          "language": "eu"
+        }, {
+          "text": "Se prestará servicio de autobús para este recorrido.",
+          "language": "gl"
+        }, {
+          "text": "Se prestará servicio de autobús para este recorrido.",
+          "language": "en"
+        }]
+      }
+    }
+  }]
+}

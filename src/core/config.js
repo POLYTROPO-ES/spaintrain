@@ -1,5 +1,6 @@
 export const APP_CONFIG = {
   feedUrl: 'https://gtfsrt.renfe.com/vehicle_positions.json',
+  alertsUrl: 'https://gtfsrt.renfe.com/alerts.json',
   feedFallbackUrls: ['/api/vehicle_positions'],
   loadRailPathsInProduction: false,
   updateIntervalMs: 20000,

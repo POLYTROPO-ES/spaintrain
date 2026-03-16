@@ -254,6 +254,26 @@ button:hover {
   gap: 8px;
 }
 
+.alerts-section h3 {
+  margin: 0;
+}
+
+.alerts-empty {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.alerts-list {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 180px;
+  overflow-y: auto;
+  font-size: 0.85rem;
+}
+
 @media (max-width: 980px) {
   .menu-root {
     top: 8px;

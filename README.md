@@ -21,7 +21,11 @@ Repository: [POLYTROPO-ES/spaintrain](https://github.com/POLYTROPO-ES/spaintrain
 ## Data Sources
 - Live train positions (Renfe GTFS Realtime):
    - JSON: [https://gtfsrt.renfe.com/vehicle_positions.json](https://gtfsrt.renfe.com/vehicle_positions.json)
+   - Long-distance JSON: [https://gtfsrt.renfe.com/vehicle_positions_LD.json](https://gtfsrt.renfe.com/vehicle_positions_LD.json)
    - Protobuf: [https://gtfsrt.renfe.com/vehicle_positions.pb](https://gtfsrt.renfe.com/vehicle_positions.pb)
+- Service alerts (Renfe GTFS Realtime):
+   - JSON: [https://gtfsrt.renfe.com/alerts.json](https://gtfsrt.renfe.com/alerts.json)
+   - This feed informs incidents/notices in cercanias service (accessibility, bus replacement services, track incidents) and is refreshed every 20 seconds.
 - Rail path geometry:
    - OpenStreetMap railway data via Overpass API mirrors
    - Local fallback sample geometry stored in [src/paths/rail-paths-spain-sample.geojson](src/paths/rail-paths-spain-sample.geojson)
@@ -92,7 +96,11 @@ SpainTrain es una PWA orientada a navegador para visualizar posiciones de trenes
 ### Fuente de datos
 - Posiciones de trenes (Renfe GTFS Realtime):
    - JSON: [https://gtfsrt.renfe.com/vehicle_positions.json](https://gtfsrt.renfe.com/vehicle_positions.json)
+   - JSON Larga Distancia: [https://gtfsrt.renfe.com/vehicle_positions_LD.json](https://gtfsrt.renfe.com/vehicle_positions_LD.json)
    - Protobuf: [https://gtfsrt.renfe.com/vehicle_positions.pb](https://gtfsrt.renfe.com/vehicle_positions.pb)
+- Avisos del servicio (Renfe GTFS Realtime):
+   - JSON: [https://gtfsrt.renfe.com/alerts.json](https://gtfsrt.renfe.com/alerts.json)
+   - Informa sobre incidencias o avisos del servicio de cercanias (accesibilidad, servicios prestados en autobus, incidencias en via). Esta informacion se actualiza cada 20 segundos.
 - Geometria de vias:
    - Datos ferroviarios de OpenStreetMap via Overpass API
    - Respaldo local en [src/paths/rail-paths-spain-sample.geojson](src/paths/rail-paths-spain-sample.geojson)

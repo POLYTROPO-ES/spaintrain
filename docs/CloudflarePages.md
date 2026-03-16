@@ -13,9 +13,15 @@
 ## API Proxy In Pages Mode
 This repository now includes a Pages Function at:
 - functions/api/vehicle_positions.js
+- functions/api/alerts.js
 
 When deploying with `npm run deploy:cf`, Wrangler uploads this function using `--functions functions`.
 This ensures `/api/vehicle_positions` returns JSON instead of SPA HTML in Pages mode.
+It also merges:
+- `vehicle_positions.json` (conventional)
+- `vehicle_positions_LD.json` (long-distance)
+
+For service incidents, `/api/alerts` proxies `alerts.json` with the same-origin path required by the browser app.
 
 ## SPA Routing
 For Cloudflare Pages deploy, `_redirects` is generated at deploy time from `cloudflare/_redirects.pages`:

@@ -11,6 +11,7 @@ import { loadRailPaths } from './paths/railPathService.js';
 import { validateImportPayload } from './storage/importSchema.js';
 import { logger } from './core/logger.js';
 import { VERSION_INFO } from './generated/version.js';
+import { AlertsService } from './data/alertsService.js';
 
 export class SpainTrainApp {
   constructor(root) {
@@ -29,6 +30,10 @@ export class SpainTrainApp {
       bounds: APP_CONFIG.spainBounds,
       platformMemory: this.platformMemory,
     });
+    this.alertsService = new AlertsService({
+      alertsUrl: '/api/alerts',
+      fallbackUrls: import.meta.env.DEV ? [APP_CONFIG.alertsUrl] : [],
+    });
 
     this.playback = new PlaybackPlayer();
     this.i18n = new I18n(APP_CONFIG.defaults.language);
@@ -44,6 +49,11 @@ export class SpainTrainApp {
       isStale: false,
       metrics: {
         fetchLatencyMs: 0,
+      },
+      alerts: [],
+      alertsMetrics: {
+        source: '/api/alerts',
+        count: 0,
       },
     };
 
@@ -161,7 +171,10 @@ export class SpainTrainApp {
 
   async fetchCycle(tickId) {
     this.state.nextUpdateAt = Date.now() + APP_CONFIG.updateIntervalMs;
-    const snapshot = await this.fetchWithBackoff(this.state.settings.platformMode);
+    const [snapshot, alertsPayload] = await Promise.all([
+      this.fetchWithBackoff(this.state.settings.platformMode),
+      this.fetchAlertsSafe(this.state.settings.language),
+    ]);
 
     if (tickId < this.state.latestTickId) {
       return;
@@ -172,10 +185,13 @@ export class SpainTrainApp {
     this.state.currentSnapshot = snapshot;
     this.state.liveRenderMode = true;
     this.state.metrics = snapshot.metrics;
+    this.state.alerts = alertsPayload.alerts;
+    this.state.alertsMetrics = alertsPayload.metrics;
     this.state.isStale = false;
 
     this.ui.refs.modePill.textContent = this.i18n.t('status_live');
     this.refreshLineOptions(snapshot.vehicles);
+    this.renderAlerts();
     this.hideFirstLoadOverlay();
     logger.debug('Snapshot applied', {
       tickId,
@@ -189,6 +205,21 @@ export class SpainTrainApp {
     await this.store.pruneOlderThan(retentionCutoff);
 
     this.refreshStats();
+  }
+
+  async fetchAlertsSafe(language) {
+    try {
+      return await this.alertsService.fetchAlerts(language);
+    } catch (error) {
+      logger.warn('Alerts fetch failed', { message: String(error?.message || error) });
+      return {
+        alerts: [],
+        metrics: {
+          source: 'unavailable',
+          count: 0,
+        },
+      };
+    }
   }
 
   async fetchWithBackoff(platformMode) {
@@ -281,6 +312,32 @@ export class SpainTrainApp {
 
     this.ui.refs.staleWarning.textContent = this.state.isStale ? this.i18n.t('stale_warning') : '';
     this.ui.refs.source.textContent = this.state.metrics.source || 'direct';
+    this.ui.refs.alertsCount.textContent = String(this.state.alertsMetrics.count || 0);
+  }
+
+  renderAlerts() {
+    if (!this.ui?.refs?.alertsList || !this.ui?.refs?.alertsEmpty) {
+      return;
+    }
+
+    const alerts = this.state.alerts || [];
+    const list = this.ui.refs.alertsList;
+    list.innerHTML = '';
+
+    if (alerts.length === 0) {
+      this.ui.refs.alertsEmpty.textContent = this.i18n.t('alerts_none');
+      return;
+    }
+
+    this.ui.refs.alertsEmpty.textContent = '';
+    alerts.slice(0, 6).forEach((alertItem) => {
+      const li = document.createElement('li');
+      const title = alertItem.header || alertItem.description || alertItem.id;
+      const lines = alertItem.lines.length > 0 ? ` [${alertItem.lines.join(', ')}]` : '';
+      const body = alertItem.description || '';
+      li.textContent = `${title}${lines}${body ? ` - ${body}` : ''}`;
+      list.appendChild(li);
+    });
   }
 
   async onLanguageChange(language) {
@@ -290,6 +347,7 @@ export class SpainTrainApp {
     this.ui.syncQuickControls(this.state.settings);
     this.updateFirstLoadOverlayText();
     this.refreshLineOptions(this.state.currentSnapshot?.vehicles || []);
+    this.renderAlerts();
     await this.store.setSetting('language', language);
     logger.info('Language changed', { language });
   }

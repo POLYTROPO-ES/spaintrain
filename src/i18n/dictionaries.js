@@ -38,6 +38,9 @@ export const dictionaries = {
     import_partial: 'Importacion parcial: algunos registros invalidos fueron omitidos',
     data_source: 'Fuente de datos',
     app_version: 'Version app',
+    alerts_count: 'Avisos activos',
+    service_alerts: 'Incidencias de cercanias',
+    alerts_none: 'Sin incidencias activas',
     updating_first_data: 'Actualizando primeros datos en vivo...',
   },
   en: {
@@ -79,6 +82,9 @@ export const dictionaries = {
     import_partial: 'Partial import: invalid records were skipped',
     data_source: 'Data source',
     app_version: 'App version',
+    alerts_count: 'Active alerts',
+    service_alerts: 'Service alerts',
+    alerts_none: 'No active service alerts',
     updating_first_data: 'Loading first live data update...',
   },
   fr: {
@@ -120,6 +126,9 @@ export const dictionaries = {
     import_partial: 'Import partiel: des enregistrements invalides ont ete ignores',
     data_source: 'Source de donnees',
     app_version: 'Version app',
+    alerts_count: 'Alertes actives',
+    service_alerts: 'Alertes de service',
+    alerts_none: 'Aucune alerte active',
     updating_first_data: 'Chargement des premieres donnees en direct...',
   },
   it: {
@@ -161,6 +170,9 @@ export const dictionaries = {
     import_partial: 'Import parziale: record non validi ignorati',
     data_source: 'Fonte dati',
     app_version: 'Versione app',
+    alerts_count: 'Avvisi attivi',
+    service_alerts: 'Avvisi di servizio',
+    alerts_none: 'Nessun avviso attivo',
     updating_first_data: 'Caricamento dei primi dati live...',
   },
   pt: {
@@ -202,6 +214,9 @@ export const dictionaries = {
     import_partial: 'Importacao parcial: registros invalidos foram ignorados',
     data_source: 'Fonte de dados',
     app_version: 'Versao app',
+    alerts_count: 'Alertas ativos',
+    service_alerts: 'Alertas de servico',
+    alerts_none: 'Sem alertas ativos',
     updating_first_data: 'Carregando os primeiros dados ao vivo...',
   },
 };
