@@ -37,7 +37,10 @@ export class MapManager {
       center: [40.4, -3.7],
       zoom: 6,
       minZoom: 5,
+      zoomControl: false,
     });
+
+    L.control.zoom({ position: 'topright' }).addTo(this.map);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 18,
