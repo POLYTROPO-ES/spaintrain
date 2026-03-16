@@ -110,7 +110,7 @@ body,
 
 .quick-controls {
   display: grid;
-  grid-template-columns: auto auto 1fr auto;
+  grid-template-columns: auto auto 1fr auto auto;
   align-items: center;
   gap: 8px;
   background: var(--panel-bg);
@@ -145,6 +145,73 @@ body,
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+.legend-card {
+  margin-top: 10px;
+  border: 1px solid var(--border);
+  background: var(--panel-bg);
+  border-radius: 12px;
+  padding: 10px;
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.legend-card h3 {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.legend-block {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.legend-block-title {
+  font-weight: 700;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.legend-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+}
+
+.legend-icon {
+  width: 18px;
+  text-align: center;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.legend-stopped {
+  background: #b45309;
+}
+
+.legend-incoming {
+  background: #0f766e;
+}
+
+.legend-transit {
+  background: #1d4ed8;
+}
+
+.legend-unknown {
+  background: #64748b;
 }
 
 .menu-drawer.collapsed {

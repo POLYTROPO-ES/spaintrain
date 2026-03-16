@@ -31,6 +31,38 @@ function buildTrainIcon(color) {
   });
 }
 
+function buildHighSpeedTrainIcon(color) {
+  const svg = `
+    <svg width="38" height="38" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g>
+        <path d="M6 22.2c0-6.8 4.7-12.2 11.2-13.4L30 6.4c1.1-.2 2 .8 1.7 1.8l-2.8 9.4c-.6 2-2.1 3.6-4 4.5l-8.8 4c-1.1.5-2.4.8-3.6.8H7.8A1.8 1.8 0 0 1 6 25.1v-2.9z" fill="${color}" stroke="#0f172a" stroke-width="1.2"/>
+        <path d="M16.2 11.1 27 9.2l-1.3 4.4-10.9 2z" fill="#e2e8f0" opacity="0.95"/>
+        <rect x="10" y="23.7" width="10.5" height="1.9" rx="0.95" fill="#e2e8f0"/>
+        <circle cx="12.4" cy="27.5" r="1.4" fill="#0f172a"/>
+        <circle cx="20.1" cy="27.5" r="1.4" fill="#0f172a"/>
+      </g>
+    </svg>
+  `;
+
+  return L.divIcon({
+    className: 'train-svg-icon train-svg-icon-highspeed',
+    html: svg,
+    iconSize: [38, 38],
+    iconAnchor: [19, 19],
+    popupAnchor: [0, -18],
+  });
+}
+
+function resolveServiceType(vehicle) {
+  return String(vehicle.serviceType || 'cercanias').toLowerCase() === 'ld' ? 'ld' : 'cercanias';
+}
+
+function buildIconForVehicle(vehicle, color) {
+  return resolveServiceType(vehicle) === 'ld'
+    ? buildHighSpeedTrainIcon(color)
+    : buildTrainIcon(color);
+}
+
 export class MapManager {
   constructor(containerId) {
     this.map = L.map(containerId, {
@@ -71,7 +103,8 @@ export class MapManager {
       const marker = this.markerCache.get(vehicle.id);
       const color = statusColor[vehicle.status] || statusColor.UNKNOWN;
       const popup = this.createPopup(vehicle);
-      const markerSignature = `${vehicle.status}|${color}`;
+      const serviceType = resolveServiceType(vehicle);
+      const markerSignature = `${vehicle.status}|${color}|${serviceType}`;
 
       if (marker) {
         const wasPopupOpen = marker.isPopupOpen();
@@ -79,7 +112,7 @@ export class MapManager {
 
         // Avoid recreating icon/popup binding every frame; this keeps marker click interactions stable.
         if (marker.__signature !== markerSignature) {
-          marker.setIcon(buildTrainIcon(color));
+          marker.setIcon(buildIconForVehicle(vehicle, color));
           marker.__signature = markerSignature;
         }
 
@@ -96,7 +129,7 @@ export class MapManager {
       }
 
       const newMarker = L.marker([vehicle.lat, vehicle.lon], {
-        icon: buildTrainIcon(color),
+        icon: buildIconForVehicle(vehicle, color),
       }).addTo(this.markerLayer);
 
       newMarker.bindPopup(popup);
@@ -118,14 +151,25 @@ export class MapManager {
       ? `${vehicle.platform}${vehicle.platformInferred ? ' (inferred)' : ''}`
       : '-';
     const confidence = vehicle.platform ? `${Math.round((vehicle.platformConfidence || 0) * 100)}%` : '-';
+    const speed = Math.round(Number(vehicle.estimatedSpeedKmh || 0));
+    const heading = Number.isFinite(vehicle.estimatedHeadingDeg)
+      ? `${Math.round(vehicle.estimatedHeadingDeg)}°`
+      : '-';
+    const serviceType = resolveServiceType(vehicle);
+    const serviceLabel = serviceType === 'ld' ? 'HIGH_SPEED_DATASET' : 'CERCANIAS_DATASET';
 
     return `
       <strong>${vehicle.lineCode}</strong><br>
       Train: ${vehicle.id}<br>
+      Service type: ${serviceLabel}<br>
       Trip: ${vehicle.tripId || '-'}<br>
       Stop: ${vehicle.stopId || '-'}<br>
       Platform: ${platformText}<br>
       Platform confidence: ${confidence}<br>
+      Estimated speed: ${speed} km/h<br>
+      Estimated heading: ${heading}<br>
+      Motion model: ${vehicle.motionModel || 'none'}<br>
+      Data source type: ${vehicle.serviceType || 'cercanias'}<br>
       Status: ${vehicle.status}
     `;
   }

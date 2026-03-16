@@ -14,6 +14,23 @@ export function buildMenu(app, i18n, settings) {
         <option value="pt">Portugues</option>
       </select>
       <button id="quick-theme" title="Theme"></button>
+      <button id="legend-toggle" class="menu-icon-btn" aria-label="Legend" title="Legend">?</button>
+    </div>
+
+    <div class="legend-card" id="legend-card" hidden>
+      <h3 id="legend-title"></h3>
+      <div class="legend-block">
+        <div class="legend-block-title" id="legend-speed-title"></div>
+        <div class="legend-row"><span class="legend-icon legend-icon-low">🚆</span><span id="legend-speed-low"></span></div>
+        <div class="legend-row"><span class="legend-icon legend-icon-high">🚄</span><span id="legend-speed-high"></span></div>
+      </div>
+      <div class="legend-block">
+        <div class="legend-block-title" id="legend-status-title"></div>
+        <div class="legend-row"><span class="legend-dot legend-stopped"></span><span id="legend-status-stopped"></span></div>
+        <div class="legend-row"><span class="legend-dot legend-incoming"></span><span id="legend-status-incoming"></span></div>
+        <div class="legend-row"><span class="legend-dot legend-transit"></span><span id="legend-status-transit"></span></div>
+        <div class="legend-row"><span class="legend-dot legend-unknown"></span><span id="legend-status-unknown"></span></div>
+      </div>
     </div>
 
     <div class="menu-drawer collapsed" id="menu-drawer">
@@ -105,6 +122,8 @@ export function buildMenu(app, i18n, settings) {
     quickLanguageLabel: panel.querySelector('#quick-language-label'),
     quickLanguage: panel.querySelector('#quick-language'),
     quickTheme: panel.querySelector('#quick-theme'),
+    legendToggle: panel.querySelector('#legend-toggle'),
+    legendCard: panel.querySelector('#legend-card'),
     platformSelect: panel.querySelector('#platform-select'),
     retentionDays: panel.querySelector('#retention-days'),
     lineFilter: panel.querySelector('#line-filter'),
@@ -150,6 +169,9 @@ export function buildMenu(app, i18n, settings) {
   });
   refs.quickLanguage.addEventListener('change', (event) => app.onLanguageChange(event.target.value));
   refs.quickTheme.addEventListener('click', () => app.onQuickThemeToggle());
+  refs.legendToggle.addEventListener('click', () => {
+    refs.legendCard.hidden = !refs.legendCard.hidden;
+  });
   refs.platformSelect.addEventListener('change', (event) => app.onPlatformModeChange(event.target.value));
   refs.retentionDays.addEventListener('change', (event) => app.onRetentionChange(Number(event.target.value)));
   refs.lineFilter.addEventListener('change', (event) => {
@@ -185,6 +207,16 @@ export function buildMenu(app, i18n, settings) {
     panel.querySelector('#subtitle').textContent = i18n.t('subtitle');
     refs.quickLanguageLabel.textContent = i18n.t('language');
     refs.quickTheme.textContent = `${i18n.t('theme')}: ${settings.theme === 'dark' ? i18n.t('dark') : i18n.t('light')}`;
+    refs.legendToggle.title = i18n.t('legend_title');
+    panel.querySelector('#legend-title').textContent = i18n.t('legend_title');
+    panel.querySelector('#legend-speed-title').textContent = i18n.t('legend_speed_title');
+    panel.querySelector('#legend-speed-low').textContent = i18n.t('legend_speed_low');
+    panel.querySelector('#legend-speed-high').textContent = i18n.t('legend_speed_high');
+    panel.querySelector('#legend-status-title').textContent = i18n.t('legend_status_title');
+    panel.querySelector('#legend-status-stopped').textContent = i18n.t('legend_status_stopped');
+    panel.querySelector('#legend-status-incoming').textContent = i18n.t('legend_status_incoming');
+    panel.querySelector('#legend-status-transit').textContent = i18n.t('legend_status_transit');
+    panel.querySelector('#legend-status-unknown').textContent = i18n.t('legend_status_unknown');
     panel.querySelector('#label-platform').textContent = i18n.t('platform_mode');
     panel.querySelector('#label-retention').textContent = i18n.t('retention_days');
     panel.querySelector('#label-line-filter').textContent = i18n.t('line_filter');

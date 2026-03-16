@@ -28,20 +28,23 @@ function toNumberTimestamp(value) {
 function mergePayloads(payloads) {
   const entityByVehicleId = new Map();
 
-  payloads.forEach((payload) => {
+  payloads.forEach(({ payload, serviceType }) => {
     const entities = Array.isArray(payload?.entity) ? payload.entity : [];
     entities.forEach((entity) => {
       const vehicleId = String(entity?.vehicle?.vehicle?.id || entity?.id || '');
       if (!vehicleId) {
         return;
       }
-      entityByVehicleId.set(vehicleId, entity);
+      entityByVehicleId.set(vehicleId, {
+        ...entity,
+        serviceType,
+      });
     });
   });
 
-  const timestamps = payloads.map((payload) => toNumberTimestamp(payload?.header?.timestamp));
+  const timestamps = payloads.map(({ payload }) => toNumberTimestamp(payload?.header?.timestamp));
   const maxTimestamp = timestamps.length > 0 ? Math.max(...timestamps) : 0;
-  const baseHeader = payloads[0]?.header || {};
+  const baseHeader = payloads[0]?.payload?.header || {};
 
   return {
     header: {
@@ -73,8 +76,8 @@ export async function onRequest(context) {
   }
 
   const results = await Promise.allSettled([
-    fetchFeed(RENFE_FEED_URL),
-    fetchFeed(RENFE_FEED_LD_URL),
+    fetchFeed(RENFE_FEED_URL).then((payload) => ({ payload, serviceType: 'cercanias' })),
+    fetchFeed(RENFE_FEED_LD_URL).then((payload) => ({ payload, serviceType: 'ld' })),
   ]);
 
   const successfulPayloads = results

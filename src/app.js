@@ -1,6 +1,6 @@
 import { APP_CONFIG } from './core/config.js';
 import { CronLikeScheduler } from './core/scheduler.js';
-import { simulateMovement } from './core/interpolation.js';
+import { calculateBearing, estimateSpeedKmh, simulateMovement } from './core/interpolation.js';
 import { FeedService } from './data/feedService.js';
 import { MapManager } from './map/mapManager.js';
 import { LocalStore } from './storage/db.js';
@@ -270,7 +270,12 @@ export class SpainTrainApp {
     const vehicles = current.vehicles.map((vehicle) => {
       const prev = previousById.get(vehicle.id);
       if (!prev) {
-        return vehicle;
+        return {
+          ...vehicle,
+          estimatedSpeedKmh: 0,
+          estimatedHeadingDeg: null,
+          motionModel: 'insufficient_history',
+        };
       }
 
       const simulated = simulateMovement(prev, vehicle, progress, {
@@ -278,10 +283,19 @@ export class SpainTrainApp {
         jumpThresholdKm: APP_CONFIG.jumpThresholdKm,
       });
 
+      const estimatedSpeedKmh = estimateSpeedKmh(prev, vehicle, APP_CONFIG.updateIntervalMs);
+      const estimatedHeadingDeg = calculateBearing(
+        { lat: prev.lat, lon: prev.lon },
+        { lat: vehicle.lat, lon: vehicle.lon }
+      );
+
       return {
         ...vehicle,
         lat: simulated.lat,
         lon: simulated.lon,
+        estimatedSpeedKmh,
+        estimatedHeadingDeg,
+        motionModel: 'kinematic_status_aware',
       };
     });
 

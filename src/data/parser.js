@@ -91,6 +91,7 @@ export function normalizePayload(payload, options) {
       const label = String(vehicleMeta.label || '');
       const lineCode = extractLineCode(label);
       const stopId = String(rawVehicle.stopId || '');
+      const serviceType = String(entity?.serviceType || 'cercanias');
       const platform = parsePlatform(label, platformMode, platformMemory, vehicleId, nowMs, stopId, lineCode);
 
       return {
@@ -99,6 +100,7 @@ export function normalizePayload(payload, options) {
         tripId: String(rawVehicle.trip?.tripId || ''),
         lineCode,
         label,
+        serviceType,
         lat,
         lon,
         stopId,
