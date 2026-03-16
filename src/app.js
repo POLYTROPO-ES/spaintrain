@@ -95,12 +95,22 @@ export class SpainTrainApp {
     this.root.innerHTML = `
       <div class="app-shell">
         <div id="map" class="map-area"></div>
+        <div id="first-load-overlay" class="first-load-overlay" role="status" aria-live="polite">
+          <div class="first-load-card">
+            <div class="first-load-icon" aria-hidden="true">🚆</div>
+            <div id="first-load-text" class="first-load-text"></div>
+            <div class="first-load-spinner" aria-hidden="true"></div>
+          </div>
+        </div>
       </div>
     `;
 
     const { refs, applyTexts, setLineOptions, syncQuickControls } = buildMenu(this, this.i18n, this.state.settings);
     this.ui = { refs, applyTexts, setLineOptions, syncQuickControls };
     this.root.querySelector('.app-shell').appendChild(refs.panel);
+    this.firstLoadOverlay = this.root.querySelector('#first-load-overlay');
+    this.firstLoadText = this.root.querySelector('#first-load-text');
+    this.updateFirstLoadOverlayText();
     this.refreshStats();
   }
 
@@ -147,6 +157,7 @@ export class SpainTrainApp {
 
     this.ui.refs.modePill.textContent = this.i18n.t('status_live');
     this.refreshLineOptions(snapshot.vehicles);
+    this.hideFirstLoadOverlay();
     logger.debug('Snapshot applied', {
       tickId,
       vehicles: snapshot.vehicles.length,
@@ -258,6 +269,7 @@ export class SpainTrainApp {
     this.i18n.setLanguage(language);
     this.ui.applyTexts();
     this.ui.syncQuickControls(this.state.settings);
+    this.updateFirstLoadOverlayText();
     this.refreshLineOptions(this.state.currentSnapshot?.vehicles || []);
     await this.store.setSetting('language', language);
     logger.info('Language changed', { language });
@@ -393,6 +405,19 @@ export class SpainTrainApp {
 
   applyTheme(theme) {
     document.documentElement.dataset.theme = theme;
+  }
+
+  updateFirstLoadOverlayText() {
+    if (this.firstLoadText) {
+      this.firstLoadText.textContent = this.i18n.t('updating_first_data');
+    }
+  }
+
+  hideFirstLoadOverlay() {
+    if (!this.firstLoadOverlay) {
+      return;
+    }
+    this.firstLoadOverlay.classList.add('hidden');
   }
 
   refreshLineOptions(vehicles) {
