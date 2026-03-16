@@ -70,6 +70,31 @@ export class LocalStore {
     return all.sort((a, b) => a.snapshotTimeMs - b.snapshotTimeMs);
   }
 
+  async getRecentSnapshots(limit = 12) {
+    const all = await this.getAllSnapshots();
+    if (limit <= 0) {
+      return [];
+    }
+    return all.slice(-limit);
+  }
+
+  async getSnapshotMetrics() {
+    const all = await this.getAllSnapshots();
+    if (all.length === 0) {
+      return {
+        count: 0,
+        oldestSnapshotTimeMs: null,
+        newestSnapshotTimeMs: null,
+      };
+    }
+
+    return {
+      count: all.length,
+      oldestSnapshotTimeMs: Number(all[0].snapshotTimeMs || 0),
+      newestSnapshotTimeMs: Number(all[all.length - 1].snapshotTimeMs || 0),
+    };
+  }
+
   async importSnapshots(snapshots) {
     if (!Array.isArray(snapshots)) {
       throw new Error('Invalid import payload');

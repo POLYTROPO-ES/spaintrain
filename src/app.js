@@ -15,6 +15,8 @@ import { AlertsService } from './data/alertsService.js';
 import { normalizeLineCode } from './core/lineCode.js';
 
 const SETTINGS_KEYS = ['language', 'theme', 'platformMode', 'retentionDays', 'lineFilters', 'searchText', 'showImpactedOnly'];
+const TRAIN_HISTORY_ROW_LIMIT = 8;
+const SNAPSHOT_HISTORY_LIMIT = 18;
 
 export class SpainTrainApp {
   constructor(root) {
@@ -59,6 +61,12 @@ export class SpainTrainApp {
         count: 0,
       },
       disruptionLineCodes: new Set(),
+      storageMetrics: {
+        count: 0,
+        oldestSnapshotTimeMs: null,
+        newestSnapshotTimeMs: null,
+      },
+      trainHistoryRowsById: new Map(),
     };
 
     this.animationFrame = null;
@@ -73,6 +81,8 @@ export class SpainTrainApp {
 
     this.map = new MapManager('map');
     this.loadRailPathsInBackground();
+    await this.refreshStorageInsights();
+    this.refreshStats();
 
     this.configurePlayback();
     this.startAnimationLoop();
@@ -216,8 +226,90 @@ export class SpainTrainApp {
     await this.store.saveSnapshot(snapshot);
     const retentionCutoff = Date.now() - Number(this.state.settings.retentionDays) * 24 * 60 * 60 * 1000;
     await this.store.pruneOlderThan(retentionCutoff);
+    await this.refreshStorageInsights();
 
     this.refreshStats();
+  }
+
+  async refreshStorageInsights() {
+    try {
+      const [storageMetrics, recentSnapshots] = await Promise.all([
+        this.store.getSnapshotMetrics(),
+        this.store.getRecentSnapshots(SNAPSHOT_HISTORY_LIMIT),
+      ]);
+      this.state.storageMetrics = storageMetrics;
+      this.state.trainHistoryRowsById = this.buildTrainHistoryRowsById(recentSnapshots, TRAIN_HISTORY_ROW_LIMIT);
+    } catch (error) {
+      logger.warn('Failed to refresh local storage metrics', { message: String(error?.message || error) });
+    }
+  }
+
+  buildTrainHistoryRowsById(snapshots, rowLimit) {
+    const byTrainId = new Map();
+
+    (snapshots || []).forEach((snapshot) => {
+      const snapshotTimeMs = Number(snapshot?.snapshotTimeMs || 0);
+      const vehicles = Array.isArray(snapshot?.vehicles) ? snapshot.vehicles : [];
+      vehicles.forEach((vehicle) => {
+        const trainId = String(vehicle?.id || '');
+        if (!trainId) {
+          return;
+        }
+
+        const row = {
+          timestampMs: snapshotTimeMs,
+          lat: Number(vehicle?.lat || 0),
+          lon: Number(vehicle?.lon || 0),
+          sourceTimestampMs: Number(vehicle?.sourceTimestampMs || 0),
+        };
+
+        if (!byTrainId.has(trainId)) {
+          byTrainId.set(trainId, []);
+        }
+        byTrainId.get(trainId).push(row);
+      });
+    });
+
+    byTrainId.forEach((rows, trainId) => {
+      rows.sort((a, b) => a.timestampMs - b.timestampMs);
+      const sliced = rows.slice(-rowLimit);
+      const withSpeed = sliced.map((row, index) => {
+        if (index === 0) {
+          return {
+            timestampMs: row.timestampMs,
+            lat: row.lat,
+            lon: row.lon,
+            speedKmh: 0,
+          };
+        }
+
+        const prev = sliced[index - 1];
+        const speedKmh = estimateSpeedKmh(
+          {
+            lat: prev.lat,
+            lon: prev.lon,
+            sourceTimestampMs: prev.sourceTimestampMs || prev.timestampMs,
+          },
+          {
+            lat: row.lat,
+            lon: row.lon,
+            sourceTimestampMs: row.sourceTimestampMs || row.timestampMs,
+          },
+          Math.max(1, row.timestampMs - prev.timestampMs)
+        );
+
+        return {
+          timestampMs: row.timestampMs,
+          lat: row.lat,
+          lon: row.lon,
+          speedKmh,
+        };
+      });
+
+      byTrainId.set(trainId, withSpeed);
+    });
+
+    return byTrainId;
   }
 
   shouldDiscardSnapshot(incomingSnapshot) {
@@ -351,6 +443,16 @@ export class SpainTrainApp {
     this.ui.refs.staleWarning.textContent = this.state.isStale ? this.i18n.t('stale_warning') : '';
     this.ui.refs.source.textContent = this.state.metrics.source || 'direct';
     this.ui.refs.alertsCount.textContent = String(this.state.alertsMetrics.count || 0);
+    this.ui.refs.snapshotsStored.textContent = String(this.state.storageMetrics.count || 0);
+    this.ui.refs.oldestSnapshot.textContent = this.formatMetricDate(this.state.storageMetrics.oldestSnapshotTimeMs);
+    this.ui.refs.newestSnapshot.textContent = this.formatMetricDate(this.state.storageMetrics.newestSnapshotTimeMs);
+  }
+
+  formatMetricDate(valueMs) {
+    if (!valueMs || !Number.isFinite(Number(valueMs))) {
+      return '-';
+    }
+    return new Date(Number(valueMs)).toLocaleString();
   }
 
   renderAlerts() {
@@ -439,12 +541,17 @@ export class SpainTrainApp {
       this.state.alerts = [];
       this.state.alertsMetrics = { source: '/api/alerts', count: 0 };
       this.state.disruptionLineCodes = new Set();
+      this.state.storageMetrics = { count: 0, oldestSnapshotTimeMs: null, newestSnapshotTimeMs: null };
+      this.state.trainHistoryRowsById = new Map();
       this.map.setDisruptionLineCodes(this.state.disruptionLineCodes);
 
       this.ui.refs.vehicles.textContent = '0';
       this.ui.refs.lastUpdate.textContent = '-';
       this.ui.refs.modePill.textContent = this.i18n.t('status_live');
       this.ui.refs.alertsCount.textContent = '0';
+      this.ui.refs.snapshotsStored.textContent = '0';
+      this.ui.refs.oldestSnapshot.textContent = '-';
+      this.ui.refs.newestSnapshot.textContent = '-';
       this.ui.refs.alertsList.innerHTML = '';
       this.ui.refs.alertsEmpty.textContent = this.i18n.t('alerts_none');
 
@@ -510,6 +617,8 @@ export class SpainTrainApp {
       }
 
       await this.store.importSnapshots(validation.snapshots);
+      await this.refreshStorageInsights();
+      this.refreshStats();
       if (validation.errors.length > 0) {
         alert(`${this.i18n.t('import_partial')}: ${validation.errors.join('; ')}`);
         logger.warn('Import completed with warnings', { errors: validation.errors, imported: validation.snapshots.length });
@@ -575,7 +684,11 @@ export class SpainTrainApp {
   }
 
   renderVehicles(vehicles, totalCount = vehicles.length) {
-    const filtered = this.applyVehicleFilters(vehicles);
+    const vehiclesWithHistory = vehicles.map((vehicle) => ({
+      ...vehicle,
+      historyRows: this.state.trainHistoryRowsById.get(vehicle.id) || [],
+    }));
+    const filtered = this.applyVehicleFilters(vehiclesWithHistory);
     this.map.updateVehicles(filtered);
     this.ui.refs.vehicles.textContent = `${filtered.length} / ${totalCount}`;
   }

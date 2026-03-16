@@ -76,6 +76,40 @@ function buildIconForVehicle(vehicle, color, isDisrupted) {
     : buildTrainIcon(color, isDisrupted);
 }
 
+function formatRowTimestamp(timestampMs) {
+  if (!timestampMs || !Number.isFinite(Number(timestampMs))) {
+    return '-';
+  }
+  return new Date(Number(timestampMs)).toLocaleString();
+}
+
+function renderHistoryTable(rows) {
+  const safeRows = Array.isArray(rows) ? rows.slice(-8) : [];
+  if (safeRows.length === 0) {
+    return '<div class="popup-history-empty">No local history yet</div>';
+  }
+
+  const body = safeRows.map((row) => {
+    const timestamp = formatRowTimestamp(row.timestampMs);
+    const coordinates = `${Number(row.lat || 0).toFixed(5)}, ${Number(row.lon || 0).toFixed(5)}`;
+    const speed = `${Math.round(Number(row.speedKmh || 0))} km/h`;
+    return `<tr><td>${timestamp}</td><td>${coordinates}</td><td>${speed}</td></tr>`;
+  }).join('');
+
+  return `
+    <table class="popup-history-table">
+      <thead>
+        <tr>
+          <th>Timestamp</th>
+          <th>Coordinates</th>
+          <th>Calculated speed</th>
+        </tr>
+      </thead>
+      <tbody>${body}</tbody>
+    </table>
+  `;
+}
+
 export class MapManager {
   constructor(containerId) {
     this.map = L.map(containerId, {
@@ -180,6 +214,7 @@ export class MapManager {
     const serviceType = resolveServiceType(vehicle);
     const serviceLabel = serviceType === 'ld' ? 'HIGH_SPEED_DATASET' : 'CERCANIAS_DATASET';
     const impacted = this.disruptionLineCodes.has(normalizeLineCode(vehicle.lineCode));
+    const historyTable = renderHistoryTable(vehicle.historyRows);
 
     return `
       <strong>${vehicle.lineCode}</strong><br>
@@ -194,7 +229,11 @@ export class MapManager {
       Motion model: ${vehicle.motionModel || 'none'}<br>
       Data source type: ${vehicle.serviceType || 'cercanias'}<br>
       Disruption impact: ${impacted ? 'YES' : 'NO'}<br>
-      Status: ${vehicle.status}
+      Status: ${vehicle.status}<br>
+      <div class="popup-history-wrap">
+        <strong>Recent stored history</strong>
+        ${historyTable}
+      </div>
     `;
   }
 }

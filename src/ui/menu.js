@@ -82,6 +82,9 @@ export function buildMenu(app, i18n, settings) {
         <div><span id="label-countdown"></span>: <strong id="countdown">-</strong></div>
         <div><span id="label-last-update"></span>: <strong id="last-update">-</strong></div>
         <div><span id="label-vehicles"></span>: <strong id="vehicles">0</strong></div>
+        <div><span id="label-snapshots-stored"></span>: <strong id="snapshots-stored">0</strong></div>
+        <div><span id="label-oldest-snapshot"></span>: <strong id="oldest-snapshot">-</strong></div>
+        <div><span id="label-newest-snapshot"></span>: <strong id="newest-snapshot">-</strong></div>
         <div><span id="label-alerts-count"></span>: <strong id="alerts-count">0</strong></div>
         <div><span id="label-source"></span>: <strong id="source">-</strong></div>
         <div><span id="label-version"></span>: <strong id="version">-</strong></div>
@@ -140,6 +143,9 @@ export function buildMenu(app, i18n, settings) {
     countdown: panel.querySelector('#countdown'),
     lastUpdate: panel.querySelector('#last-update'),
     vehicles: panel.querySelector('#vehicles'),
+    snapshotsStored: panel.querySelector('#snapshots-stored'),
+    oldestSnapshot: panel.querySelector('#oldest-snapshot'),
+    newestSnapshot: panel.querySelector('#newest-snapshot'),
     alertsCount: panel.querySelector('#alerts-count'),
     source: panel.querySelector('#source'),
     version: panel.querySelector('#version'),
@@ -247,6 +253,9 @@ export function buildMenu(app, i18n, settings) {
     setText('#label-countdown', 'countdown');
     setText('#label-last-update', 'last_update');
     setText('#label-vehicles', 'vehicles');
+    setText('#label-snapshots-stored', 'snapshots_stored');
+    setText('#label-oldest-snapshot', 'oldest_snapshot');
+    setText('#label-newest-snapshot', 'newest_snapshot');
     setText('#label-alerts-count', 'alerts_count');
     setText('#label-source', 'data_source');
     setText('#label-version', 'app_version');
