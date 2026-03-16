@@ -66,5 +66,35 @@ Repository: [POLYTROPO-ES/spaintrain](https://github.com/POLYTROPO-ES/spaintrain
 ## Contributing
 See [CONTRIBUTING.md](CONTRIBUTING.md) for branching, commit conventions, push/PR workflow, and review checklist.
 
+
+## Español
+
+SpainTrain es una PWA orientada a navegador para visualizar posiciones de trenes en tiempo real en Espana sobre OpenStreetMap, con historial local, reproduccion de datos y soporte multilenguaje.
+
+### Caracteristicas
+- Seguimiento de trenes en vivo con refresco cada 20 segundos
+- Movimiento interpolado entre snapshots para una animacion mas fluida
+- Marcadores SVG con forma de tren y color por estado
+- Modo de anden estricto o inferido con puntuacion de confianza
+- Interfaz multi idioma: ES, EN, FR, IT, PT
+- Filtro multi seleccion por linea y busqueda por tren/linea
+- Historial local en IndexedDB con controles de reproduccion
+- Exportacion/importacion de historial para mover datos entre dispositivos
+- Soporte de tema claro/oscuro
+- Proxy local para evitar problemas CORS en desarrollo
+- Soporte de despliegue en Cloudflare Pages + Worker proxy
+
+### Fuente de datos
+- Posiciones de trenes (Renfe GTFS Realtime):
+   - JSON: [https://gtfsrt.renfe.com/vehicle_positions.json](https://gtfsrt.renfe.com/vehicle_positions.json)
+   - Protobuf: [https://gtfsrt.renfe.com/vehicle_positions.pb](https://gtfsrt.renfe.com/vehicle_positions.pb)
+- Geometria de vias:
+   - Datos ferroviarios de OpenStreetMap via Overpass API
+   - Respaldo local en [src/paths/rail-paths-spain-sample.geojson](src/paths/rail-paths-spain-sample.geojson)
+
+
+
+
 ## License
-Add a license file (for example MIT) before public release.
+MIT
+
