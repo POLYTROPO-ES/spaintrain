@@ -542,9 +542,10 @@ export class SpainTrainApp {
     const search = (this.state.settings.searchText || '').trim().toLowerCase();
     const showImpactedOnly = Boolean(this.state.settings.showImpactedOnly);
     const disruptionLineCodes = this.state.disruptionLineCodes || new Set();
+    const hasImpactedLines = disruptionLineCodes.size > 0;
 
     return vehicles.filter((vehicle) => {
-      if (showImpactedOnly) {
+      if (showImpactedOnly && hasImpactedLines) {
         const normalizedLine = normalizeLineCode(vehicle.lineCode);
         if (!normalizedLine || !disruptionLineCodes.has(normalizedLine)) {
           return false;
