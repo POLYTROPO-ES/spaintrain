@@ -2,6 +2,8 @@
 
 SpainTrain is a browser-first PWA for visualizing live train positions in Spain on top of OpenStreetMap, with local playback history, multilingual UI, and resilient data fallback strategies.
 
+Repository: [POLYTROPO-ES/spaintrain](https://github.com/POLYTROPO-ES/spaintrain)
+
 ## Features
 - Live vehicle tracking with 20-second refresh cadence
 - Interpolated movement between snapshots for smoother motion
@@ -23,11 +25,11 @@ SpainTrain is a browser-first PWA for visualizing live train positions in Spain 
 - Optional Cloudflare Pages and Cloudflare Worker
 
 ## Project Structure
-- `src/`: application source code
-- `public/`: static files and PWA assets
-- `docs/`: goals, decisions, deployment and workflow docs
-- `cloudflare/`: Worker proxy template and Wrangler config
-- `data-source/`: local sample source payloads
+- [src/](src/): application source code
+- [public/](public/): static files and PWA assets
+- [docs/](docs/): goals, decisions, deployment and workflow docs
+- [cloudflare/](cloudflare/): Worker proxy template and Wrangler config
+- [data-source/](data-source/): local sample source payloads
 
 ## Getting Started
 1. Install dependencies:
@@ -50,11 +52,11 @@ SpainTrain is a browser-first PWA for visualizing live train positions in Spain 
 - `npm run docker:run`: run container on port 8080
 
 ## Deployment
-- Cloudflare Pages instructions: `docs/CloudflarePages.md`
-- Local and Docker instructions: `docs/LocalTestingAndDocker.md`
+- Cloudflare Pages instructions: [docs/CloudflarePages.md](docs/CloudflarePages.md)
+- Local and Docker instructions: [docs/LocalTestingAndDocker.md](docs/LocalTestingAndDocker.md)
 
 ## Contributing
-See `CONTRIBUTING.md` for branching, commit conventions, push/PR workflow, and review checklist.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for branching, commit conventions, push/PR workflow, and review checklist.
 
 ## License
 Add a license file (for example MIT) before public release.
