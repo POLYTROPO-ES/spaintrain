@@ -181,6 +181,16 @@ export class SpainTrainApp {
       return;
     }
 
+    if (this.shouldDiscardSnapshot(snapshot)) {
+      this.state.latestTickId = tickId;
+      logger.warn('Discarding out-of-order snapshot', {
+        tickId,
+        incomingHeaderTimestampMs: Number(snapshot?.headerTimestampMs || 0),
+        currentHeaderTimestampMs: Number(this.state.currentSnapshot?.headerTimestampMs || 0),
+      });
+      return;
+    }
+
     this.state.latestTickId = tickId;
     this.state.previousSnapshot = this.state.currentSnapshot;
     this.state.currentSnapshot = snapshot;
@@ -208,6 +218,24 @@ export class SpainTrainApp {
     await this.store.pruneOlderThan(retentionCutoff);
 
     this.refreshStats();
+  }
+
+  shouldDiscardSnapshot(incomingSnapshot) {
+    if (!this.state.currentSnapshot) {
+      return false;
+    }
+
+    const incomingTs = Number(incomingSnapshot?.headerTimestampMs || 0);
+    const currentTs = Number(this.state.currentSnapshot?.headerTimestampMs || 0);
+
+    // Only accept strictly newer source timestamps to keep movement interpolation monotonic.
+    if (incomingTs > 0 && currentTs > 0) {
+      return incomingTs <= currentTs;
+    }
+
+    const incomingFallbackTs = Number(incomingSnapshot?.snapshotTimeMs || 0);
+    const currentFallbackTs = Number(this.state.currentSnapshot?.snapshotTimeMs || 0);
+    return incomingFallbackTs <= currentFallbackTs;
   }
 
   async fetchAlertsSafe(language) {
