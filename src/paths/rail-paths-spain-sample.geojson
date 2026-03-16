@@ -1,0 +1,44 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "name": "Madrid-Barcelona" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-3.7038, 40.4168],
+          [-2.1332, 41.6518],
+          [0.1760, 41.6639],
+          [2.1734, 41.3851]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Madrid-Sevilla" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-3.7038, 40.4168],
+          [-3.2560, 39.8628],
+          [-4.7794, 37.8882],
+          [-5.9845, 37.3891]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Valencia-Barcelona" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-0.3763, 39.4699],
+          [0.0410, 40.8060],
+          [0.8080, 40.7210],
+          [2.1734, 41.3851]
+        ]
+      }
+    }
+  ]
+}
