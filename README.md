@@ -61,6 +61,7 @@ Repository: [POLYTROPO-ES/spaintrain](https://github.com/POLYTROPO-ES/spaintrain
 
 ## Deployment
 - Cloudflare Pages instructions: [docs/CloudflarePages.md](docs/CloudflarePages.md)
+- GitHub Actions auto deploy (main): [docs/GitHubActionsCloudflare.md](docs/GitHubActionsCloudflare.md)
 - Local and Docker instructions: [docs/LocalTestingAndDocker.md](docs/LocalTestingAndDocker.md)
 
 ## Contributing
