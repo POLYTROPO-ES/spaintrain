@@ -55,6 +55,7 @@ export class SpainTrainApp {
       metrics: {
         fetchLatencyMs: 0,
       },
+      discardedOutOfOrderCount: 0,
       alerts: [],
       alertsMetrics: {
         source: '/api/alerts',
@@ -193,11 +194,14 @@ export class SpainTrainApp {
 
     if (this.shouldDiscardSnapshot(snapshot)) {
       this.state.latestTickId = tickId;
+      this.state.discardedOutOfOrderCount += 1;
       logger.warn('Discarding out-of-order snapshot', {
         tickId,
+        discardedOutOfOrderCount: this.state.discardedOutOfOrderCount,
         incomingHeaderTimestampMs: Number(snapshot?.headerTimestampMs || 0),
         currentHeaderTimestampMs: Number(this.state.currentSnapshot?.headerTimestampMs || 0),
       });
+      this.refreshStats();
       return;
     }
 
@@ -443,6 +447,7 @@ export class SpainTrainApp {
     this.ui.refs.staleWarning.textContent = this.state.isStale ? this.i18n.t('stale_warning') : '';
     this.ui.refs.source.textContent = this.state.metrics.source || 'direct';
     this.ui.refs.alertsCount.textContent = String(this.state.alertsMetrics.count || 0);
+    this.ui.refs.discardedSnapshots.textContent = String(this.state.discardedOutOfOrderCount || 0);
     this.ui.refs.snapshotsStored.textContent = String(this.state.storageMetrics.count || 0);
     this.ui.refs.oldestSnapshot.textContent = this.formatMetricDate(this.state.storageMetrics.oldestSnapshotTimeMs);
     this.ui.refs.newestSnapshot.textContent = this.formatMetricDate(this.state.storageMetrics.newestSnapshotTimeMs);
@@ -540,6 +545,7 @@ export class SpainTrainApp {
       this.state.currentSnapshot = null;
       this.state.alerts = [];
       this.state.alertsMetrics = { source: '/api/alerts', count: 0 };
+      this.state.discardedOutOfOrderCount = 0;
       this.state.disruptionLineCodes = new Set();
       this.state.storageMetrics = { count: 0, oldestSnapshotTimeMs: null, newestSnapshotTimeMs: null };
       this.state.trainHistoryRowsById = new Map();
@@ -549,6 +555,7 @@ export class SpainTrainApp {
       this.ui.refs.lastUpdate.textContent = '-';
       this.ui.refs.modePill.textContent = this.i18n.t('status_live');
       this.ui.refs.alertsCount.textContent = '0';
+      this.ui.refs.discardedSnapshots.textContent = '0';
       this.ui.refs.snapshotsStored.textContent = '0';
       this.ui.refs.oldestSnapshot.textContent = '-';
       this.ui.refs.newestSnapshot.textContent = '-';

@@ -82,6 +82,7 @@ export function buildMenu(app, i18n, settings) {
         <div><span id="label-countdown"></span>: <strong id="countdown">-</strong></div>
         <div><span id="label-last-update"></span>: <strong id="last-update">-</strong></div>
         <div><span id="label-vehicles"></span>: <strong id="vehicles">0</strong></div>
+        <div><span id="label-discarded-snapshots"></span>: <strong id="discarded-snapshots">0</strong></div>
         <div><span id="label-snapshots-stored"></span>: <strong id="snapshots-stored">0</strong></div>
         <div><span id="label-oldest-snapshot"></span>: <strong id="oldest-snapshot">-</strong></div>
         <div><span id="label-newest-snapshot"></span>: <strong id="newest-snapshot">-</strong></div>
@@ -143,6 +144,7 @@ export function buildMenu(app, i18n, settings) {
     countdown: panel.querySelector('#countdown'),
     lastUpdate: panel.querySelector('#last-update'),
     vehicles: panel.querySelector('#vehicles'),
+    discardedSnapshots: panel.querySelector('#discarded-snapshots'),
     snapshotsStored: panel.querySelector('#snapshots-stored'),
     oldestSnapshot: panel.querySelector('#oldest-snapshot'),
     newestSnapshot: panel.querySelector('#newest-snapshot'),
@@ -253,6 +255,7 @@ export function buildMenu(app, i18n, settings) {
     setText('#label-countdown', 'countdown');
     setText('#label-last-update', 'last_update');
     setText('#label-vehicles', 'vehicles');
+    setText('#label-discarded-snapshots', 'discarded_out_of_order');
     setText('#label-snapshots-stored', 'snapshots_stored');
     setText('#label-oldest-snapshot', 'oldest_snapshot');
     setText('#label-newest-snapshot', 'newest_snapshot');
