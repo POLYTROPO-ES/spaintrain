@@ -1,6 +1,6 @@
 import { APP_CONFIG } from './core/config.js';
 import { CronLikeScheduler } from './core/scheduler.js';
-import { lerpPosition, shouldSnap } from './core/interpolation.js';
+import { simulateMovement } from './core/interpolation.js';
 import { FeedService } from './data/feedService.js';
 import { MapManager } from './map/mapManager.js';
 import { LocalStore } from './storage/db.js';
@@ -264,7 +264,7 @@ export class SpainTrainApp {
 
     const progress = Math.max(
       0,
-      Math.min(1, (Date.now() - current.snapshotTimeMs) / APP_CONFIG.updateIntervalMs)
+      Date.now() - current.snapshotTimeMs
     );
 
     const vehicles = current.vehicles.map((vehicle) => {
@@ -273,21 +273,16 @@ export class SpainTrainApp {
         return vehicle;
       }
 
-      if (vehicle.status === 'STOPPED_AT') {
-        return vehicle;
-      }
+      const simulated = simulateMovement(prev, vehicle, progress, {
+        updateIntervalMs: APP_CONFIG.updateIntervalMs,
+        jumpThresholdKm: APP_CONFIG.jumpThresholdKm,
+      });
 
-      if (shouldSnap({ lat: prev.lat, lon: prev.lon }, { lat: vehicle.lat, lon: vehicle.lon }, APP_CONFIG.jumpThresholdKm)) {
-        return vehicle;
-      }
-
-      const interpolated = lerpPosition(
-        { lat: prev.lat, lon: prev.lon },
-        { lat: vehicle.lat, lon: vehicle.lon },
-        progress
-      );
-
-      return { ...vehicle, lat: interpolated.lat, lon: interpolated.lon };
+      return {
+        ...vehicle,
+        lat: simulated.lat,
+        lon: simulated.lon,
+      };
     });
 
     const filtered = this.applyVehicleFilters(vehicles);
