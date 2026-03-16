@@ -133,6 +133,7 @@ export function buildMenu(app, i18n, settings) {
 
   refs.menuToggle.addEventListener('click', () => {
     const isCollapsed = refs.menuDrawer.classList.toggle('collapsed');
+    refs.menuDrawer.hidden = isCollapsed;
     app.onMenuToggle(!isCollapsed);
   });
   refs.quickLanguage.addEventListener('change', (event) => app.onLanguageChange(event.target.value));
@@ -163,6 +164,9 @@ export function buildMenu(app, i18n, settings) {
   refs.pause.addEventListener('click', () => app.onPlaybackPause());
   refs.speed.addEventListener('change', (event) => app.onPlaybackSpeed(Number(event.target.value)));
   refs.seek.addEventListener('input', (event) => app.onPlaybackSeek(Number(event.target.value)));
+
+  // Force collapsed-by-default behavior even if stale CSS is cached.
+  refs.menuDrawer.hidden = true;
 
   const applyTexts = () => {
     panel.querySelector('#title').textContent = i18n.t('title');

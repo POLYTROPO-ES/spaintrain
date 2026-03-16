@@ -1,4 +1,4 @@
-const CACHE_NAME = 'spaintrain-shell-v1';
+const CACHE_NAME = 'spaintrain-shell-v2';
 const SHELL_FILES = ['/', '/index.html'];
 
 self.addEventListener('install', (event) => {

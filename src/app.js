@@ -68,7 +68,14 @@ export class SpainTrainApp {
     this.startScheduler();
 
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').catch(() => {});
+      if (import.meta.env.PROD) {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      } else {
+        // Prevent stale dev assets (for example old dot markers) from service worker cache.
+        navigator.serviceWorker.getRegistrations().then((registrations) => {
+          registrations.forEach((registration) => registration.unregister());
+        }).catch(() => {});
+      }
     }
   }
 
