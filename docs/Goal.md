@@ -2,51 +2,60 @@
 # SpainTrain Goal And Technical Requirements
 
 ## 1) Product Goal
-Build a JavaScript PWA that displays a map based on OpenStreetMap and shows live Renfe Cercanias train positions over Spain rail paths.
+Build a JavaScript PWA that displays a map based on OpenStreetMap and shows live Renfe train positions over Spain rail paths.
 
 The app must:
 - Render train markers with real-time position updates.
+- Render icon family by source dataset (`cercanias` vs `ld`).
 - Show train operational status (for example: stopped, incoming, in transit).
-- Extract and display platform information from the vehicle label when available.
-- Refresh data every 20 seconds (as indicated by the provider).
+- Extract and display platform information from vehicle labels when available.
+- Display calculated telemetry in popup (estimated speed, heading, motion model).
+- Show active service alerts/incidents and refresh every 20 seconds.
 
 ## 2) Data Sources
 - GTFS Realtime (protobuf): https://gtfsrt.renfe.com/vehicle_positions.pb
-- JSON endpoint: https://gtfsrt.renfe.com/vehicle_positions.json
+- Vehicle JSON endpoint: https://gtfsrt.renfe.com/vehicle_positions.json
+- LD vehicle JSON endpoint: https://gtfsrt.renfe.com/vehicle_positions_LD.json
+- Alerts JSON endpoint: https://gtfsrt.renfe.com/alerts.json
+
+Same-origin API endpoints used by app runtime:
+- `/api/vehicle_positions` (merged conventional + LD + source type tags)
+- `/api/alerts` (service alerts)
 
 Local analyzed files:
 - data-source/vehicle_positions.json
 - data-source/vehicle_positions.pb
+- data-source/vehicle_positions_LD.json
+- data-source/alerts.json
 
 ## 3) Data Analysis (Based On Current Sample)
 
-### 3.1 JSON Feed Structure
+### 3.1 Vehicle Feed Structure
 - Top-level keys: `header`, `entity`
 - Header fields: `gtfsRealtimeVersion`, `timestamp`
-- Entity count in sample: 128 vehicles
-- Header timestamp in sample: 1773603491 (`2026-03-15 19:38:11Z`)
-
-Representative entity:
-- `entity[i].id`: string (example `VP_C2-35355`)
-- `entity[i].vehicle.trip.tripId`: string
-- `entity[i].vehicle.position.latitude`: number
-- `entity[i].vehicle.position.longitude`: number
-- `entity[i].vehicle.currentStatus`: enum-like string
-- `entity[i].vehicle.timestamp`: unix timestamp string
-- `entity[i].vehicle.stopId`: string
-- `entity[i].vehicle.vehicle.id`: string
-- `entity[i].vehicle.vehicle.label`: string
-
-### 3.2 Data Quality Signals
-- Vehicles analyzed: 128
-- Missing `position`: 1
-- Missing `trip`: 0
-- Missing `timestamp`: 0
-- Missing `stopId`: 0
-- Missing `vehicle.label`: 0
+- Representative entity fields:
+  - `entity[i].id`
+  - `entity[i].vehicle.trip.tripId`
+  - `entity[i].vehicle.position.latitude`
+  - `entity[i].vehicle.position.longitude`
+  - `entity[i].vehicle.currentStatus`
+  - `entity[i].vehicle.timestamp`
+  - `entity[i].vehicle.stopId`
+  - `entity[i].vehicle.vehicle.id`
+  - `entity[i].vehicle.vehicle.label`
 
 Important schema note:
 - Status key is camelCase `currentStatus` (not `current_status`).
+
+### 3.2 Alerts Feed Structure
+- Top-level keys: `header`, `entity`
+- Alert entities are under `entity[i].alert`
+- Useful fields for UI:
+  - `alert.headerText.translation[]`
+  - `alert.descriptionText.translation[]`
+  - `alert.effect`
+  - `alert.cause`
+  - `alert.informedEntity[]`
 
 ### 3.3 Status Distribution (Sample)
 - `STOPPED_AT`: 59
@@ -76,7 +85,9 @@ Interpretation:
 
 ### 4.1 Architecture
 - Browser-only PWA (no backend in phase 1).
-- Direct fetch from Renfe JSON endpoint from client.
+- Same-origin API endpoints consumed by browser client:
+  - `/api/vehicle_positions` (merged conventional + LD feed)
+  - `/api/alerts` (service alerts)
 - In-browser modules:
 	- JSON fetcher and parser
 	- in-memory state store
@@ -107,13 +118,22 @@ Interpretation:
 - Rail paths layer for Spain must be provided as a dedicated geometry dataset (GeoJSON/vector tiles):
 	- First option: OpenStreetMap-derived rail data.
 	- Fallback options: OpenRailwayMap exports or other open-source rail datasets with compatible license.
-- Marker style by status:
-  - `STOPPED_AT`
-  - `INCOMING_AT`
-  - `IN_TRANSIT_TO`
-- Popup/card content: line, train id, trip id, platform (if available), stop id, last update age.
+- Marker icon style by source dataset:
+	- Cercanias dataset (`vehicle_positions.json`)
+	- LD/high-speed dataset (`vehicle_positions_LD.json`)
+- Marker color by status:
+	- `STOPPED_AT`
+	- `INCOMING_AT`
+	- `IN_TRANSIT_TO`
+- Popup/card content includes raw + calculated telemetry:
+	- line, train id, trip id, stop id, platform, platform confidence
+	- estimated speed (km/h)
+	- estimated heading (degrees)
+	- motion model and source type
 - Auto-refresh with visible countdown and "last updated" indicator.
 - Stale data UI: if no new snapshot >40s, show warning banner.
+- Help/legend icon explains icon families, status colors, and state meanings.
+- Service alerts panel shows active incidents/notices refreshed on scheduler cycle.
 - Menu configuration for platform mode:
 	- Strict mode: show platform only when explicit regex match exists.
 	- Enhanced mode: allow inferred platform from extra heuristics.
@@ -123,9 +143,11 @@ Interpretation:
 - Interpolation cycle:
 	- When a new snapshot arrives, store previous and current positions for each vehicle.
 	- Render intermediate position each animation frame (requestAnimationFrame).
-	- Interpolate over 20 seconds using linear interpolation by default.
-- If a vehicle has no previous point or jump distance is above threshold, snap instead of animate.
-- If status implies stop (`STOPPED_AT`), hold marker steady unless next snapshot changes position.
+	- Use status-aware kinematic simulation (smoothed transition + bounded extrapolation).
+- If a vehicle has no previous point, render raw point and mark telemetry as insufficient history.
+- If jump distance is above threshold, snap instead of animate.
+- If status implies stop (`STOPPED_AT`), hold marker steady.
+- Use speed/heading estimation from previous/current points and timestamps for in-transit projection.
 
 ### 4.6 Performance And Scalability
 - Initial render target: <2s on broadband desktop.
@@ -139,9 +161,10 @@ Interpretation:
 - Record client-side telemetry in memory and optional debug panel:
 	- fetch latency
 	- vehicles count
+	- alerts count
 	- invalid records count
 	- staleness seconds
-	- interpolation lag
+	- motion model telemetry (speed/heading)
 
 ### 4.8 Security And Operations
 - CORS restricted to app domains.
@@ -179,7 +202,7 @@ Interpretation:
 
 ## 5) Confirmed Product Decisions
 1. Source protocol: JSON first.
-2. Topology: direct browser fetch in phase 1.
+2. Topology: browser-first runtime with same-origin edge API endpoints.
 3. Rail-path source: OpenStreetMap first; if unavailable/insufficient, use other open-source alternatives.
 4. Scope: include all trains present in JSON and all train paths inside Spain.
 5. Platform behavior: both strict and inferred modes, user-configurable in menu.

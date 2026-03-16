@@ -7,11 +7,13 @@ Accepted
 Initial delivery must run entirely in browser with no backend service.
 
 ## Decision
-All runtime logic executes in browser: fetch, parse, normalize, render, store, playback.
+All application runtime logic executes in browser: fetch, parse, normalize, render, store, playback.
 
 ## Technical Requirements
 - No custom API server in phase 1.
-- Client fetches provider feed directly.
+- Client uses same-origin API endpoints provided by edge functions/workers:
+	- `/api/vehicle_positions` (merged conventional + LD JSON)
+	- `/api/alerts` (service alerts JSON)
 - Local storage via IndexedDB for history.
 - Application shell and assets served as static files.
 
@@ -20,7 +22,8 @@ All runtime logic executes in browser: fetch, parse, normalize, render, store, p
 - Faster MVP iteration.
 
 ## Consequences
-- CORS and upstream availability are external constraints.
+- CORS is mitigated via same-origin proxy endpoints.
+- Upstream availability remains an external constraint.
 - Heavy operations (history growth, replay, parsing) must be optimized client-side.
 
 ## Guardrails

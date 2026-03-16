@@ -21,6 +21,8 @@ It also merges:
 - `vehicle_positions.json` (conventional)
 - `vehicle_positions_LD.json` (long-distance)
 
+Merged entities are tagged with `serviceType` (`cercanias` or `ld`) so UI icon mapping follows data source origin.
+
 For service incidents, `/api/alerts` proxies `alerts.json` with the same-origin path required by the browser app.
 
 ## SPA Routing
@@ -104,6 +106,11 @@ The app is already configured with fallback endpoint:
 3. In production, fallback is intentionally empty to avoid direct browser CORS calls.
 
 You can verify active source in the menu stats section (`Data source`).
+You can verify dataset-driven icon behavior and calculated telemetry in marker popups:
+- `serviceType` / source type
+- estimated speed (km/h)
+- estimated heading (degrees)
+- motion model descriptor
 
 ## Overpass Rail-Path 504 Alternative
 The app no longer relies on one large Spain-wide Overpass request.

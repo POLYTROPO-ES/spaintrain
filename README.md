@@ -6,11 +6,14 @@ Repository: [POLYTROPO-ES/spaintrain](https://github.com/POLYTROPO-ES/spaintrain
 
 ## Features
 - Live vehicle tracking with 20-second refresh cadence
-- Interpolated movement between snapshots for smoother motion
-- Train-shaped SVG map markers with status-based colors
+- Status-aware kinematic movement simulation (speed + heading + stop/incoming/transit logic)
+- Dataset-based SVG train icons (Cercanias vs LD/high-speed feed)
 - Strict and inferred platform modes with confidence scoring
 - Multi-language UI: ES, EN, FR, IT, PT
 - Line multi-select filter and train/line search
+- In-app legend/help panel for icon, color, and state meanings
+- Popup telemetry: estimated speed, heading, motion model, service source type
+- Live service alerts panel (incidents/notices) updated every 20 seconds
 - In-app build version with short commit SHA
 - IndexedDB local history with playback controls
 - Export/import history for cross-device transfer
@@ -35,6 +38,7 @@ Repository: [POLYTROPO-ES/spaintrain](https://github.com/POLYTROPO-ES/spaintrain
 - Leaflet
 - IndexedDB
 - Vitest
+- Playwright
 - Optional Cloudflare Pages and Cloudflare Worker
 
 ## Project Structure
@@ -42,6 +46,7 @@ Repository: [POLYTROPO-ES/spaintrain](https://github.com/POLYTROPO-ES/spaintrain
 - [public/](public/): static files and PWA assets
 - [docs/](docs/): goals, decisions, deployment and workflow docs
 - [cloudflare/](cloudflare/): Worker proxy template and Wrangler config
+- [functions/](functions/): Cloudflare Pages Functions for same-origin API endpoints
 - [data-source/](data-source/): local sample source payloads
 
 ## Getting Started
@@ -82,11 +87,14 @@ SpainTrain es una PWA orientada a navegador para visualizar posiciones de trenes
 
 ### Caracteristicas
 - Seguimiento de trenes en vivo con refresco cada 20 segundos
-- Movimiento interpolado entre snapshots para una animacion mas fluida
-- Marcadores SVG con forma de tren y color por estado
+- Simulacion cinematica por estado (velocidad + rumbo + logica stopped/incoming/transit)
+- Iconos SVG por origen de datos (Cercanias vs Larga Distancia)
 - Modo de anden estricto o inferido con puntuacion de confianza
 - Interfaz multi idioma: ES, EN, FR, IT, PT
 - Filtro multi seleccion por linea y busqueda por tren/linea
+- Panel de ayuda/leyenda para iconos, colores y estados
+- Popup con telemetria calculada (velocidad estimada, rumbo y modelo de movimiento)
+- Panel de incidencias/avisos en vivo actualizado cada 20 segundos
 - Historial local en IndexedDB con controles de reproduccion
 - Exportacion/importacion de historial para mover datos entre dispositivos
 - Soporte de tema claro/oscuro

@@ -15,7 +15,9 @@ npm run dev
 
 Note:
 - Use `npm run dev` (not `nmp run dev`).
-- Dev mode is configured with a Vite proxy route `/api/vehicle_positions` that forwards to Renfe.
+- Dev mode exposes local middleware endpoints:
+	- `/api/vehicle_positions` merges Renfe conventional + LD feeds and tags source type.
+	- `/api/alerts` proxies Renfe alerts feed.
 - This avoids browser-side CORS blocks during local testing.
 
 3. Open the URL shown by Vite (default `http://localhost:5173`).
@@ -43,9 +45,10 @@ npm test
 ```
 
 Current automated coverage includes:
-- interpolation math and jump detection
+- kinematic motion model (speed/heading estimation, status-aware simulation, jump detection)
 - platform parsing and payload normalization
 - import schema/version validation and partial import behavior
+- marker click popup regression via Playwright (`npm run test:e2e`)
 
 ## Local CORS Troubleshooting
 If you still see CORS errors in local browser:
@@ -55,6 +58,7 @@ If you still see CORS errors in local browser:
 
 ```txt
 http://localhost:5173/api/vehicle_positions
+http://localhost:5173/api/alerts
 ```
 
 3. Restart dev server after config changes:

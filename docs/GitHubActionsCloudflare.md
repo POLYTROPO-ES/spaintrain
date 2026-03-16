@@ -1,7 +1,7 @@
 # Cloudflare Auto Deploy On Every Main Commit
 
 This guide configures automatic deployment to Cloudflare Worker and Cloudflare Pages whenever code is pushed to main.
-It also runs a build validation on pull requests to main.
+It also runs a quality gate on pull requests to main.
 
 Workflow file:
 - .github/workflows/deploy-cloudflare.yml
@@ -25,10 +25,12 @@ Restrict token scope to your account/resources whenever possible.
 
 ## 3) How The Workflow Runs
 On every pull request to main:
-1. Build project (validation only, no deploy)
+1. Build project
+2. Run unit tests (`npm run test:run`)
+3. Run Playwright e2e regression (`npm run test:e2e`)
 
 On every push to main:
-1. Build project
+1. Run quality gate (build + unit + e2e)
 2. Deploy Worker static app (`npm run deploy:worker`)
 3. Build again
 4. Deploy Pages (`npm run deploy:cf`)
@@ -44,6 +46,7 @@ After pushing to main:
 3. Validate app URL loads
 4. Validate API proxy URL returns JSON:
    - /api/vehicle_positions
+   - /api/alerts
 
 ## 5) If You Only Want One Target
 Worker only:

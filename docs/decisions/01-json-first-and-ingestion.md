@@ -7,13 +7,18 @@ Accepted
 The provider exposes both JSON and protobuf GTFS-RT feeds. The first delivery needs fast integration and easy debugging from browser tools.
 
 ## Decision
-Use the JSON endpoint as the primary feed in phase 1.
+Use JSON feeds as the primary protocol in phase 1.
 
 ## Technical Requirements
 - Poll cadence: one fetch every 20 seconds.
 - Scheduler type: cron-like browser scheduler, drift-corrected.
 - Single-flight network policy: do not overlap ingestion requests.
 - Freshness policy: preserve latest good snapshot if a cycle fails.
+- Vehicle ingestion endpoint merges:
+	- `vehicle_positions.json`
+	- `vehicle_positions_LD.json`
+- Alerts ingestion endpoint:
+	- `alerts.json`
 
 ## Rationale
 - Browser-native JSON parsing avoids protobuf runtime and schema package complexity.
