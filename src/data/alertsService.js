@@ -1,4 +1,5 @@
-import { logger } from '../core/logger.js';
+import { normalizeLineCode } from '../core/lineCode.js';
+import { fetchJsonWithFallback } from './http.js';
 
 function pickTranslation(translation, language) {
   if (!Array.isArray(translation) || translation.length === 0) {
@@ -28,35 +29,10 @@ function normalizeText(value) {
   return String(value || '').replace(/\s+/g, ' ').trim();
 }
 
-function normalizeLineCode(value) {
-  return String(value || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
-}
-
 export class AlertsService {
   constructor({ alertsUrl, fallbackUrls = [] }) {
     this.alertsUrl = alertsUrl;
     this.fallbackUrls = fallbackUrls;
-  }
-
-  async requestJson(url) {
-    const response = await fetch(url, {
-      cache: 'no-store',
-      headers: {
-        Accept: 'application/json',
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(`Alerts request failed with status ${response.status}`);
-    }
-
-    const contentType = response.headers.get('content-type') || '';
-    if (!contentType.toLowerCase().includes('application/json')) {
-      const text = await response.text();
-      throw new Error(`Alerts endpoint did not return JSON (content-type: ${contentType}, preview: ${text.slice(0, 80)})`);
-    }
-
-    return response.json();
   }
 
   parsePayload(payload, language) {
@@ -94,33 +70,13 @@ export class AlertsService {
   }
 
   async fetchAlerts(language = 'es') {
-    let payload;
-    let source = this.alertsUrl;
-
-    try {
-      payload = await this.requestJson(this.alertsUrl);
-    } catch (error) {
-      logger.warn('Primary alerts fetch failed', { message: String(error?.message || error) });
-      if (this.fallbackUrls.length === 0) {
-        throw error;
-      }
-
-      let fallbackError = error;
-      for (const fallbackUrl of this.fallbackUrls) {
-        try {
-          payload = await this.requestJson(fallbackUrl);
-          source = fallbackUrl;
-          break;
-        } catch (nested) {
-          fallbackError = nested;
-          logger.warn('Alerts fallback source failed', { source: fallbackUrl, message: String(nested?.message || nested) });
-        }
-      }
-
-      if (!payload) {
-        throw fallbackError;
-      }
-    }
+    const { payload, source } = await fetchJsonWithFallback({
+      primaryUrl: this.alertsUrl,
+      fallbackUrls: this.fallbackUrls,
+      primaryLabel: 'Alerts request',
+      fallbackLabel: 'Alerts request',
+      warnPrefix: 'Alerts',
+    });
 
     const alerts = this.parsePayload(payload, language)
       .sort((a, b) => (b.updatedAtMs || 0) - (a.updatedAtMs || 0));

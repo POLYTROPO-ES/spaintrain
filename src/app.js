@@ -12,10 +12,9 @@ import { validateImportPayload } from './storage/importSchema.js';
 import { logger } from './core/logger.js';
 import { VERSION_INFO } from './generated/version.js';
 import { AlertsService } from './data/alertsService.js';
+import { normalizeLineCode } from './core/lineCode.js';
 
-function normalizeLineCode(value) {
-  return String(value || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
-}
+const SETTINGS_KEYS = ['language', 'theme', 'platformMode', 'retentionDays', 'lineFilters', 'searchText', 'showImpactedOnly'];
 
 export class SpainTrainApp {
   constructor(root) {
@@ -113,10 +112,7 @@ export class SpainTrainApp {
   }
 
   async loadSettings() {
-    this.state.settings = await this.store.getSettings(
-      ['language', 'theme', 'platformMode', 'retentionDays', 'lineFilters', 'searchText', 'showImpactedOnly'],
-      APP_CONFIG.defaults
-    );
+    this.state.settings = await this.store.getSettings(SETTINGS_KEYS, APP_CONFIG.defaults);
 
     if (!Array.isArray(this.state.settings.lineFilters) || this.state.settings.lineFilters.length === 0) {
       this.state.settings.lineFilters = ['all'];
@@ -306,9 +302,7 @@ export class SpainTrainApp {
       };
     });
 
-    const filtered = this.applyVehicleFilters(vehicles);
-    this.map.updateVehicles(filtered);
-    this.ui.refs.vehicles.textContent = `${filtered.length} / ${current.vehicles.length}`;
+    this.renderVehicles(vehicles, current.vehicles.length);
 
     const staleMs = Date.now() - current.snapshotTimeMs;
     this.state.isStale = staleMs > APP_CONFIG.staleAfterMs;
@@ -436,9 +430,7 @@ export class SpainTrainApp {
     await this.store.setSetting('showImpactedOnly', this.state.settings.showImpactedOnly);
     this.renderLiveInterpolated();
     if (!this.state.liveRenderMode && this.state.currentSnapshot) {
-      const filtered = this.applyVehicleFilters(this.state.currentSnapshot.vehicles);
-      this.map.updateVehicles(filtered);
-      this.ui.refs.vehicles.textContent = `${filtered.length} / ${this.state.currentSnapshot.vehicles.length}`;
+      this.renderVehicles(this.state.currentSnapshot.vehicles, this.state.currentSnapshot.vehicles.length);
     }
   }
 
@@ -537,6 +529,12 @@ export class SpainTrainApp {
     this.ui.setLineOptions(codes);
   }
 
+  renderVehicles(vehicles, totalCount = vehicles.length) {
+    const filtered = this.applyVehicleFilters(vehicles);
+    this.map.updateVehicles(filtered);
+    this.ui.refs.vehicles.textContent = `${filtered.length} / ${totalCount}`;
+  }
+
   applyVehicleFilters(vehicles) {
     const lineFilters = new Set((this.state.settings.lineFilters || ['all']).map((item) => item.toLowerCase()));
     const search = (this.state.settings.searchText || '').trim().toLowerCase();
@@ -545,14 +543,17 @@ export class SpainTrainApp {
     const hasImpactedLines = disruptionLineCodes.size > 0;
 
     return vehicles.filter((vehicle) => {
+      const lineCode = String(vehicle.lineCode || '');
+      const lineCodeLower = lineCode.toLowerCase();
+
       if (showImpactedOnly && hasImpactedLines) {
-        const normalizedLine = normalizeLineCode(vehicle.lineCode);
+        const normalizedLine = normalizeLineCode(lineCode);
         if (!normalizedLine || !disruptionLineCodes.has(normalizedLine)) {
           return false;
         }
       }
 
-      if (!lineFilters.has('all') && !lineFilters.has(vehicle.lineCode.toLowerCase())) {
+      if (!lineFilters.has('all') && !lineFilters.has(lineCodeLower)) {
         return false;
       }
 
@@ -562,7 +563,7 @@ export class SpainTrainApp {
 
       return (
         vehicle.id.toLowerCase().includes(search) ||
-        vehicle.lineCode.toLowerCase().includes(search) ||
+        lineCodeLower.includes(search) ||
         vehicle.label.toLowerCase().includes(search)
       );
     });

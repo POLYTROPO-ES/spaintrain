@@ -1,5 +1,6 @@
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { normalizeLineCode } from '../core/lineCode.js';
 
 const statusColor = {
   STOPPED_AT: '#b45309',
@@ -8,9 +9,9 @@ const statusColor = {
   UNKNOWN: '#64748b',
 };
 
-function buildTrainIcon(color) {
-  const iconClass = arguments.length > 1 && arguments[1] ? 'train-svg-icon train-disruption' : 'train-svg-icon';
-  const disruptionBadge = arguments.length > 1 && arguments[1]
+function buildTrainIcon(color, isDisrupted = false) {
+  const iconClass = isDisrupted ? 'train-svg-icon train-disruption' : 'train-svg-icon';
+  const disruptionBadge = isDisrupted
     ? '<circle cx="28" cy="8" r="5" fill="#dc2626" stroke="#ffffff" stroke-width="1.2"/><text x="28" y="10.5" font-size="7" font-weight="700" text-anchor="middle" fill="#ffffff">!</text>'
     : '';
   const svg = `
@@ -36,11 +37,11 @@ function buildTrainIcon(color) {
   });
 }
 
-function buildHighSpeedTrainIcon(color) {
-  const iconClass = arguments.length > 1 && arguments[1]
+function buildHighSpeedTrainIcon(color, isDisrupted = false) {
+  const iconClass = isDisrupted
     ? 'train-svg-icon train-svg-icon-highspeed train-disruption'
     : 'train-svg-icon train-svg-icon-highspeed';
-  const disruptionBadge = arguments.length > 1 && arguments[1]
+  const disruptionBadge = isDisrupted
     ? '<circle cx="31" cy="8" r="5" fill="#dc2626" stroke="#ffffff" stroke-width="1.2"/><text x="31" y="10.5" font-size="7" font-weight="700" text-anchor="middle" fill="#ffffff">!</text>'
     : '';
   const svg = `
@@ -67,10 +68,6 @@ function buildHighSpeedTrainIcon(color) {
 
 function resolveServiceType(vehicle) {
   return String(vehicle.serviceType || 'cercanias').toLowerCase() === 'ld' ? 'ld' : 'cercanias';
-}
-
-function normalizeLineCode(value) {
-  return String(value || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
 }
 
 function buildIconForVehicle(vehicle, color, isDisrupted) {

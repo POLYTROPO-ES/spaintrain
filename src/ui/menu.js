@@ -212,51 +212,55 @@ export function buildMenu(app, i18n, settings) {
   // Force collapsed-by-default behavior even if stale CSS is cached.
   refs.menuDrawer.hidden = true;
 
+  const setText = (selector, key) => {
+    panel.querySelector(selector).textContent = i18n.t(key);
+  };
+
   const applyTexts = () => {
-    panel.querySelector('#title').textContent = i18n.t('title');
-    panel.querySelector('#subtitle').textContent = i18n.t('subtitle');
+    setText('#title', 'title');
+    setText('#subtitle', 'subtitle');
     refs.quickLanguageLabel.textContent = i18n.t('language');
     refs.quickTheme.textContent = `${i18n.t('theme')}: ${settings.theme === 'dark' ? i18n.t('dark') : i18n.t('light')}`;
     refs.legendToggle.title = i18n.t('legend_title');
-    panel.querySelector('#legend-title').textContent = i18n.t('legend_title');
-    panel.querySelector('#legend-speed-title').textContent = i18n.t('legend_speed_title');
-    panel.querySelector('#legend-speed-low').textContent = i18n.t('legend_speed_low');
-    panel.querySelector('#legend-speed-high').textContent = i18n.t('legend_speed_high');
-    panel.querySelector('#legend-status-title').textContent = i18n.t('legend_status_title');
-    panel.querySelector('#legend-status-stopped').textContent = i18n.t('legend_status_stopped');
-    panel.querySelector('#legend-status-incoming').textContent = i18n.t('legend_status_incoming');
-    panel.querySelector('#legend-status-transit').textContent = i18n.t('legend_status_transit');
-    panel.querySelector('#legend-status-unknown').textContent = i18n.t('legend_status_unknown');
-    panel.querySelector('#legend-impact-only-label').textContent = i18n.t('legend_filter_impacted_only');
-    panel.querySelector('#label-platform').textContent = i18n.t('platform_mode');
-    panel.querySelector('#label-retention').textContent = i18n.t('retention_days');
-    panel.querySelector('#label-line-filter').textContent = i18n.t('line_filter');
-    panel.querySelector('#line-filter-help').textContent = i18n.t('line_filter_help');
-    panel.querySelector('#line-filter-all').textContent = i18n.t('all_lines');
-    panel.querySelector('#label-search').textContent = i18n.t('search');
+    setText('#legend-title', 'legend_title');
+    setText('#legend-speed-title', 'legend_speed_title');
+    setText('#legend-speed-low', 'legend_speed_low');
+    setText('#legend-speed-high', 'legend_speed_high');
+    setText('#legend-status-title', 'legend_status_title');
+    setText('#legend-status-stopped', 'legend_status_stopped');
+    setText('#legend-status-incoming', 'legend_status_incoming');
+    setText('#legend-status-transit', 'legend_status_transit');
+    setText('#legend-status-unknown', 'legend_status_unknown');
+    setText('#legend-impact-only-label', 'legend_filter_impacted_only');
+    setText('#label-platform', 'platform_mode');
+    setText('#label-retention', 'retention_days');
+    setText('#label-line-filter', 'line_filter');
+    setText('#line-filter-help', 'line_filter_help');
+    setText('#line-filter-all', 'all_lines');
+    setText('#label-search', 'search');
     panel.querySelector('#search-input').placeholder = i18n.t('search');
-    panel.querySelector('#export-data').textContent = i18n.t('export_data');
-    panel.querySelector('#import-data').textContent = i18n.t('import_data');
-    panel.querySelector('#delete-data').textContent = i18n.t('delete_data');
-    panel.querySelector('#platform-strict').textContent = i18n.t('strict');
-    panel.querySelector('#platform-inferred').textContent = i18n.t('inferred');
-    panel.querySelector('#label-countdown').textContent = i18n.t('countdown');
-    panel.querySelector('#label-last-update').textContent = i18n.t('last_update');
-    panel.querySelector('#label-vehicles').textContent = i18n.t('vehicles');
-    panel.querySelector('#label-alerts-count').textContent = i18n.t('alerts_count');
-    panel.querySelector('#label-source').textContent = i18n.t('data_source');
-    panel.querySelector('#label-version').textContent = i18n.t('app_version');
-    panel.querySelector('#alerts-title').textContent = i18n.t('service_alerts');
+    setText('#export-data', 'export_data');
+    setText('#import-data', 'import_data');
+    setText('#delete-data', 'delete_data');
+    setText('#platform-strict', 'strict');
+    setText('#platform-inferred', 'inferred');
+    setText('#label-countdown', 'countdown');
+    setText('#label-last-update', 'last_update');
+    setText('#label-vehicles', 'vehicles');
+    setText('#label-alerts-count', 'alerts_count');
+    setText('#label-source', 'data_source');
+    setText('#label-version', 'app_version');
+    setText('#alerts-title', 'service_alerts');
     if (!refs.alertsList.children.length) {
-      panel.querySelector('#alerts-empty').textContent = i18n.t('alerts_none');
+      setText('#alerts-empty', 'alerts_none');
     }
-    panel.querySelector('#playback-title').textContent = i18n.t('playback');
-    panel.querySelector('#label-from').textContent = i18n.t('from');
-    panel.querySelector('#label-to').textContent = i18n.t('to');
-    panel.querySelector('#load-playback').textContent = i18n.t('load');
-    panel.querySelector('#play').textContent = i18n.t('play');
-    panel.querySelector('#pause').textContent = i18n.t('pause');
-    panel.querySelector('#label-speed').textContent = i18n.t('speed');
+    setText('#playback-title', 'playback');
+    setText('#label-from', 'from');
+    setText('#label-to', 'to');
+    setText('#load-playback', 'load');
+    setText('#play', 'play');
+    setText('#pause', 'pause');
+    setText('#label-speed', 'speed');
     panel.querySelector('#menu-toggle').title = i18n.t('menu');
   };
 
