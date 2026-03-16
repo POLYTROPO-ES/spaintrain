@@ -13,6 +13,10 @@ import { logger } from './core/logger.js';
 import { VERSION_INFO } from './generated/version.js';
 import { AlertsService } from './data/alertsService.js';
 
+function normalizeLineCode(value) {
+  return String(value || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+}
+
 export class SpainTrainApp {
   constructor(root) {
     this.root = root;
@@ -55,6 +59,7 @@ export class SpainTrainApp {
         source: '/api/alerts',
         count: 0,
       },
+      disruptionLineCodes: new Set(),
     };
 
     this.animationFrame = null;
@@ -109,7 +114,7 @@ export class SpainTrainApp {
 
   async loadSettings() {
     this.state.settings = await this.store.getSettings(
-      ['language', 'theme', 'platformMode', 'retentionDays', 'lineFilters', 'searchText'],
+      ['language', 'theme', 'platformMode', 'retentionDays', 'lineFilters', 'searchText', 'showImpactedOnly'],
       APP_CONFIG.defaults
     );
 
@@ -188,6 +193,8 @@ export class SpainTrainApp {
     this.state.alerts = alertsPayload.alerts;
     this.state.alertsMetrics = alertsPayload.metrics;
     this.state.isStale = false;
+    this.state.disruptionLineCodes = this.collectDisruptionLineCodes(this.state.alerts);
+    this.map.setDisruptionLineCodes(this.state.disruptionLineCodes);
 
     this.ui.refs.modePill.textContent = this.i18n.t('status_live');
     this.refreshLineOptions(snapshot.vehicles);
@@ -349,6 +356,14 @@ export class SpainTrainApp {
     });
   }
 
+  collectDisruptionLineCodes(alerts) {
+    const set = new Set();
+    (alerts || []).forEach((alertItem) => {
+      (alertItem.normalizedLines || []).forEach((lineCode) => set.add(lineCode));
+    });
+    return set;
+  }
+
   async onLanguageChange(language) {
     this.state.settings.language = language;
     this.i18n.setLanguage(language);
@@ -414,6 +429,17 @@ export class SpainTrainApp {
     this.state.settings.searchText = searchText;
     await this.store.setSetting('searchText', searchText);
     logger.debug('Search updated', { searchText });
+  }
+
+  async onShowImpactedOnlyChange(enabled) {
+    this.state.settings.showImpactedOnly = Boolean(enabled);
+    await this.store.setSetting('showImpactedOnly', this.state.settings.showImpactedOnly);
+    this.renderLiveInterpolated();
+    if (!this.state.liveRenderMode && this.state.currentSnapshot) {
+      const filtered = this.applyVehicleFilters(this.state.currentSnapshot.vehicles);
+      this.map.updateVehicles(filtered);
+      this.ui.refs.vehicles.textContent = `${filtered.length} / ${this.state.currentSnapshot.vehicles.length}`;
+    }
   }
 
   async onExportData() {
@@ -514,8 +540,17 @@ export class SpainTrainApp {
   applyVehicleFilters(vehicles) {
     const lineFilters = new Set((this.state.settings.lineFilters || ['all']).map((item) => item.toLowerCase()));
     const search = (this.state.settings.searchText || '').trim().toLowerCase();
+    const showImpactedOnly = Boolean(this.state.settings.showImpactedOnly);
+    const disruptionLineCodes = this.state.disruptionLineCodes || new Set();
 
     return vehicles.filter((vehicle) => {
+      if (showImpactedOnly) {
+        const normalizedLine = normalizeLineCode(vehicle.lineCode);
+        if (!normalizedLine || !disruptionLineCodes.has(normalizedLine)) {
+          return false;
+        }
+      }
+
       if (!lineFilters.has('all') && !lineFilters.has(vehicle.lineCode.toLowerCase())) {
         return false;
       }

@@ -50,6 +50,7 @@ export const dictionaries = {
     legend_status_incoming: 'INCOMING_AT (aproximando a estacion)',
     legend_status_transit: 'IN_TRANSIT_TO (en transito)',
     legend_status_unknown: 'UNKNOWN (estado no informado)',
+    legend_filter_impacted_only: 'Mostrar solo trenes afectados',
     updating_first_data: 'Actualizando primeros datos en vivo...',
   },
   en: {
@@ -103,6 +104,7 @@ export const dictionaries = {
     legend_status_incoming: 'INCOMING_AT (approaching station)',
     legend_status_transit: 'IN_TRANSIT_TO (in transit)',
     legend_status_unknown: 'UNKNOWN (status not provided)',
+    legend_filter_impacted_only: 'Show only impacted trains',
     updating_first_data: 'Loading first live data update...',
   },
   fr: {
@@ -156,6 +158,7 @@ export const dictionaries = {
     legend_status_incoming: 'INCOMING_AT (approche gare)',
     legend_status_transit: 'IN_TRANSIT_TO (en transit)',
     legend_status_unknown: 'UNKNOWN (etat non fourni)',
+    legend_filter_impacted_only: 'Afficher seulement les trains impactes',
     updating_first_data: 'Chargement des premieres donnees en direct...',
   },
   it: {
@@ -209,6 +212,7 @@ export const dictionaries = {
     legend_status_incoming: 'INCOMING_AT (in arrivo in stazione)',
     legend_status_transit: 'IN_TRANSIT_TO (in transito)',
     legend_status_unknown: 'UNKNOWN (stato non disponibile)',
+    legend_filter_impacted_only: 'Mostra solo treni impattati',
     updating_first_data: 'Caricamento dei primi dati live...',
   },
   pt: {
@@ -262,6 +266,7 @@ export const dictionaries = {
     legend_status_incoming: 'INCOMING_AT (aproximando da estacao)',
     legend_status_transit: 'IN_TRANSIT_TO (em transito)',
     legend_status_unknown: 'UNKNOWN (estado nao informado)',
+    legend_filter_impacted_only: 'Mostrar apenas trens afetados',
     updating_first_data: 'Carregando os primeiros dados ao vivo...',
   },
 };

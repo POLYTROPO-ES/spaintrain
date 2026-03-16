@@ -25,5 +25,6 @@ export const APP_CONFIG = {
     retentionDays: 7,
     lineFilters: ['all'],
     searchText: '',
+    showImpactedOnly: false,
   },
 };

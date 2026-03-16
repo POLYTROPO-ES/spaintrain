@@ -9,6 +9,10 @@ const statusColor = {
 };
 
 function buildTrainIcon(color) {
+  const iconClass = arguments.length > 1 && arguments[1] ? 'train-svg-icon train-disruption' : 'train-svg-icon';
+  const disruptionBadge = arguments.length > 1 && arguments[1]
+    ? '<circle cx="28" cy="8" r="5" fill="#dc2626" stroke="#ffffff" stroke-width="1.2"/><text x="28" y="10.5" font-size="7" font-weight="700" text-anchor="middle" fill="#ffffff">!</text>'
+    : '';
   const svg = `
     <svg width="36" height="36" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <g>
@@ -18,12 +22,13 @@ function buildTrainIcon(color) {
         <rect x="11" y="16.5" width="14" height="2.2" rx="1.1" fill="#e2e8f0" opacity="0.95"/>
         <circle cx="13.2" cy="21.2" r="1.5" fill="#0f172a"/>
         <circle cx="22.8" cy="21.2" r="1.5" fill="#0f172a"/>
+        ${disruptionBadge}
       </g>
     </svg>
   `;
 
   return L.divIcon({
-    className: 'train-svg-icon',
+    className: iconClass,
     html: svg,
     iconSize: [36, 36],
     iconAnchor: [18, 18],
@@ -32,6 +37,12 @@ function buildTrainIcon(color) {
 }
 
 function buildHighSpeedTrainIcon(color) {
+  const iconClass = arguments.length > 1 && arguments[1]
+    ? 'train-svg-icon train-svg-icon-highspeed train-disruption'
+    : 'train-svg-icon train-svg-icon-highspeed';
+  const disruptionBadge = arguments.length > 1 && arguments[1]
+    ? '<circle cx="31" cy="8" r="5" fill="#dc2626" stroke="#ffffff" stroke-width="1.2"/><text x="31" y="10.5" font-size="7" font-weight="700" text-anchor="middle" fill="#ffffff">!</text>'
+    : '';
   const svg = `
     <svg width="38" height="38" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <g>
@@ -40,12 +51,13 @@ function buildHighSpeedTrainIcon(color) {
         <rect x="10" y="23.7" width="10.5" height="1.9" rx="0.95" fill="#e2e8f0"/>
         <circle cx="12.4" cy="27.5" r="1.4" fill="#0f172a"/>
         <circle cx="20.1" cy="27.5" r="1.4" fill="#0f172a"/>
+        ${disruptionBadge}
       </g>
     </svg>
   `;
 
   return L.divIcon({
-    className: 'train-svg-icon train-svg-icon-highspeed',
+    className: iconClass,
     html: svg,
     iconSize: [38, 38],
     iconAnchor: [19, 19],
@@ -57,10 +69,14 @@ function resolveServiceType(vehicle) {
   return String(vehicle.serviceType || 'cercanias').toLowerCase() === 'ld' ? 'ld' : 'cercanias';
 }
 
-function buildIconForVehicle(vehicle, color) {
+function normalizeLineCode(value) {
+  return String(value || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+}
+
+function buildIconForVehicle(vehicle, color, isDisrupted) {
   return resolveServiceType(vehicle) === 'ld'
-    ? buildHighSpeedTrainIcon(color)
-    : buildTrainIcon(color);
+    ? buildHighSpeedTrainIcon(color, isDisrupted)
+    : buildTrainIcon(color, isDisrupted);
 }
 
 export class MapManager {
@@ -82,6 +98,13 @@ export class MapManager {
     this.markerLayer = L.layerGroup().addTo(this.map);
     this.pathLayer = L.layerGroup().addTo(this.map);
     this.markerCache = new Map();
+    this.disruptionLineCodes = new Set();
+  }
+
+  setDisruptionLineCodes(lineCodes) {
+    this.disruptionLineCodes = lineCodes instanceof Set
+      ? new Set(lineCodes)
+      : new Set(Array.isArray(lineCodes) ? lineCodes : []);
   }
 
   setRailPaths(geojson) {
@@ -102,9 +125,11 @@ export class MapManager {
       activeIds.add(vehicle.id);
       const marker = this.markerCache.get(vehicle.id);
       const color = statusColor[vehicle.status] || statusColor.UNKNOWN;
+      const normalizedLine = normalizeLineCode(vehicle.lineCode);
+      const isDisrupted = normalizedLine ? this.disruptionLineCodes.has(normalizedLine) : false;
       const popup = this.createPopup(vehicle);
       const serviceType = resolveServiceType(vehicle);
-      const markerSignature = `${vehicle.status}|${color}|${serviceType}`;
+      const markerSignature = `${vehicle.status}|${color}|${serviceType}|${isDisrupted ? 'impact' : 'normal'}`;
 
       if (marker) {
         const wasPopupOpen = marker.isPopupOpen();
@@ -112,7 +137,7 @@ export class MapManager {
 
         // Avoid recreating icon/popup binding every frame; this keeps marker click interactions stable.
         if (marker.__signature !== markerSignature) {
-          marker.setIcon(buildIconForVehicle(vehicle, color));
+          marker.setIcon(buildIconForVehicle(vehicle, color, isDisrupted));
           marker.__signature = markerSignature;
         }
 
@@ -129,7 +154,7 @@ export class MapManager {
       }
 
       const newMarker = L.marker([vehicle.lat, vehicle.lon], {
-        icon: buildIconForVehicle(vehicle, color),
+        icon: buildIconForVehicle(vehicle, color, isDisrupted),
       }).addTo(this.markerLayer);
 
       newMarker.bindPopup(popup);
@@ -157,6 +182,7 @@ export class MapManager {
       : '-';
     const serviceType = resolveServiceType(vehicle);
     const serviceLabel = serviceType === 'ld' ? 'HIGH_SPEED_DATASET' : 'CERCANIAS_DATASET';
+    const impacted = this.disruptionLineCodes.has(normalizeLineCode(vehicle.lineCode));
 
     return `
       <strong>${vehicle.lineCode}</strong><br>
@@ -170,6 +196,7 @@ export class MapManager {
       Estimated heading: ${heading}<br>
       Motion model: ${vehicle.motionModel || 'none'}<br>
       Data source type: ${vehicle.serviceType || 'cercanias'}<br>
+      Disruption impact: ${impacted ? 'YES' : 'NO'}<br>
       Status: ${vehicle.status}
     `;
   }

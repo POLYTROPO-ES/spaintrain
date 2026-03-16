@@ -133,6 +133,11 @@ body,
   border-radius: 10px;
 }
 
+.menu-icon-btn.active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 35%, transparent);
+}
+
 .menu-drawer {
   margin-top: 10px;
   overflow-y: auto;
@@ -184,6 +189,19 @@ body,
   align-items: center;
   gap: 8px;
   font-size: 0.85rem;
+}
+
+.legend-impact-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.legend-impact-toggle input {
+  width: 15px;
+  height: 15px;
 }
 
 .legend-icon {
@@ -339,6 +357,10 @@ button:hover {
   max-height: 180px;
   overflow-y: auto;
   font-size: 0.85rem;
+}
+
+.train-disruption {
+  filter: drop-shadow(0 0 6px rgba(220, 38, 38, 0.55));
 }
 
 @media (max-width: 980px) {

@@ -14,7 +14,7 @@ export function buildMenu(app, i18n, settings) {
         <option value="pt">Portugues</option>
       </select>
       <button id="quick-theme" title="Theme"></button>
-      <button id="legend-toggle" class="menu-icon-btn" aria-label="Legend" title="Legend">?</button>
+      <button id="legend-toggle" class="menu-icon-btn" aria-label="Legend" aria-expanded="false" title="Legend">?</button>
     </div>
 
     <div class="legend-card" id="legend-card" hidden>
@@ -31,6 +31,10 @@ export function buildMenu(app, i18n, settings) {
         <div class="legend-row"><span class="legend-dot legend-transit"></span><span id="legend-status-transit"></span></div>
         <div class="legend-row"><span class="legend-dot legend-unknown"></span><span id="legend-status-unknown"></span></div>
       </div>
+      <label class="legend-impact-toggle" for="legend-impact-only">
+        <input type="checkbox" id="legend-impact-only" />
+        <span id="legend-impact-only-label"></span>
+      </label>
     </div>
 
     <div class="menu-drawer collapsed" id="menu-drawer">
@@ -124,6 +128,7 @@ export function buildMenu(app, i18n, settings) {
     quickTheme: panel.querySelector('#quick-theme'),
     legendToggle: panel.querySelector('#legend-toggle'),
     legendCard: panel.querySelector('#legend-card'),
+    legendImpactOnly: panel.querySelector('#legend-impact-only'),
     platformSelect: panel.querySelector('#platform-select'),
     retentionDays: panel.querySelector('#retention-days'),
     lineFilter: panel.querySelector('#line-filter'),
@@ -154,6 +159,7 @@ export function buildMenu(app, i18n, settings) {
   refs.quickLanguage.value = settings.language;
   refs.platformSelect.value = settings.platformMode;
   refs.retentionDays.value = settings.retentionDays;
+  refs.legendImpactOnly.checked = Boolean(settings.showImpactedOnly);
   const selectedFilters = Array.isArray(settings.lineFilters) && settings.lineFilters.length > 0
     ? settings.lineFilters
     : ['all'];
@@ -170,8 +176,12 @@ export function buildMenu(app, i18n, settings) {
   refs.quickLanguage.addEventListener('change', (event) => app.onLanguageChange(event.target.value));
   refs.quickTheme.addEventListener('click', () => app.onQuickThemeToggle());
   refs.legendToggle.addEventListener('click', () => {
-    refs.legendCard.hidden = !refs.legendCard.hidden;
+    const willOpen = refs.legendCard.hidden;
+    refs.legendCard.hidden = !willOpen;
+    refs.legendToggle.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    refs.legendToggle.classList.toggle('active', willOpen);
   });
+  refs.legendImpactOnly.addEventListener('change', (event) => app.onShowImpactedOnlyChange(event.target.checked));
   refs.platformSelect.addEventListener('change', (event) => app.onPlatformModeChange(event.target.value));
   refs.retentionDays.addEventListener('change', (event) => app.onRetentionChange(Number(event.target.value)));
   refs.lineFilter.addEventListener('change', (event) => {
@@ -217,6 +227,7 @@ export function buildMenu(app, i18n, settings) {
     panel.querySelector('#legend-status-incoming').textContent = i18n.t('legend_status_incoming');
     panel.querySelector('#legend-status-transit').textContent = i18n.t('legend_status_transit');
     panel.querySelector('#legend-status-unknown').textContent = i18n.t('legend_status_unknown');
+    panel.querySelector('#legend-impact-only-label').textContent = i18n.t('legend_filter_impacted_only');
     panel.querySelector('#label-platform').textContent = i18n.t('platform_mode');
     panel.querySelector('#label-retention').textContent = i18n.t('retention_days');
     panel.querySelector('#label-line-filter').textContent = i18n.t('line_filter');

@@ -28,6 +28,10 @@ function normalizeText(value) {
   return String(value || '').replace(/\s+/g, ' ').trim();
 }
 
+function normalizeLineCode(value) {
+  return String(value || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+}
+
 export class AlertsService {
   constructor({ alertsUrl, fallbackUrls = [] }) {
     this.alertsUrl = alertsUrl;
@@ -70,8 +74,10 @@ export class AlertsService {
         const informed = Array.isArray(alert?.informedEntity) ? alert.informedEntity : [];
         const informedLines = informed
           .map((item) => String(item?.routeId || '').trim())
-          .filter(Boolean)
-          .slice(0, 4);
+          .filter(Boolean);
+        const normalizedInformedLines = Array.from(
+          new Set(informedLines.map((lineCode) => normalizeLineCode(lineCode)).filter(Boolean))
+        );
 
         return {
           id: String(entity?.id || ''),
@@ -79,7 +85,8 @@ export class AlertsService {
           description,
           effect: String(alert?.effect || 'UNKNOWN'),
           cause: String(alert?.cause || 'UNKNOWN'),
-          lines: informedLines,
+          lines: informedLines.slice(0, 4),
+          normalizedLines: normalizedInformedLines,
           updatedAtMs: Number(payload?.header?.timestamp || 0) * 1000,
         };
       })
