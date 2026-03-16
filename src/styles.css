@@ -164,6 +164,10 @@ body,
   gap: 8px;
 }
 
+.legend-card[hidden] {
+  display: none !important;
+}
+
 .legend-card h3 {
   margin: 0;
   font-size: 0.95rem;
