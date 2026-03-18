@@ -76,7 +76,13 @@ export class SpainTrainApp {
 
   async init() {
     logger.info('Initializing app', { debug: logger.isDebugEnabled() });
-    await this.loadSettings();
+    try {
+      await this.loadSettings();
+    } catch (error) {
+      logger.error('Failed to load settings, using defaults', { message: String(error?.message || error) });
+      this.state.settings = { ...APP_CONFIG.defaults };
+      this.i18n.setLanguage(this.state.settings.language);
+    }
     this.mountLayout();
     this.applyTheme(this.state.settings.theme);
 

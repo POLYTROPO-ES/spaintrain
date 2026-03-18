@@ -43,15 +43,24 @@ export class LocalStore {
     this.dbPromise = openDatabase();
   }
 
+  async getDb() {
+    try {
+      return await this.dbPromise;
+    } catch {
+      this.dbPromise = openDatabase();
+      return this.dbPromise;
+    }
+  }
+
   async saveSnapshot(snapshot) {
-    const db = await this.dbPromise;
+    const db = await this.getDb();
     const tx = db.transaction(APP_CONFIG.storage.snapshotStore, 'readwrite');
     tx.objectStore(APP_CONFIG.storage.snapshotStore).put(snapshot);
     await awaitTransaction(tx);
   }
 
   async loadSnapshots(fromMs, toMs) {
-    const db = await this.dbPromise;
+    const db = await this.getDb();
     const tx = db.transaction(APP_CONFIG.storage.snapshotStore, 'readonly');
     const store = tx.objectStore(APP_CONFIG.storage.snapshotStore);
     const request = store.getAll();
@@ -62,7 +71,7 @@ export class LocalStore {
   }
 
   async getAllSnapshots() {
-    const db = await this.dbPromise;
+    const db = await this.getDb();
     const tx = db.transaction(APP_CONFIG.storage.snapshotStore, 'readonly');
     const store = tx.objectStore(APP_CONFIG.storage.snapshotStore);
     const request = store.getAll();
@@ -100,7 +109,7 @@ export class LocalStore {
       throw new Error('Invalid import payload');
     }
 
-    const db = await this.dbPromise;
+    const db = await this.getDb();
     const tx = db.transaction(APP_CONFIG.storage.snapshotStore, 'readwrite');
     const store = tx.objectStore(APP_CONFIG.storage.snapshotStore);
 
@@ -118,7 +127,7 @@ export class LocalStore {
   }
 
   async pruneOlderThan(cutoffMs) {
-    const db = await this.dbPromise;
+    const db = await this.getDb();
     const tx = db.transaction(APP_CONFIG.storage.snapshotStore, 'readwrite');
     const store = tx.objectStore(APP_CONFIG.storage.snapshotStore);
     const all = await promisifyRequest(store.getAll());
@@ -127,21 +136,21 @@ export class LocalStore {
   }
 
   async clearSnapshots() {
-    const db = await this.dbPromise;
+    const db = await this.getDb();
     const tx = db.transaction(APP_CONFIG.storage.snapshotStore, 'readwrite');
     tx.objectStore(APP_CONFIG.storage.snapshotStore).clear();
     await awaitTransaction(tx);
   }
 
   async setSetting(key, value) {
-    const db = await this.dbPromise;
+    const db = await this.getDb();
     const tx = db.transaction(APP_CONFIG.storage.settingsStore, 'readwrite');
     tx.objectStore(APP_CONFIG.storage.settingsStore).put({ key, value });
     await awaitTransaction(tx);
   }
 
   async getSetting(key) {
-    const db = await this.dbPromise;
+    const db = await this.getDb();
     const tx = db.transaction(APP_CONFIG.storage.settingsStore, 'readonly');
     const request = tx.objectStore(APP_CONFIG.storage.settingsStore).get(key);
     const row = await promisifyRequest(request);
@@ -160,7 +169,7 @@ export class LocalStore {
   }
 
   async clearAll() {
-    const db = await this.dbPromise;
+    const db = await this.getDb();
     const tx = db.transaction([APP_CONFIG.storage.snapshotStore, APP_CONFIG.storage.settingsStore], 'readwrite');
     tx.objectStore(APP_CONFIG.storage.snapshotStore).clear();
     tx.objectStore(APP_CONFIG.storage.settingsStore).clear();

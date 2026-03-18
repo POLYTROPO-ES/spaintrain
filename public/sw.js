@@ -1,4 +1,4 @@
-const CACHE_NAME = 'spaintrain-shell-v3';
+const CACHE_NAME = 'spaintrain-shell-v4';
 const SHELL_FILES = ['/', '/index.html'];
 
 self.addEventListener('install', (event) => {
@@ -23,6 +23,21 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  if (request.mode === 'navigate') {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          if (response && response.ok) {
+            const copy = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put('/index.html', copy));
+          }
+          return response;
+        })
+        .catch(() => caches.match('/index.html'))
+    );
+    return;
+  }
+
   event.respondWith(
     caches.match(request).then((cached) => {
       if (cached) {
@@ -30,7 +45,11 @@ self.addEventListener('fetch', (event) => {
       }
       return fetch(request)
         .then((response) => {
-          if (request.url.includes('/src/') || request.url.endsWith('.js') || request.url.endsWith('.css')) {
+          if (
+            response &&
+            response.ok &&
+            (request.url.includes('/src/') || request.url.endsWith('.js') || request.url.endsWith('.css'))
+          ) {
             const copy = response.clone();
             caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
           }
