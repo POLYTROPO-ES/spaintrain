@@ -97,9 +97,13 @@ export function simulateMovement(prev, current, elapsedSinceSnapshotMs, options)
     updateIntervalMs,
     jumpThresholdKm,
     transitionMs = Math.min(2000, updateIntervalMs * 0.2),
-    maxSpeedKmh = 320,
     minMovingSpeedKmh = 6,
+    serviceType = 'cercanias',
   } = options;
+
+  const isHighSpeedService = String(serviceType || '').toLowerCase() === 'ld';
+  const maxSpeedKmh = isHighSpeedService ? 350 : 250;
+  const maxLeadDistanceKm = isHighSpeedService ? 0.9 : 0.45;
 
   const prevPoint = { lat: prev.lat, lon: prev.lon };
   const currentPoint = { lat: current.lat, lon: current.lon };
@@ -136,9 +140,15 @@ export function simulateMovement(prev, current, elapsedSinceSnapshotMs, options)
   }
 
   const heading = calculateBearing(prevPoint, currentPoint);
-  const maxExtrapolationMs = updateIntervalMs * 1.25;
+  const maxExtrapolationMs = updateIntervalMs * 0.45;
   const effectiveExtrapolationMs = Math.min(extrapolationMs, maxExtrapolationMs);
-  const travelDistanceKm = adjustedSpeed * (effectiveExtrapolationMs / 3600000);
+  const observedDistanceKm = distanceKm(prevPoint, currentPoint);
+  const rawTravelDistanceKm = adjustedSpeed * (effectiveExtrapolationMs / 3600000);
+  const maxTravelDistanceKm = Math.min(
+    maxLeadDistanceKm,
+    observedDistanceKm * 0.35 + maxLeadDistanceKm * 0.25
+  );
+  const travelDistanceKm = Math.min(rawTravelDistanceKm, Math.max(0, maxTravelDistanceKm));
 
   return projectPosition(smoothedCurrent, heading, travelDistanceKm);
 }

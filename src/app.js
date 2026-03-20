@@ -414,6 +414,7 @@ export class SpainTrainApp {
       const simulated = simulateMovement(prev, vehicle, progress, {
         updateIntervalMs: APP_CONFIG.updateIntervalMs,
         jumpThresholdKm: APP_CONFIG.jumpThresholdKm,
+        serviceType: vehicle.serviceType,
       });
 
       const estimatedSpeedKmh = estimateSpeedKmh(prev, vehicle, APP_CONFIG.updateIntervalMs);
