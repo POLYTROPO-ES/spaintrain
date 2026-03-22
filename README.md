@@ -8,6 +8,8 @@ Repository: [POLYTROPO-ES/spaintrain](https://github.com/POLYTROPO-ES/spaintrain
 - Live vehicle tracking with 20-second refresh cadence
 - Status-aware kinematic movement simulation (speed + heading + stop/incoming/transit logic)
 - Dataset-based SVG train icons (Cercanias vs LD/high-speed feed)
+- LD icon style: black/white technical blueprint with a front engine, one middle coach, and rear engine (`<==>` profile)
+- LD icon orientation follows estimated heading so marker points in travel direction
 - Strict and inferred platform modes with confidence scoring
 - Multi-language UI: ES, EN, FR, IT, PT
 - Line multi-select filter and train/line search
@@ -96,6 +98,8 @@ SpainTrain es una PWA orientada a navegador para visualizar posiciones de trenes
 - Seguimiento de trenes en vivo con refresco cada 20 segundos
 - Simulacion cinematica por estado (velocidad + rumbo + logica stopped/incoming/transit)
 - Iconos SVG por origen de datos (Cercanias vs Larga Distancia)
+- Icono LD en estilo blueprint blanco/negro con motor frontal, un coche intermedio y motor trasero (perfil `<==>`)
+- El icono LD se orienta con el rumbo estimado para apuntar a la direccion de movimiento
 - Modo de anden estricto o inferido con puntuacion de confianza
 - Interfaz multi idioma: ES, EN, FR, IT, PT
 - Filtro multi seleccion por linea y busqueda por tren/linea

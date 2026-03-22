@@ -20,6 +20,7 @@ Adopt a KISS baseline for core runtime code:
 - Unified app render path: [src/app.js](../../src/app.js)
 - Simplified map icon signatures: [src/map/mapManager.js](../../src/map/mapManager.js)
 - Reduced menu i18n repetition: [src/ui/menu.js](../../src/ui/menu.js)
+- LD marker visual standard: black/white technical blueprint consist (`<==>` silhouette) with heading-based orientation in [src/map/mapManager.js](../../src/map/mapManager.js)
 
 ## Consequences
 - Lower duplication and fewer divergent code paths.

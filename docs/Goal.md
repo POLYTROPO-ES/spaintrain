@@ -124,7 +124,8 @@ Interpretation:
 	- Fallback options: OpenRailwayMap exports or other open-source rail datasets with compatible license.
 - Marker icon style by source dataset:
 	- Cercanias dataset (`vehicle_positions.json`)
-	- LD/high-speed dataset (`vehicle_positions_LD.json`)
+	- LD/high-speed dataset (`vehicle_positions_LD.json`) with black/white blueprint consist (front engine + middle coach + rear engine, `<==>` profile)
+- LD marker orientation should follow estimated heading so the train icon points to current movement direction.
 - Marker color by status:
 	- `STOPPED_AT`
 	- `INCOMING_AT`
