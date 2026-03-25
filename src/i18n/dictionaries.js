@@ -57,6 +57,7 @@ export const dictionaries = {
     legend_status_transit: 'IN_TRANSIT_TO (en transito)',
     legend_status_unknown: 'UNKNOWN (estado no informado)',
     legend_filter_impacted_only: 'Mostrar solo trenes afectados',
+    legend_repo_link: 'Repositorio del proyecto',
     updating_first_data: 'Actualizando primeros datos en vivo...',
   },
   en: {
@@ -117,6 +118,7 @@ export const dictionaries = {
     legend_status_transit: 'IN_TRANSIT_TO (in transit)',
     legend_status_unknown: 'UNKNOWN (status not provided)',
     legend_filter_impacted_only: 'Show only impacted trains',
+    legend_repo_link: 'Project repository',
     updating_first_data: 'Loading first live data update...',
   },
   fr: {
@@ -177,6 +179,7 @@ export const dictionaries = {
     legend_status_transit: 'IN_TRANSIT_TO (en transit)',
     legend_status_unknown: 'UNKNOWN (etat non fourni)',
     legend_filter_impacted_only: 'Afficher seulement les trains impactes',
+    legend_repo_link: 'Depot du projet',
     updating_first_data: 'Chargement des premieres donnees en direct...',
   },
   it: {
@@ -237,6 +240,7 @@ export const dictionaries = {
     legend_status_transit: 'IN_TRANSIT_TO (in transito)',
     legend_status_unknown: 'UNKNOWN (stato non disponibile)',
     legend_filter_impacted_only: 'Mostra solo treni impattati',
+    legend_repo_link: 'Repository del progetto',
     updating_first_data: 'Caricamento dei primi dati live...',
   },
   pt: {
@@ -297,6 +301,7 @@ export const dictionaries = {
     legend_status_transit: 'IN_TRANSIT_TO (em transito)',
     legend_status_unknown: 'UNKNOWN (estado nao informado)',
     legend_filter_impacted_only: 'Mostrar apenas trens afetados',
+    legend_repo_link: 'Repositorio do projeto',
     updating_first_data: 'Carregando os primeiros dados ao vivo...',
   },
 };

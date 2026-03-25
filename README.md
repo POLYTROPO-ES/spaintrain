@@ -82,6 +82,7 @@ Repository: [POLYTROPO-ES/spaintrain](https://github.com/POLYTROPO-ES/spaintrain
 - `npm run docker:run`: run container on port 8080
 
 ## Deployment
+- Production URL: [https://spaintrain.tinkertask.com/](https://spaintrain.tinkertask.com/)
 - Cloudflare Pages instructions: [docs/CloudflarePages.md](docs/CloudflarePages.md)
 - GitHub Actions auto deploy (main): [docs/GitHubActionsCloudflare.md](docs/GitHubActionsCloudflare.md)
 - Local and Docker instructions: [docs/LocalTestingAndDocker.md](docs/LocalTestingAndDocker.md)

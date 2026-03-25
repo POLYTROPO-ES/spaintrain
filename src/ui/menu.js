@@ -35,6 +35,13 @@ export function buildMenu(app, i18n, settings) {
         <input type="checkbox" id="legend-impact-only" />
         <span id="legend-impact-only-label"></span>
       </label>
+      <a
+        id="legend-repo-link"
+        class="legend-repo-link"
+        href="https://github.com/POLYTROPO-ES/spaintrain"
+        target="_blank"
+        rel="noopener noreferrer"
+      ></a>
     </div>
 
     <div class="menu-drawer collapsed" id="menu-drawer">
@@ -240,6 +247,7 @@ export function buildMenu(app, i18n, settings) {
     setText('#legend-status-transit', 'legend_status_transit');
     setText('#legend-status-unknown', 'legend_status_unknown');
     setText('#legend-impact-only-label', 'legend_filter_impacted_only');
+    setText('#legend-repo-link', 'legend_repo_link');
     setText('#label-platform', 'platform_mode');
     setText('#label-retention', 'retention_days');
     setText('#label-line-filter', 'line_filter');
