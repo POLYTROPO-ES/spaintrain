@@ -30,6 +30,7 @@ export function buildMenu(app, i18n, settings) {
         <div class="legend-row"><span class="legend-dot legend-incoming"></span><span id="legend-status-incoming"></span></div>
         <div class="legend-row"><span class="legend-dot legend-transit"></span><span id="legend-status-transit"></span></div>
         <div class="legend-row"><span class="legend-dot legend-unknown"></span><span id="legend-status-unknown"></span></div>
+        <div class="legend-row"><span class="legend-dot legend-unknown train-data-stale"></span><span id="legend-status-stale"></span></div>
       </div>
       <label class="legend-impact-toggle" for="legend-impact-only">
         <input type="checkbox" id="legend-impact-only" />
@@ -246,6 +247,7 @@ export function buildMenu(app, i18n, settings) {
     setText('#legend-status-incoming', 'legend_status_incoming');
     setText('#legend-status-transit', 'legend_status_transit');
     setText('#legend-status-unknown', 'legend_status_unknown');
+    setText('#legend-status-stale', 'legend_status_stale');
     setText('#legend-impact-only-label', 'legend_filter_impacted_only');
     setText('#legend-repo-link', 'legend_repo_link');
     setText('#label-platform', 'platform_mode');
