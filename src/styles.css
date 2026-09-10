@@ -47,6 +47,13 @@ body,
   height: 100%;
 }
 
+.train-data-stale {
+  opacity: 0.55;
+  outline: 1px dashed #64748b;
+  outline-offset: 2px;
+  border-radius: 5px;
+}
+
 .first-load-overlay {
   position: absolute;
   inset: 0;
