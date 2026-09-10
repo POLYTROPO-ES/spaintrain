@@ -213,6 +213,15 @@ The faded/dashed style and five-language legend distinguish stale evidence from 
 Popup speed is displayed-motion speed; history speed is an average between stored raw
 fixes, so the two values need not match. Raw history speeds are not service-capped.
 
+In the history table, an exactly repeated coordinate in consecutive moving states
+shows **Ignored**, not `0 km/h`. Its tooltip explains that the repeated moving GPS
+position is excluded from speed calculation. The next distinct row uses the full
+interval from the last non-ignored baseline, including when source timestamps are
+missing and receipt times must be used. Stops and departures establish new baselines.
+The first available row shows **—** when no predecessor exists; classification uses
+all loaded recent history before selecting the eight visible rows. If older evidence
+is outside that loaded window, it cannot establish a baseline. Stored data is unchanged.
+
 ## Background tabs, startup and network recovery
 
 - Hidden tabs suspend motion and stop scheduled polling. An already-running request is
@@ -274,7 +283,8 @@ full-frame cost, mobile guarantee, or proof that every long-session pause is eli
 
 Run `npm run test:run`, then `npm run build`, then `npm run test:e2e` from the repository
 root (not the separate FastEnough starter). At this revision: **71 unit tests and 10
-browser tests passed**, with a successful production build.
+browser tests passed** for the initial motion implementation. After adding ignored-position
+history labels: **80 unit tests and 10 browser tests passed**, with a successful production build.
 
 | Suite | Important guarantees tested |
 | --- | --- |
@@ -282,6 +292,7 @@ browser tests passed**, with a successful production build.
 | [Scheduler](../src/core/scheduler.test.js) | Single flight/timer, coalesced forced refresh, hidden/resume, stop, exact-boundary scheduling |
 | [Storage](../src/storage/db.test.js) | v1 schema, inclusive ranges, bounded recent cursors, exclusive prune, clear/settings APIs |
 | [Math/history speed](../src/core/interpolation.test.js) | Distance/bearing utilities and source-time ordering/fallback |
+| [History rows](../src/core/history.test.js) | Ignored moving repeats, last-distinct-fix intervals, stop/departure exceptions, missing source times and classification before visible-row truncation |
 | [Browser motion](../tests/e2e/motion-regression.spec.js) | New timestamps with repeated GPS become stale, hidden/resume, slow alerts, real IndexedDB startup with 1,000 snapshots ×100 vehicles and no unbounded history read |
 | [Existing UI](../tests/e2e/main-regression.spec.js) | Dataset icons, telemetry, legend, alerts, filters, theme and language |
 
