@@ -46,7 +46,8 @@ export async function onRequest(context) {
       },
     });
   } catch (error) {
-    return new Response(JSON.stringify({ error: 'Unable to fetch alerts', message: String(error?.message || error) }), {
+    console.error('Alerts proxy request failed', { message: String(error?.message || error) });
+    return new Response(JSON.stringify({ error: 'Unable to fetch alerts' }), {
       status: 502,
       headers: {
         ...corsHeaders(origin),
