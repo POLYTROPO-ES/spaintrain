@@ -3,6 +3,7 @@ import { logger } from '../core/logger.js';
 export async function requestJson(url, label = 'request') {
   const response = await fetch(url, {
     cache: 'no-store',
+    signal: AbortSignal.timeout(15000),
     headers: {
       Accept: 'application/json',
     },
