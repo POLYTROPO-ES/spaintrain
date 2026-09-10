@@ -1,6 +1,6 @@
 import { APP_CONFIG } from './core/config.js';
 import { CronLikeScheduler } from './core/scheduler.js';
-import { estimateSpeedKmh } from './core/interpolation.js';
+import { buildHistoryRows } from './core/history.js';
 import { TrainMotion } from './core/motion.js';
 import { FeedService } from './data/feedService.js';
 import { MapManager } from './map/mapManager.js';
@@ -308,6 +308,7 @@ export class SpainTrainApp {
           lat: Number(vehicle?.lat || 0),
           lon: Number(vehicle?.lon || 0),
           sourceTimestampMs: Number(vehicle?.sourceTimestampMs || 0),
+          status: String(vehicle?.status || 'UNKNOWN'),
         };
 
         if (!byTrainId.has(trainId)) {
@@ -318,42 +319,7 @@ export class SpainTrainApp {
     });
 
     byTrainId.forEach((rows, trainId) => {
-      rows.sort((a, b) => a.timestampMs - b.timestampMs);
-      const sliced = rows.slice(-rowLimit);
-      const withSpeed = sliced.map((row, index) => {
-        if (index === 0) {
-          return {
-            timestampMs: row.timestampMs,
-            lat: row.lat,
-            lon: row.lon,
-            speedKmh: 0,
-          };
-        }
-
-        const prev = sliced[index - 1];
-        const speedKmh = estimateSpeedKmh(
-          {
-            lat: prev.lat,
-            lon: prev.lon,
-            sourceTimestampMs: prev.sourceTimestampMs,
-          },
-          {
-            lat: row.lat,
-            lon: row.lon,
-            sourceTimestampMs: row.sourceTimestampMs,
-          },
-          Math.max(1, row.timestampMs - prev.timestampMs)
-        );
-
-        return {
-          timestampMs: row.timestampMs,
-          lat: row.lat,
-          lon: row.lon,
-          speedKmh,
-        };
-      });
-
-      byTrainId.set(trainId, withSpeed);
+      byTrainId.set(trainId, buildHistoryRows(rows, rowLimit));
     });
 
     return byTrainId;
