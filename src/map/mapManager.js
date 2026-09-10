@@ -9,6 +9,8 @@ const statusColor = {
   UNKNOWN: '#64748b',
 };
 
+const STOPPED_ORANGE = '#ea580c';
+
 function buildTrainIcon(color, isDisrupted = false) {
   const iconClass = isDisrupted ? 'train-svg-icon train-disruption' : 'train-svg-icon';
   const disruptionBadge = isDisrupted
@@ -58,20 +60,41 @@ function buildHighSpeedTrainIcon(color, isDisrupted = false, headingDeg = null) 
   const svg = `
     <svg width="48" height="34" viewBox="0 0 54 38" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <g transform="rotate(${rotationDeg} 27 19)">
-        <path d="M6 19 13 11h7.8v16H13z" fill="${color}" stroke="#111827" stroke-width="1.4"/>
-        <rect x="20.8" y="11" width="12.4" height="16" rx="1.8" fill="${color}" stroke="#111827" stroke-width="1.4"/>
-        <path d="M48 19 41 11h-7.8v16H41z" fill="${color}" stroke="#111827" stroke-width="1.4"/>
+        <path d="M6 13Q5 13 5 16V22Q5 25 8 25H36Q47 25 47 20.5V17.5Q47 13 36 13Z" fill="${color}" stroke="#111827" stroke-width="1.4"/>
+        <path d="M41 14.5Q45.5 15.5 45.5 19Q45.5 22.5 41 23.5" fill="none" stroke="#e2e8f0" stroke-width="1" opacity="0.9"/>
+        <rect x="10" y="15" width="8" height="8" rx="2" fill="#e2e8f0"/>
+        <rect x="20.5" y="15" width="6" height="8" rx="2" fill="#e2e8f0"/>
+        <line x1="8" y1="18.5" x2="34" y2="18.5" stroke="#111827" stroke-width="0.7" opacity="0.25"/>
+        ${disruptionBadge}
+      </g>
+    </svg>
+  `;
 
-        <line x1="16.2" y1="13.8" x2="16.2" y2="24.2" stroke="#ffffff" stroke-width="0.9" opacity="0.9"/>
-        <line x1="37.8" y1="13.8" x2="37.8" y2="24.2" stroke="#ffffff" stroke-width="0.9" opacity="0.9"/>
+  return L.divIcon({
+    className: iconClass,
+    html: svg,
+    iconSize: [48, 34],
+    iconAnchor: [24, 17],
+    popupAnchor: [0, -18],
+  });
+}
 
-        <line x1="23.2" y1="19" x2="30.8" y2="19" stroke="#e2e8f0" stroke-width="1.5" opacity="0.95"/>
-        <line x1="21.1" y1="19" x2="23.2" y2="19" stroke="#111827" stroke-width="1.1"/>
-        <line x1="30.8" y1="19" x2="32.9" y2="19" stroke="#111827" stroke-width="1.1"/>
-
-        <circle cx="14.1" cy="19" r="1" fill="#111827"/>
-        <circle cx="39.9" cy="19" r="1" fill="#111827"/>
-
+function buildStationaryHighSpeedIcon(color, isDisrupted = false) {
+  const iconClass = isDisrupted
+    ? 'train-svg-icon train-svg-icon-highspeed train-stationary train-disruption'
+    : 'train-svg-icon train-svg-icon-highspeed train-stationary';
+  const disruptionBadge = isDisrupted
+    ? '<circle cx="49" cy="8" r="4.8" fill="#dc2626" stroke="#ffffff" stroke-width="1.2"/><text x="49" y="10.3" font-size="6.8" font-weight="700" text-anchor="middle" fill="#ffffff">!</text>'
+    : '';
+  const svg = `
+    <svg width="48" height="34" viewBox="0 0 54 38" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g>
+        <path d="M6 13Q5 13 5 16V22Q5 25 8 25H36Q47 25 47 20.5V17.5Q47 13 36 13Z" fill="${color}" stroke="#111827" stroke-width="1.4"/>
+        <path d="M41 14.5Q45.5 15.5 45.5 19Q45.5 22.5 41 23.5" fill="none" stroke="#e2e8f0" stroke-width="1" opacity="0.9"/>
+        <rect x="10" y="15" width="8" height="8" rx="2" fill="#e2e8f0"/>
+        <rect x="20.5" y="15" width="6" height="8" rx="2" fill="#e2e8f0"/>
+        <line x1="8" y1="18.5" x2="34" y2="18.5" stroke="#111827" stroke-width="0.7" opacity="0.25"/>
+        <line x1="8" y1="28" x2="46" y2="28" stroke="#111827" stroke-width="1.2" stroke-dasharray="2.5 2.5" opacity="0.7"/>
         ${disruptionBadge}
       </g>
     </svg>
@@ -91,9 +114,15 @@ function resolveServiceType(vehicle) {
 }
 
 function buildIconForVehicle(vehicle, color, isDisrupted) {
-  return resolveServiceType(vehicle) === 'ld'
-    ? buildHighSpeedTrainIcon(color, isDisrupted, vehicle.estimatedHeadingDeg)
-    : buildTrainIcon(color, isDisrupted);
+  if (resolveServiceType(vehicle) !== 'ld') {
+    return buildTrainIcon(color, isDisrupted);
+  }
+
+  if (vehicle.status === 'STOPPED_AT') {
+    return buildStationaryHighSpeedIcon(STOPPED_ORANGE, isDisrupted);
+  }
+
+  return buildHighSpeedTrainIcon(color, isDisrupted, vehicle.estimatedHeadingDeg);
 }
 
 function getHeadingBucket(vehicle) {
@@ -191,7 +220,9 @@ export class MapManager {
       const normalizedLine = normalizeLineCode(vehicle.lineCode);
       const isDisrupted = normalizedLine ? this.disruptionLineCodes.has(normalizedLine) : false;
       const serviceType = resolveServiceType(vehicle);
-      const headingBucket = serviceType === 'ld' ? getHeadingBucket(vehicle) : 'na';
+      const headingBucket = serviceType === 'ld' && vehicle.status !== 'STOPPED_AT'
+        ? getHeadingBucket(vehicle)
+        : 'na';
       const markerSignature = `${vehicle.status}|${color}|${serviceType}|${isDisrupted ? 'impact' : 'normal'}|${headingBucket}`;
 
       if (marker) {
