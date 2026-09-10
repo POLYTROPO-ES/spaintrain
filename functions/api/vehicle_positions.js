@@ -87,10 +87,10 @@ export async function onRequest(context) {
     .map((result) => result.value);
 
   if (successfulPayloads.length === 0) {
-    const failures = results
+    results
       .filter((result) => result.status === 'rejected')
-      .map((result) => String(result.reason?.message || result.reason));
-    return new Response(JSON.stringify({ error: 'Unable to fetch Renfe feeds', failures }), {
+      .forEach((result) => console.error('Vehicle feed request failed', { message: String(result.reason?.message || result.reason) }));
+    return new Response(JSON.stringify({ error: 'Unable to fetch Renfe feeds' }), {
       status: 502,
       headers: {
         ...corsHeaders(origin),
