@@ -11,7 +11,6 @@ export class FeedService {
   }
 
   async fetchSnapshot(platformMode) {
-    const now = Date.now();
     const started = performance.now();
     const { payload, source } = await fetchJsonWithFallback({
       primaryUrl: this.feedUrl,
@@ -25,7 +24,7 @@ export class FeedService {
     const normalized = normalizePayload(payload, {
       platformMode,
       platformMemory: this.platformMemory,
-      nowMs: now,
+      nowMs: Date.now(),
       bounds: this.bounds,
     });
 
