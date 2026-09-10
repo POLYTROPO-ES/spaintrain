@@ -7,9 +7,16 @@ export class CronLikeScheduler {
     this.running = false;
     this.inFlight = false;
     this.tickId = 0;
+    this.pendingRefresh = false;
+    this.hidden = document.hidden;
 
     document.addEventListener('visibilitychange', () => {
-      if (!document.hidden && this.running) {
+      const wasHidden = this.hidden;
+      this.hidden = document.hidden;
+      if (this.hidden) {
+        this.clearTimer();
+        this.pendingRefresh = false;
+      } else if (wasHidden && this.running) {
         this.executeTick(true);
       }
     });
@@ -25,31 +32,42 @@ export class CronLikeScheduler {
 
   stop() {
     this.running = false;
-    if (this.timer) {
+    this.pendingRefresh = false;
+    this.clearTimer();
+  }
+
+  clearTimer() {
+    if (this.timer !== null) {
       clearTimeout(this.timer);
       this.timer = null;
     }
   }
 
   scheduleNext() {
-    if (!this.running) {
+    this.clearTimer();
+    if (!this.running || document.hidden || this.inFlight) {
       return;
     }
     const now = Date.now();
-    const nextBoundary = Math.ceil(now / this.intervalMs) * this.intervalMs;
-    const delay = Math.max(50, nextBoundary - now);
-    this.timer = setTimeout(() => this.executeTick(false), delay);
+    const nextBoundary = (Math.floor(now / this.intervalMs) + 1) * this.intervalMs;
+    this.timer = setTimeout(() => {
+      this.timer = null;
+      this.executeTick(false);
+    }, nextBoundary - now);
   }
 
   async executeTick(force = false) {
-    if (!this.running) {
+    this.clearTimer();
+    if (!this.running || document.hidden) {
       return;
     }
-    if (this.inFlight && !force) {
-      this.scheduleNext();
+    if (this.inFlight) {
+      // Settings changes and visibility resumes share one deferred refresh.
+      this.pendingRefresh ||= force;
       return;
     }
 
+    this.pendingRefresh = false;
     this.inFlight = true;
     this.tickId += 1;
     const currentTick = this.tickId;
@@ -62,7 +80,12 @@ export class CronLikeScheduler {
       }
     } finally {
       this.inFlight = false;
-      this.scheduleNext();
+      if (this.pendingRefresh && this.running && !document.hidden) {
+        this.executeTick(true);
+      } else {
+        this.pendingRefresh = false;
+        this.scheduleNext();
+      }
     }
   }
 }
