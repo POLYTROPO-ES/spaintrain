@@ -45,6 +45,10 @@ test('repeated moving GPS coordinates become stale despite advancing report time
   await expect(popup).toContainText('Motion model: stale_hold');
   await expect(popup).toContainText('Estimated speed: 0 km/h');
   await expect(popup).toContainText('Position report: STALE');
+  const ignored = popup.locator('.popup-history-table abbr').first();
+  await expect(ignored).toHaveText('Ignored');
+  await expect(ignored).toHaveAttribute('title', 'Repeated GPS position while moving; ignored for speed calculation');
+  await expect(ignored.locator('..')).not.toContainText('0 km/h');
 });
 
 test('hidden tabs stop polling and resume once without replaying old prediction', async ({ page }) => {
