@@ -7,9 +7,9 @@ Live app: [https://spaintrain.tinkertask.com/](https://spaintrain.tinkertask.com
 
 ## Features
 - Live vehicle tracking with 20-second refresh cadence
-- Status-aware kinematic movement simulation (speed + heading + stop/incoming/transit logic)
+- Continuous near-live prediction with bounded corrections, graceful braking and stale-data indicators
 - Dataset-based SVG train icons (Cercanias vs LD/high-speed feed)
-- LD icon style: black/white technical blueprint with a front engine, one middle coach, and rear engine (`<==>` profile)
+- LD icon style: retro streamlined; stopped trains remain full-size, orange and horizontal
 - LD icon orientation follows estimated heading so marker points in travel direction
 - Strict and inferred platform modes with confidence scoring
 - Multi-language UI: ES, EN, FR, IT, PT
@@ -55,7 +55,10 @@ Live app: [https://spaintrain.tinkertask.com/](https://spaintrain.tinkertask.com
 ## KISS Refactor Notes
 - Shared JSON request + fallback behavior is centralized in [src/data/http.js](src/data/http.js).
 - Shared line normalization is centralized in [src/core/lineCode.js](src/core/lineCode.js).
-- App vehicle rendering/count updates use one path in [src/app.js](src/app.js) via `renderVehicles(...)`.
+- Live rendering reuses per-train display state and cached filters at 30fps; popup/stat text refreshes at 1Hz.
+- [Kinetic model guide](docs/KineticModel.md) explains prediction equations, repeated GPS coordinates, stale holds, background recovery and validation.
+- [ADR 12](docs/decisions/12-continuous-prediction-and-runtime-budget.md) records alternatives and trade-offs, superseding the previous motion model.
+- History insights read only the newest records; pruning uses an indexed key range.
 - Map icon functions in [src/map/mapManager.js](src/map/mapManager.js) use explicit parameters instead of dynamic argument inspection.
 - Menu i18n text assignment in [src/ui/menu.js](src/ui/menu.js) uses a small helper to reduce repetitive DOM code.
 
@@ -100,9 +103,9 @@ SpainTrain es una PWA orientada a navegador para visualizar posiciones de trenes
 
 ### Caracteristicas
 - Seguimiento de trenes en vivo con refresco cada 20 segundos
-- Simulacion cinematica por estado (velocidad + rumbo + logica stopped/incoming/transit)
+- Prediccion continua con correcciones limitadas, frenado progresivo e indicadores de datos antiguos
 - Iconos SVG por origen de datos (Cercanias vs Larga Distancia)
-- Icono LD en estilo blueprint blanco/negro con motor frontal, un coche intermedio y motor trasero (perfil `<==>`)
+- Icono LD retro aerodinamico; los trenes detenidos mantienen el tamano, en naranja y horizontales
 - El icono LD se orienta con el rumbo estimado para apuntar a la direccion de movimiento
 - Modo de anden estricto o inferido con puntuacion de confianza
 - Interfaz multi idioma: ES, EN, FR, IT, PT
