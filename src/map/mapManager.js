@@ -148,7 +148,11 @@ function renderHistoryTable(rows) {
   const body = safeRows.map((row) => {
     const timestamp = formatRowTimestamp(row.timestampMs);
     const coordinates = `${Number(row.lat || 0).toFixed(5)}, ${Number(row.lon || 0).toFixed(5)}`;
-    const speed = `${Math.round(Number(row.speedKmh || 0))} km/h`;
+    const speed = row.ignoredPosition
+      ? '<abbr title="Repeated GPS position while moving; ignored for speed calculation" aria-label="Ignored: repeated GPS position while moving">Ignored</abbr>'
+      : row.speedKmh == null
+        ? '<span title="No earlier position available to calculate speed">—</span>'
+        : `${Math.round(Number(row.speedKmh || 0))} km/h`;
     return `<tr><td>${timestamp}</td><td>${coordinates}</td><td>${speed}</td></tr>`;
   }).join('');
 
