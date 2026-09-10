@@ -65,14 +65,17 @@ export class LocalStore {
   }
 
   async loadSnapshots(fromMs, toMs) {
+    if (
+      typeof fromMs !== 'number' || typeof toMs !== 'number' ||
+      Number.isNaN(fromMs) || Number.isNaN(toMs) || fromMs > toMs
+    ) {
+      return [];
+    }
+    const range = IDBKeyRange.bound(fromMs, toMs);
     const db = await this.getDb();
     const tx = db.transaction(APP_CONFIG.storage.snapshotStore, 'readonly');
     const store = tx.objectStore(APP_CONFIG.storage.snapshotStore);
-    const request = store.getAll();
-    const all = await promisifyRequest(request);
-    return all
-      .filter((row) => row.snapshotTimeMs >= fromMs && row.snapshotTimeMs <= toMs)
-      .sort((a, b) => a.snapshotTimeMs - b.snapshotTimeMs);
+    return promisifyRequest(store.getAll(range));
   }
 
   async getAllSnapshots() {
@@ -80,26 +83,45 @@ export class LocalStore {
     const tx = db.transaction(APP_CONFIG.storage.snapshotStore, 'readonly');
     const store = tx.objectStore(APP_CONFIG.storage.snapshotStore);
     const request = store.getAll();
-    const all = await promisifyRequest(request);
-    return all.sort((a, b) => a.snapshotTimeMs - b.snapshotTimeMs);
+    return promisifyRequest(request);
   }
 
   async getStorageInsights(recentLimit = 18) {
-    const all = await this.getAllSnapshots();
-    if (all.length === 0) {
-      return {
-        count: 0,
-        oldestSnapshotTimeMs: null,
-        newestSnapshotTimeMs: null,
-        recent: [],
+    const limit = Number.isFinite(Number(recentLimit))
+      ? Math.max(1, Math.trunc(Number(recentLimit)))
+      : 18;
+    const db = await this.getDb();
+    const tx = db.transaction(APP_CONFIG.storage.snapshotStore, 'readonly');
+    const store = tx.objectStore(APP_CONFIG.storage.snapshotStore);
+    // Queue every request before awaiting; continue cursors only in their callbacks.
+    const countPromise = promisifyRequest(store.count());
+    const oldestPromise = promisifyRequest(store.openKeyCursor());
+    const recentPromise = new Promise((resolve, reject) => {
+      const recent = [];
+      const request = store.openCursor(null, 'prev');
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => {
+        const cursor = request.result;
+        if (cursor) {
+          recent.push(cursor.value);
+          if (recent.length < limit) {
+            cursor.continue();
+            return;
+          }
+        }
+        resolve(recent);
       };
-    }
+    });
+    const [count, oldest, recent] = await Promise.all([
+      countPromise, oldestPromise, recentPromise,
+    ]);
+    const newestSnapshotTimeMs = recent.length ? Number(recent[0].snapshotTimeMs) : null;
 
     return {
-      count: all.length,
-      oldestSnapshotTimeMs: Number(all[0].snapshotTimeMs || 0),
-      newestSnapshotTimeMs: Number(all[all.length - 1].snapshotTimeMs || 0),
-      recent: all.slice(-Math.max(1, recentLimit)),
+      count,
+      oldestSnapshotTimeMs: oldest ? Number(oldest.key) : null,
+      newestSnapshotTimeMs,
+      recent: recent.reverse(),
     };
   }
 
@@ -129,11 +151,11 @@ export class LocalStore {
   }
 
   async pruneOlderThan(cutoffMs) {
+    const range = IDBKeyRange.upperBound(cutoffMs, true);
     const db = await this.getDb();
     const tx = db.transaction(APP_CONFIG.storage.snapshotStore, 'readwrite');
     const store = tx.objectStore(APP_CONFIG.storage.snapshotStore);
-    const all = await promisifyRequest(store.getAll());
-    all.filter((row) => row.snapshotTimeMs < cutoffMs).forEach((row) => store.delete(row.snapshotTimeMs));
+    store.delete(range);
     await awaitTransaction(tx);
   }
 
