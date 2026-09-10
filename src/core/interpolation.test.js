@@ -6,7 +6,6 @@ import {
   lerpPosition,
   projectPosition,
   shouldSnap,
-  simulateMovement,
 } from './interpolation.js';
 
 describe('interpolation utilities', () => {
@@ -50,28 +49,16 @@ describe('interpolation utilities', () => {
     expect(speedKmh).toBeGreaterThan(500);
   });
 
-  it('keeps stopped trains static in simulated movement', () => {
-    const prev = { lat: 40, lon: -3, sourceTimestampMs: 1_000, status: 'IN_TRANSIT_TO' };
-    const current = { lat: 40.001, lon: -3.001, sourceTimestampMs: 21_000, status: 'STOPPED_AT' };
-    const simulated = simulateMovement(prev, current, 8_000, {
-      updateIntervalMs: 20_000,
-      jumpThresholdKm: 15,
-    });
-
-    expect(simulated.lat).toBe(current.lat);
-    expect(simulated.lon).toBe(current.lon);
+  it('does not calculate a new speed from regressed or duplicate source times', () => {
+    const prev = { lat: 40, lon: -3, sourceTimestampMs: 21000 };
+    expect(estimateSpeedKmh(prev, { ...prev, lat: 40.1 }, 20000)).toBe(0);
+    expect(estimateSpeedKmh(prev, { ...prev, lat: 40.1, sourceTimestampMs: 1000 }, 20000)).toBe(0);
   });
 
-  it('moves in-transit trains forward after transition window', () => {
-    const prev = { lat: 40.0, lon: -3.0, sourceTimestampMs: 1_000, status: 'IN_TRANSIT_TO' };
-    const current = { lat: 40.002, lon: -2.998, sourceTimestampMs: 21_000, status: 'IN_TRANSIT_TO' };
-    const simulated = simulateMovement(prev, current, 12_000, {
-      updateIntervalMs: 20_000,
-      jumpThresholdKm: 15,
-    });
-
-    const baselineDistance = distanceKm({ lat: prev.lat, lon: prev.lon }, { lat: current.lat, lon: current.lon });
-    const simulatedDistance = distanceKm({ lat: prev.lat, lon: prev.lon }, simulated);
-    expect(simulatedDistance).toBeGreaterThan(baselineDistance);
+  it('uses receipt interval when only one report has a source timestamp', () => {
+    const prev = { lat: 40, lon: -3, sourceTimestampMs: 0 };
+    const next = { lat: 40.001, lon: -3, sourceTimestampMs: 1000000000 };
+    expect(estimateSpeedKmh(prev, next, 20000)).toBeCloseTo(distanceKm(prev, next) * 180);
   });
+
 });
