@@ -13,10 +13,6 @@ function normalizeBearing(degrees) {
   return normalized < 0 ? normalized + 360 : normalized;
 }
 
-function clamp(value, min, max) {
-  return Math.max(min, Math.min(max, value));
-}
-
 export function distanceKm(a, b) {
   const dLat = toRadians(b.lat - a.lat);
   const dLon = toRadians(b.lon - a.lon);
@@ -82,75 +78,16 @@ export function projectPosition(start, bearingDeg, distanceKmValue) {
 
 export function estimateSpeedKmh(prev, next, fallbackDeltaMs) {
   const distance = distanceKm(prev, next);
-  const sourceDelta = Number(next.sourceTimestampMs || 0) - Number(prev.sourceTimestampMs || 0);
-  const deltaMs = sourceDelta > 0 ? sourceDelta : fallbackDeltaMs;
+  const previousTime = Number(prev.sourceTimestampMs || 0);
+  const nextTime = Number(next.sourceTimestampMs || 0);
+  const bothHaveSourceTime = previousTime > 0 && nextTime > 0;
+  const deltaMs = bothHaveSourceTime ? nextTime - previousTime : fallbackDeltaMs;
 
   if (!deltaMs || deltaMs <= 0) {
     return 0;
   }
 
   return (distance / (deltaMs / 3600000));
-}
-
-export function simulateMovement(prev, current, elapsedSinceSnapshotMs, options) {
-  const {
-    updateIntervalMs,
-    jumpThresholdKm,
-    transitionMs = Math.min(2000, updateIntervalMs * 0.2),
-    minMovingSpeedKmh = 6,
-    serviceType = 'cercanias',
-  } = options;
-
-  const isHighSpeedService = String(serviceType || '').toLowerCase() === 'ld';
-  const maxSpeedKmh = isHighSpeedService ? 350 : 250;
-  const maxLeadDistanceKm = isHighSpeedService ? 0.9 : 0.45;
-
-  const prevPoint = { lat: prev.lat, lon: prev.lon };
-  const currentPoint = { lat: current.lat, lon: current.lon };
-
-  if (current.status === 'STOPPED_AT') {
-    return currentPoint;
-  }
-
-  if (shouldSnap(prevPoint, currentPoint, jumpThresholdKm)) {
-    return currentPoint;
-  }
-
-  const transitionProgress = clamp(elapsedSinceSnapshotMs / Math.max(1, transitionMs), 0, 1);
-  const smoothedCurrent = lerpPosition(prevPoint, currentPoint, transitionProgress);
-
-  const extrapolationMs = Math.max(0, elapsedSinceSnapshotMs - transitionMs);
-  if (extrapolationMs === 0) {
-    return smoothedCurrent;
-  }
-
-  const estimatedRawSpeed = estimateSpeedKmh(prev, current, updateIntervalMs);
-  let adjustedSpeed = clamp(estimatedRawSpeed, 0, maxSpeedKmh);
-
-  if (current.status === 'INCOMING_AT') {
-    adjustedSpeed = clamp(adjustedSpeed, 0, 45);
-  } else if (current.status === 'IN_TRANSIT_TO') {
-    adjustedSpeed = clamp(adjustedSpeed, minMovingSpeedKmh, maxSpeedKmh);
-  } else if (current.status !== 'UNKNOWN') {
-    adjustedSpeed = clamp(adjustedSpeed, 0, 120);
-  }
-
-  if (adjustedSpeed <= 0) {
-    return smoothedCurrent;
-  }
-
-  const heading = calculateBearing(prevPoint, currentPoint);
-  const maxExtrapolationMs = updateIntervalMs * 0.45;
-  const effectiveExtrapolationMs = Math.min(extrapolationMs, maxExtrapolationMs);
-  const observedDistanceKm = distanceKm(prevPoint, currentPoint);
-  const rawTravelDistanceKm = adjustedSpeed * (effectiveExtrapolationMs / 3600000);
-  const maxTravelDistanceKm = Math.min(
-    maxLeadDistanceKm,
-    observedDistanceKm * 0.35 + maxLeadDistanceKm * 0.25
-  );
-  const travelDistanceKm = Math.min(rawTravelDistanceKm, Math.max(0, maxTravelDistanceKm));
-
-  return projectPosition(smoothedCurrent, heading, travelDistanceKm);
 }
 
 export function shouldSnap(prev, next, jumpThresholdKm) {
