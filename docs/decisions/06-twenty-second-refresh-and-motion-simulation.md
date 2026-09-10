@@ -1,7 +1,11 @@
 # ADR 06: 20-Second Refresh With Motion Simulation
 
 ## Status
-Accepted
+Superseded for motion behavior by [ADR 12](12-continuous-prediction-and-runtime-budget.md)
+on 2026-09-10. The 20-second polling target remains accepted.
+
+This record retains the original decision below. Current implementation details and
+the reasons for replacing it are in the [kinetic model guide](../KineticModel.md).
 
 ## Context
 Source updates every 20 seconds. Without interpolation, markers jump.
