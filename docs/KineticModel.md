@@ -282,7 +282,7 @@ full-frame cost, mobile guarantee, or proof that every long-session pause is eli
 ## Regression coverage and reproduction
 
 Run `npm run test:run`, then `npm run build`, then `npm run test:e2e` from the repository
-root (not the separate FastEnough starter). At this revision: **71 unit tests and 10
+root. At this revision: **71 unit tests and 10
 browser tests passed** for the initial motion implementation. After adding ignored-position
 history labels: **80 unit tests and 10 browser tests passed**, with a successful production build.
 
