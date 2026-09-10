@@ -79,12 +79,12 @@ export default defineConfig({
               .map((result) => result.value);
 
             if (successfulPayloads.length === 0) {
-              const failures = results
+              results
                 .filter((result) => result.status === 'rejected')
-                .map((result) => String(result.reason?.message || result.reason));
+                .forEach((result) => console.error('Vehicle feed request failed', { message: String(result.reason?.message || result.reason) }));
               res.statusCode = 502;
               res.setHeader('Content-Type', 'application/json; charset=utf-8');
-              res.end(JSON.stringify({ error: 'Unable to fetch Renfe feeds', failures }));
+              res.end(JSON.stringify({ error: 'Unable to fetch Renfe feeds' }));
               return;
             }
 
@@ -109,9 +109,10 @@ export default defineConfig({
             res.setHeader('Content-Type', 'application/json; charset=utf-8');
             res.end(JSON.stringify(payload));
           } catch (error) {
+            console.error('Alerts proxy request failed', { message: String(error?.message || error) });
             res.statusCode = 502;
             res.setHeader('Content-Type', 'application/json; charset=utf-8');
-            res.end(JSON.stringify({ error: 'Unable to fetch alerts', message: String(error?.message || error) }));
+            res.end(JSON.stringify({ error: 'Unable to fetch alerts' }));
           }
         });
       },
