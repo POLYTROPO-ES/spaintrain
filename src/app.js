@@ -1,6 +1,7 @@
 import { APP_CONFIG } from './core/config.js';
 import { CronLikeScheduler } from './core/scheduler.js';
-import { calculateBearing, estimateSpeedKmh, simulateMovement } from './core/interpolation.js';
+import { estimateSpeedKmh } from './core/interpolation.js';
+import { TrainMotion } from './core/motion.js';
 import { FeedService } from './data/feedService.js';
 import { MapManager } from './map/mapManager.js';
 import { LocalStore } from './storage/db.js';
@@ -41,6 +42,8 @@ export class SpainTrainApp {
     });
 
     this.playback = new PlaybackPlayer();
+    this.motion = new TrainMotion(APP_CONFIG);
+    this.visibleLiveVehicles = null;
     this.i18n = new I18n(APP_CONFIG.defaults.language);
 
     this.state = {
@@ -91,10 +94,11 @@ export class SpainTrainApp {
     this.loadRailPathsInBackground();
     await this.refreshStorageInsights();
 
-    // Seed the previous snapshot from local history so the first live cycle
-    // can interpolate movement instead of starting with insufficient_history.
-    if (!this.state.currentSnapshot && this.state.insightsRecent.length > 0) {
-      this.state.previousSnapshot = this.state.insightsRecent[this.state.insightsRecent.length - 1];
+    const recent = this.state.insightsRecent.at(-1);
+    if (recent && Date.now() - recent.snapshotTimeMs < APP_CONFIG.staleAfterMs) {
+      this.motion.accept(recent);
+      // Use recent history for velocity, but start the live display at a fresh report.
+      this.motion.suspend();
     }
 
     this.refreshStats();
@@ -198,10 +202,20 @@ export class SpainTrainApp {
 
   async fetchCycle(tickId) {
     this.state.nextUpdateAt = Date.now() + APP_CONFIG.updateIntervalMs;
-    const [snapshot, alertsPayload] = await Promise.all([
-      this.fetchWithBackoff(this.state.settings.platformMode),
-      this.fetchAlertsSafe(this.state.settings.language),
-    ]);
+    // Slow alert requests must not hold up new vehicle positions.
+    const alertsRequest = this.fetchAlertsSafe(this.state.settings.language);
+    const snapshot = await this.fetchWithBackoff(this.state.settings.platformMode);
+
+    void alertsRequest.then((alertsPayload) => {
+      if (tickId !== this.state.latestTickId) return;
+      this.state.alerts = alertsPayload.alerts;
+      this.state.alertsMetrics = alertsPayload.metrics;
+      this.state.disruptionLineCodes = this.collectDisruptionLineCodes(this.state.alerts);
+      this.map.setDisruptionLineCodes(this.state.disruptionLineCodes);
+      this.visibleLiveVehicles = null;
+      this.renderAlerts();
+      this.refreshStats();
+    });
 
     if (tickId < this.state.latestTickId) {
       return;
@@ -222,18 +236,20 @@ export class SpainTrainApp {
 
     this.state.latestTickId = tickId;
     this.state.previousSnapshot = this.state.currentSnapshot;
+    this.motion.accept(snapshot);
+    if (document.hidden) this.motion.suspend();
+    // Persist accepted reports, not regressed samples from a partly stale feed.
+    snapshot.vehicles = Array.from(this.motion.tracks.values(), track => track.report);
     this.state.currentSnapshot = snapshot;
+    this.visibleLiveVehicles = null;
+    this.attachHistoryRows();
 
     // Do not force the view back to live mode while the user is playing history.
     if (!this.playback.isPlaying()) {
       this.state.liveRenderMode = true;
     }
     this.state.metrics = snapshot.metrics;
-    this.state.alerts = alertsPayload.alerts;
-    this.state.alertsMetrics = alertsPayload.metrics;
     this.state.isStale = false;
-    this.state.disruptionLineCodes = this.collectDisruptionLineCodes(this.state.alerts);
-    this.map.setDisruptionLineCodes(this.state.disruptionLineCodes);
 
     this.ui.refs.modePill.textContent = this.playback.isPlaying()
       ? this.i18n.t('status_playback')
@@ -269,6 +285,7 @@ export class SpainTrainApp {
         insights.recent,
         TRAIN_HISTORY_ROW_LIMIT
       );
+      this.attachHistoryRows();
     } catch (error) {
       logger.warn('Failed to refresh local storage metrics', { message: String(error?.message || error) });
     }
@@ -318,12 +335,12 @@ export class SpainTrainApp {
           {
             lat: prev.lat,
             lon: prev.lon,
-            sourceTimestampMs: prev.sourceTimestampMs || prev.timestampMs,
+            sourceTimestampMs: prev.sourceTimestampMs,
           },
           {
             lat: row.lat,
             lon: row.lon,
-            sourceTimestampMs: row.sourceTimestampMs || row.timestampMs,
+            sourceTimestampMs: row.sourceTimestampMs,
           },
           Math.max(1, row.timestampMs - prev.timestampMs)
         );
@@ -347,14 +364,8 @@ export class SpainTrainApp {
       return false;
     }
 
-    const incomingTs = Number(incomingSnapshot?.headerTimestampMs || 0);
-    const currentTs = Number(this.state.currentSnapshot?.headerTimestampMs || 0);
-
-    // Only accept strictly newer source timestamps to keep movement interpolation monotonic.
-    if (incomingTs > 0 && currentTs > 0) {
-      return incomingTs <= currentTs;
-    }
-
+    // Vehicle timestamps are validated by TrainMotion. The merged header is a
+    // maximum across sources and cannot safely gate individual train updates.
     const incomingFallbackTs = Number(incomingSnapshot?.snapshotTimeMs || 0);
     const currentFallbackTs = Number(this.state.currentSnapshot?.snapshotTimeMs || 0);
     return incomingFallbackTs <= currentFallbackTs;
@@ -396,67 +407,46 @@ export class SpainTrainApp {
   }
 
   startAnimationLoop() {
-    const frame = () => {
-      this.renderLiveInterpolated();
-      this.refreshStats();
+    let lastRender = 0;
+    let lastStats = 0;
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) this.motion.suspend();
+      lastRender = lastStats = 0;
+    });
+    const frame = (time) => {
+      if (!document.hidden && time - lastRender >= 1000 / 30 - 0.5) {
+        this.renderLiveInterpolated(time);
+        lastRender = time;
+      }
+      if (!document.hidden && time - lastStats >= 1000) {
+        this.refreshStats();
+        lastStats = time;
+      }
       this.animationFrame = requestAnimationFrame(frame);
     };
 
-    frame();
+    this.animationFrame = requestAnimationFrame(frame);
   }
 
-  renderLiveInterpolated() {
-    if (!this.state.liveRenderMode || !this.state.currentSnapshot) {
+  renderLiveInterpolated(time = performance.now()) {
+    if (!this.state.currentSnapshot) {
       return;
     }
 
-    const current = this.state.currentSnapshot;
-    const previousById = new Map(
-      (this.state.previousSnapshot?.vehicles || []).map((vehicle) => [vehicle.id, vehicle])
-    );
+    const vehicles = this.motion.advance(time);
+    if (this.state.liveRenderMode) {
+      this.visibleLiveVehicles ??= this.applyVehicleFilters(vehicles);
+      this.map.updateVehicles(this.visibleLiveVehicles, time);
+      const count = `${this.visibleLiveVehicles.length} / ${vehicles.length}`;
+      if (this.ui.refs.vehicles.textContent !== count) this.ui.refs.vehicles.textContent = count;
+    }
+    this.state.isStale = Date.now() - this.state.currentSnapshot.snapshotTimeMs > APP_CONFIG.staleAfterMs;
+  }
 
-    const progress = Math.max(
-      0,
-      Date.now() - current.snapshotTimeMs
-    );
-
-    const vehicles = current.vehicles.map((vehicle) => {
-      const prev = previousById.get(vehicle.id);
-      if (!prev) {
-        return {
-          ...vehicle,
-          estimatedSpeedKmh: 0,
-          estimatedHeadingDeg: null,
-          motionModel: 'insufficient_history',
-        };
-      }
-
-      const simulated = simulateMovement(prev, vehicle, progress, {
-        updateIntervalMs: APP_CONFIG.updateIntervalMs,
-        jumpThresholdKm: APP_CONFIG.jumpThresholdKm,
-        serviceType: vehicle.serviceType,
-      });
-
-      const estimatedSpeedKmh = estimateSpeedKmh(prev, vehicle, APP_CONFIG.updateIntervalMs);
-      const estimatedHeadingDeg = calculateBearing(
-        { lat: prev.lat, lon: prev.lon },
-        { lat: vehicle.lat, lon: vehicle.lon }
-      );
-
-      return {
-        ...vehicle,
-        lat: simulated.lat,
-        lon: simulated.lon,
-        estimatedSpeedKmh,
-        estimatedHeadingDeg,
-        motionModel: 'kinematic_status_aware',
-      };
-    });
-
-    this.renderVehicles(vehicles, current.vehicles.length);
-
-    const staleMs = Date.now() - current.snapshotTimeMs;
-    this.state.isStale = staleMs > APP_CONFIG.staleAfterMs;
+  attachHistoryRows() {
+    for (const vehicle of this.motion.vehicles) {
+      vehicle.historyRows = this.state.trainHistoryRowsById.get(vehicle.id) || [];
+    }
   }
 
   refreshStats() {
@@ -566,7 +556,7 @@ export class SpainTrainApp {
   async onPlatformModeChange(mode) {
     this.state.settings.platformMode = mode;
     await this.store.setSetting('platformMode', mode);
-    await this.fetchCycle(this.state.latestTickId + 1);
+    await this.scheduler.executeTick(true);
   }
 
   async onRetentionChange(days) {
@@ -583,6 +573,8 @@ export class SpainTrainApp {
       this.platformMemory.byStopLine.clear();
       this.state.previousSnapshot = null;
       this.state.currentSnapshot = null;
+      this.motion.clear();
+      this.visibleLiveVehicles = null;
       this.state.alerts = [];
       this.state.alertsMetrics = { source: '/api/alerts', count: 0 };
       this.state.discardedOutOfOrderCount = 0;
@@ -617,18 +609,21 @@ export class SpainTrainApp {
   async onLineFilterChange(lineFilters) {
     const normalized = (lineFilters || []).map((item) => String(item).trim()).filter(Boolean);
     this.state.settings.lineFilters = normalized.length > 0 ? normalized : ['all'];
+    this.visibleLiveVehicles = null;
     await this.store.setSetting('lineFilters', this.state.settings.lineFilters);
     logger.debug('Line filters updated', { lineFilters: this.state.settings.lineFilters });
   }
 
   async onSearchChange(searchText) {
     this.state.settings.searchText = searchText;
+    this.visibleLiveVehicles = null;
     await this.store.setSetting('searchText', searchText);
     logger.debug('Search updated', { searchText });
   }
 
   async onShowImpactedOnlyChange(enabled) {
     this.state.settings.showImpactedOnly = Boolean(enabled);
+    this.visibleLiveVehicles = null;
     await this.store.setSetting('showImpactedOnly', this.state.settings.showImpactedOnly);
     this.renderLiveInterpolated();
     if (!this.state.liveRenderMode && this.state.currentSnapshot) {
