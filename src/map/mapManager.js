@@ -41,7 +41,7 @@ function buildTrainIcon(color, isDisrupted = false) {
 }
 
 function normalizeHeadingForIcon(headingDeg) {
-  if (!Number.isFinite(Number(headingDeg))) {
+  if (headingDeg == null || !Number.isFinite(Number(headingDeg))) {
     return 0;
   }
 
@@ -126,7 +126,7 @@ function buildIconForVehicle(vehicle, color, isDisrupted) {
 }
 
 function getHeadingBucket(vehicle) {
-  if (!Number.isFinite(Number(vehicle?.estimatedHeadingDeg))) {
+  if (vehicle?.estimatedHeadingDeg == null || !Number.isFinite(Number(vehicle.estimatedHeadingDeg))) {
     return 'na';
   }
   return String(Math.round(Number(vehicle.estimatedHeadingDeg) / 12));
@@ -186,6 +186,11 @@ export class MapManager {
     this.pathLayer = L.layerGroup().addTo(this.map);
     this.markerCache = new Map();
     this.disruptionLineCodes = new Set();
+    this.renderBounds = this.map.getBounds().pad(0.2);
+    this.map.on('moveend zoomend', () => {
+      this.renderBounds = this.map.getBounds().pad(0.2);
+      this.positionsDirty = true;
+    });
   }
 
   setDisruptionLineCodes(lineCodes) {
@@ -208,13 +213,15 @@ export class MapManager {
   clearVehicles() {
     this.markerLayer.clearLayers();
     this.markerCache.clear();
+    this.lastVehicles = null;
   }
 
-  updateVehicles(vehicles) {
-    const activeIds = new Set();
+  updateVehicles(vehicles, now = performance.now()) {
+    const membershipChanged = vehicles !== this.lastVehicles;
+    const activeIds = membershipChanged ? new Set() : null;
 
     vehicles.forEach((vehicle) => {
-      activeIds.add(vehicle.id);
+      activeIds?.add(vehicle.id);
       const marker = this.markerCache.get(vehicle.id);
       const color = statusColor[vehicle.status] || statusColor.UNKNOWN;
       const normalizedLine = normalizeLineCode(vehicle.lineCode);
@@ -228,18 +235,26 @@ export class MapManager {
       if (marker) {
         const wasPopupOpen = marker.isPopupOpen();
         marker.__vehicle = vehicle;
-        marker.setLatLng([vehicle.lat, vehicle.lon]);
+        const oldPosition = marker.getLatLng();
+        const moved = Math.abs(oldPosition.lat - vehicle.lat) > 0.000001
+          || Math.abs(oldPosition.lng - vehicle.lon) > 0.000001;
+        if (moved && (this.positionsDirty || wasPopupOpen
+          || this.renderBounds.contains([vehicle.lat, vehicle.lon])
+          || this.renderBounds.contains(oldPosition))) {
+          marker.setLatLng([vehicle.lat, vehicle.lon]);
+        }
 
         // Avoid recreating icon/popup binding every frame; this keeps marker click interactions stable.
         if (marker.__signature !== markerSignature) {
           marker.setIcon(buildIconForVehicle(vehicle, color, isDisrupted));
           marker.__signature = markerSignature;
         }
+        this.updateFreshness(marker, vehicle);
 
-        // Popup content is only rebuilt while the popup is visible.
-        if (wasPopupOpen && marker.getPopup()) {
+        // Position follows the marker, but rebuilding table/layout needs only 1Hz.
+        if (wasPopupOpen && marker.getPopup() && now - (marker.__popupUpdatedAt || 0) >= 1000) {
           marker.setPopupContent(this.createPopup(vehicle));
-          marker.openPopup();
+          marker.__popupUpdatedAt = now;
         }
         return;
       }
@@ -253,17 +268,33 @@ export class MapManager {
       newMarker.bindPopup('');
       newMarker.on('popupopen', () => {
         newMarker.setPopupContent(this.createPopup(newMarker.__vehicle));
+        newMarker.__popupUpdatedAt = performance.now();
       });
+      this.updateFreshness(newMarker, vehicle);
       this.markerCache.set(vehicle.id, newMarker);
     });
 
-    Array.from(this.markerCache.keys()).forEach((id) => {
-      if (!activeIds.has(id)) {
-        const marker = this.markerCache.get(id);
-        this.markerLayer.removeLayer(marker);
-        this.markerCache.delete(id);
+    if (membershipChanged) {
+      for (const [id, marker] of this.markerCache) {
+        if (!activeIds.has(id)) {
+          this.markerLayer.removeLayer(marker);
+          this.markerCache.delete(id);
+        }
       }
-    });
+    }
+    this.lastVehicles = vehicles;
+    this.positionsDirty = false;
+  }
+
+  updateFreshness(marker, vehicle) {
+    const element = marker.getElement();
+    const stale = Boolean(vehicle.motionStale);
+    if (element && (marker.__stale !== stale || marker.__freshnessElement !== element)) {
+      element.classList.toggle('train-data-stale', stale);
+      element.setAttribute('aria-label', `Train ${vehicle.id}${stale ? ' — stale position report' : ''}`);
+      marker.__stale = stale;
+      marker.__freshnessElement = element;
+    }
   }
 
   createPopup(vehicle) {
@@ -291,6 +322,7 @@ export class MapManager {
       Estimated speed: ${speed} km/h<br>
       Estimated heading: ${heading}<br>
       Motion model: ${vehicle.motionModel || 'none'}<br>
+      Position report: ${vehicle.motionStale ? 'STALE — prediction limited; awaiting fresh data' : 'Current'}<br>
       Data source type: ${vehicle.serviceType || 'cercanias'}<br>
       Disruption impact: ${impacted ? 'YES' : 'NO'}<br>
       Status: ${vehicle.status}<br>
