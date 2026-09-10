@@ -8,12 +8,15 @@ This folder stores the baseline technical decisions for SpainTrain.
 3. [03-rail-path-dataset-strategy](03-rail-path-dataset-strategy.md)
 4. [04-scope-all-trains-and-spain-paths](04-scope-all-trains-and-spain-paths.md)
 5. [05-platform-modes-strict-and-inferred](05-platform-modes-strict-and-inferred.md)
-6. [06-twenty-second-refresh-and-motion-simulation](06-twenty-second-refresh-and-motion-simulation.md)
+6. [06-twenty-second-refresh-and-motion-simulation](06-twenty-second-refresh-and-motion-simulation.md) — motion behavior superseded by ADR 12; cadence retained.
 7. [07-browser-runtime-and-storage-model](07-browser-runtime-and-storage-model.md)
 8. [08-multilingual-support-five-languages](08-multilingual-support-five-languages.md)
 9. [09-local-playback-history](09-local-playback-history.md)
 10. [10-free-access-model](10-free-access-model.md)
 11. [11-kiss-refactor-and-shared-utilities](11-kiss-refactor-and-shared-utilities.md)
+12. [12-continuous-prediction-and-runtime-budget](12-continuous-prediction-and-runtime-budget.md) — current prediction, heartbeat semantics, recovery and performance decisions.
+
+Implementation guide: [Train kinetic model](../KineticModel.md).
 
 ## Conventions
 - Status: accepted, proposed, superseded.
