@@ -68,6 +68,7 @@ export class SpainTrainApp {
         newestSnapshotTimeMs: null,
       },
       trainHistoryRowsById: new Map(),
+      insightsRecent: [],
     };
 
     this.animationFrame = null;
@@ -89,6 +90,13 @@ export class SpainTrainApp {
     this.map = new MapManager('map');
     this.loadRailPathsInBackground();
     await this.refreshStorageInsights();
+
+    // Seed the previous snapshot from local history so the first live cycle
+    // can interpolate movement instead of starting with insufficient_history.
+    if (!this.state.currentSnapshot && this.state.insightsRecent.length > 0) {
+      this.state.previousSnapshot = this.state.insightsRecent[this.state.insightsRecent.length - 1];
+    }
+
     this.refreshStats();
 
     this.configurePlayback();
@@ -181,6 +189,7 @@ export class SpainTrainApp {
       onTick: (tickId) => this.fetchCycle(tickId),
       onError: () => {
         this.state.isStale = true;
+        this.hideFirstLoadOverlay();
         this.refreshStats();
       },
     });
@@ -214,7 +223,11 @@ export class SpainTrainApp {
     this.state.latestTickId = tickId;
     this.state.previousSnapshot = this.state.currentSnapshot;
     this.state.currentSnapshot = snapshot;
-    this.state.liveRenderMode = true;
+
+    // Do not force the view back to live mode while the user is playing history.
+    if (!this.playback.isPlaying()) {
+      this.state.liveRenderMode = true;
+    }
     this.state.metrics = snapshot.metrics;
     this.state.alerts = alertsPayload.alerts;
     this.state.alertsMetrics = alertsPayload.metrics;
@@ -222,7 +235,9 @@ export class SpainTrainApp {
     this.state.disruptionLineCodes = this.collectDisruptionLineCodes(this.state.alerts);
     this.map.setDisruptionLineCodes(this.state.disruptionLineCodes);
 
-    this.ui.refs.modePill.textContent = this.i18n.t('status_live');
+    this.ui.refs.modePill.textContent = this.playback.isPlaying()
+      ? this.i18n.t('status_playback')
+      : this.i18n.t('status_live');
     this.refreshLineOptions(snapshot.vehicles);
     this.renderAlerts();
     this.hideFirstLoadOverlay();
@@ -243,12 +258,17 @@ export class SpainTrainApp {
 
   async refreshStorageInsights() {
     try {
-      const [storageMetrics, recentSnapshots] = await Promise.all([
-        this.store.getSnapshotMetrics(),
-        this.store.getRecentSnapshots(SNAPSHOT_HISTORY_LIMIT),
-      ]);
-      this.state.storageMetrics = storageMetrics;
-      this.state.trainHistoryRowsById = this.buildTrainHistoryRowsById(recentSnapshots, TRAIN_HISTORY_ROW_LIMIT);
+      const insights = await this.store.getStorageInsights(SNAPSHOT_HISTORY_LIMIT);
+      this.state.storageMetrics = {
+        count: insights.count,
+        oldestSnapshotTimeMs: insights.oldestSnapshotTimeMs,
+        newestSnapshotTimeMs: insights.newestSnapshotTimeMs,
+      };
+      this.state.insightsRecent = insights.recent || [];
+      this.state.trainHistoryRowsById = this.buildTrainHistoryRowsById(
+        insights.recent,
+        TRAIN_HISTORY_ROW_LIMIT
+      );
     } catch (error) {
       logger.warn('Failed to refresh local storage metrics', { message: String(error?.message || error) });
     }
@@ -444,20 +464,32 @@ export class SpainTrainApp {
       return;
     }
 
+    this._statCache = this._statCache || {};
+    const setStat = (key, ref, value) => {
+      if (this._statCache[key] !== value) {
+        this._statCache[key] = value;
+        ref.textContent = value;
+      }
+    };
+
     const countdownSec = Math.max(0, Math.ceil((this.state.nextUpdateAt - Date.now()) / 1000));
-    this.ui.refs.countdown.textContent = `${countdownSec}s`;
+    setStat('countdown', this.ui.refs.countdown, `${countdownSec}s`);
 
     if (this.state.currentSnapshot) {
-      this.ui.refs.lastUpdate.textContent = new Date(this.state.currentSnapshot.snapshotTimeMs).toLocaleTimeString();
+      setStat(
+        'lastUpdate',
+        this.ui.refs.lastUpdate,
+        new Date(this.state.currentSnapshot.snapshotTimeMs).toLocaleTimeString()
+      );
     }
 
-    this.ui.refs.staleWarning.textContent = this.state.isStale ? this.i18n.t('stale_warning') : '';
-    this.ui.refs.source.textContent = this.state.metrics.source || 'direct';
-    this.ui.refs.alertsCount.textContent = String(this.state.alertsMetrics.count || 0);
-    this.ui.refs.discardedSnapshots.textContent = String(this.state.discardedOutOfOrderCount || 0);
-    this.ui.refs.snapshotsStored.textContent = String(this.state.storageMetrics.count || 0);
-    this.ui.refs.oldestSnapshot.textContent = this.formatMetricDate(this.state.storageMetrics.oldestSnapshotTimeMs);
-    this.ui.refs.newestSnapshot.textContent = this.formatMetricDate(this.state.storageMetrics.newestSnapshotTimeMs);
+    setStat('stale', this.ui.refs.staleWarning, this.state.isStale ? this.i18n.t('stale_warning') : '');
+    setStat('source', this.ui.refs.source, this.state.metrics.source || 'direct');
+    setStat('alerts', this.ui.refs.alertsCount, String(this.state.alertsMetrics.count || 0));
+    setStat('discarded', this.ui.refs.discardedSnapshots, String(this.state.discardedOutOfOrderCount || 0));
+    setStat('stored', this.ui.refs.snapshotsStored, String(this.state.storageMetrics.count || 0));
+    setStat('oldest', this.ui.refs.oldestSnapshot, this.formatMetricDate(this.state.storageMetrics.oldestSnapshotTimeMs));
+    setStat('newest', this.ui.refs.newestSnapshot, this.formatMetricDate(this.state.storageMetrics.newestSnapshotTimeMs));
   }
 
   formatMetricDate(valueMs) {
@@ -506,6 +538,7 @@ export class SpainTrainApp {
     this.ui.applyTexts();
     this.ui.syncQuickControls(this.state.settings);
     this.updateFirstLoadOverlayText();
+    this._lineCodesKey = null;
     this.refreshLineOptions(this.state.currentSnapshot?.vehicles || []);
     this.renderAlerts();
     await this.store.setSetting('language', language);
@@ -556,7 +589,10 @@ export class SpainTrainApp {
       this.state.disruptionLineCodes = new Set();
       this.state.storageMetrics = { count: 0, oldestSnapshotTimeMs: null, newestSnapshotTimeMs: null };
       this.state.trainHistoryRowsById = new Map();
+      this.state.insightsRecent = [];
       this.map.setDisruptionLineCodes(this.state.disruptionLineCodes);
+      this.map.clearVehicles();
+      this._lineCodesKey = null;
 
       this.ui.refs.vehicles.textContent = '0';
       this.ui.refs.lastUpdate.textContent = '-';
@@ -694,6 +730,11 @@ export class SpainTrainApp {
 
   refreshLineOptions(vehicles) {
     const codes = Array.from(new Set(vehicles.map((vehicle) => vehicle.lineCode).filter(Boolean))).sort();
+    const key = codes.join('|');
+    if (key === this._lineCodesKey) {
+      return;
+    }
+    this._lineCodesKey = key;
     this.ui.setLineOptions(codes);
   }
 

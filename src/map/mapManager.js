@@ -176,6 +176,11 @@ export class MapManager {
     }).addTo(this.pathLayer);
   }
 
+  clearVehicles() {
+    this.markerLayer.clearLayers();
+    this.markerCache.clear();
+  }
+
   updateVehicles(vehicles) {
     const activeIds = new Set();
 
@@ -185,13 +190,13 @@ export class MapManager {
       const color = statusColor[vehicle.status] || statusColor.UNKNOWN;
       const normalizedLine = normalizeLineCode(vehicle.lineCode);
       const isDisrupted = normalizedLine ? this.disruptionLineCodes.has(normalizedLine) : false;
-      const popup = this.createPopup(vehicle);
       const serviceType = resolveServiceType(vehicle);
       const headingBucket = serviceType === 'ld' ? getHeadingBucket(vehicle) : 'na';
       const markerSignature = `${vehicle.status}|${color}|${serviceType}|${isDisrupted ? 'impact' : 'normal'}|${headingBucket}`;
 
       if (marker) {
         const wasPopupOpen = marker.isPopupOpen();
+        marker.__vehicle = vehicle;
         marker.setLatLng([vehicle.lat, vehicle.lon]);
 
         // Avoid recreating icon/popup binding every frame; this keeps marker click interactions stable.
@@ -200,13 +205,9 @@ export class MapManager {
           marker.__signature = markerSignature;
         }
 
-        if (marker.getPopup()) {
-          marker.setPopupContent(popup);
-        } else {
-          marker.bindPopup(popup);
-        }
-
-        if (wasPopupOpen) {
+        // Popup content is only rebuilt while the popup is visible.
+        if (wasPopupOpen && marker.getPopup()) {
+          marker.setPopupContent(this.createPopup(vehicle));
           marker.openPopup();
         }
         return;
@@ -216,8 +217,12 @@ export class MapManager {
         icon: buildIconForVehicle(vehicle, color, isDisrupted),
       }).addTo(this.markerLayer);
 
-      newMarker.bindPopup(popup);
+      newMarker.__vehicle = vehicle;
       newMarker.__signature = markerSignature;
+      newMarker.bindPopup('');
+      newMarker.on('popupopen', () => {
+        newMarker.setPopupContent(this.createPopup(newMarker.__vehicle));
+      });
       this.markerCache.set(vehicle.id, newMarker);
     });
 

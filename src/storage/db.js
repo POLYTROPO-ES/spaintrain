@@ -1,4 +1,5 @@
 import { APP_CONFIG } from '../core/config.js';
+import { compactSnapshot } from './compact.js';
 
 function promisifyRequest(request) {
   return new Promise((resolve, reject) => {
@@ -53,9 +54,13 @@ export class LocalStore {
   }
 
   async saveSnapshot(snapshot) {
+    const compact = compactSnapshot(snapshot);
+    if (!compact) {
+      return;
+    }
     const db = await this.getDb();
     const tx = db.transaction(APP_CONFIG.storage.snapshotStore, 'readwrite');
-    tx.objectStore(APP_CONFIG.storage.snapshotStore).put(snapshot);
+    tx.objectStore(APP_CONFIG.storage.snapshotStore).put(compact);
     await awaitTransaction(tx);
   }
 
@@ -79,21 +84,14 @@ export class LocalStore {
     return all.sort((a, b) => a.snapshotTimeMs - b.snapshotTimeMs);
   }
 
-  async getRecentSnapshots(limit = 12) {
-    const all = await this.getAllSnapshots();
-    if (limit <= 0) {
-      return [];
-    }
-    return all.slice(-limit);
-  }
-
-  async getSnapshotMetrics() {
+  async getStorageInsights(recentLimit = 18) {
     const all = await this.getAllSnapshots();
     if (all.length === 0) {
       return {
         count: 0,
         oldestSnapshotTimeMs: null,
         newestSnapshotTimeMs: null,
+        recent: [],
       };
     }
 
@@ -101,6 +99,7 @@ export class LocalStore {
       count: all.length,
       oldestSnapshotTimeMs: Number(all[0].snapshotTimeMs || 0),
       newestSnapshotTimeMs: Number(all[all.length - 1].snapshotTimeMs || 0),
+      recent: all.slice(-Math.max(1, recentLimit)),
     };
   }
 
@@ -119,7 +118,10 @@ export class LocalStore {
         typeof snapshot.snapshotTimeMs === 'number' &&
         Array.isArray(snapshot.vehicles)
       ) {
-        store.put(snapshot);
+        const compact = compactSnapshot(snapshot);
+        if (compact) {
+          store.put(compact);
+        }
       }
     });
 

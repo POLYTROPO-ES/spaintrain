@@ -3,6 +3,7 @@
 SpainTrain is a browser-first PWA for visualizing live train positions in Spain on top of OpenStreetMap, with local playback history, multilingual UI, and resilient data fallback strategies.
 
 Repository: [POLYTROPO-ES/spaintrain](https://github.com/POLYTROPO-ES/spaintrain)
+Live app: [https://spaintrain.tinkertask.com/](https://spaintrain.tinkertask.com/)
 
 ## Features
 - Live vehicle tracking with 20-second refresh cadence
@@ -86,6 +87,8 @@ Repository: [POLYTROPO-ES/spaintrain](https://github.com/POLYTROPO-ES/spaintrain
 - Cloudflare Pages instructions: [docs/CloudflarePages.md](docs/CloudflarePages.md)
 - GitHub Actions auto deploy (main): [docs/GitHubActionsCloudflare.md](docs/GitHubActionsCloudflare.md)
 - Local and Docker instructions: [docs/LocalTestingAndDocker.md](docs/LocalTestingAndDocker.md)
+- Audit and bottleneck review: [docs/audits/AuditReview-2026-09-10.md](docs/audits/AuditReview-2026-09-10.md)
+- Docs index: [docs/README.md](docs/README.md)
 
 ## Contributing
 See [CONTRIBUTING.md](CONTRIBUTING.md) for branching, commit conventions, push/PR workflow, and review checklist.

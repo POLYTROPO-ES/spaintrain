@@ -46,6 +46,10 @@ export class PlaybackPlayer {
     this.emitState();
   }
 
+  isPlaying() {
+    return Boolean(this.timer);
+  }
+
   seek(index) {
     if (!this.snapshots.length) {
       return;
